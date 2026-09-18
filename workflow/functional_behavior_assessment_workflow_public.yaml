@@ -1,0 +1,4390 @@
+public_release:
+  schema: fba_workflow_public_blueprint/v1
+  generated_date: '2026-08-16'
+  deployable: false
+  source_format: Baidu AppBuilder workflow export
+  purpose: Public documentation of the research workflow structure and prompt/code logic.
+  redactions:
+  - signed asset URLs and live share links
+  - application, workflow, node, port, and deployment identifiers
+  - platform editor metadata and duplicated rich-text templates
+  - model service endpoints and deployment-specific model identifiers
+  - unreferenced test variables
+  safety_boundary:
+    intended_use: Research documentation and code review only.
+    not_a:
+    - medical or clinical diagnosis
+    - treatment or crisis-management service
+    - autonomous or final high-stakes decision tool
+    - replacement for educator or qualified professional review
+    review_required: Educators and, when appropriate, qualified professionals must review every hypothesis and recommendation.
+    risk_escalation: Self-harm, harm-to-others, or other serious-risk indications require immediate escalation under the responsible
+      institution's procedures.
+    privacy: Do not place names, school identifiers, raw child narratives, chat logs, access keys, or signed URLs in this
+      public file.
+application:
+  name: FBA-guided behavior-assessment decision-support workflow
+  description: 本访谈表旨在通过结构化提问，了解学生问题行为的背景、触发因素及潜在功能，以制定针对性干预方案。
+  export_version: 3.4.9
+  platform_configuration:
+    provider: redacted
+    endpoint: ${MODEL_ENDPOINT}
+    model: ${MODEL_ID}
+    retrieval_corpus: Not included in this public snapshot.
+  memory_variables:
+  - name: bg_score
+    description: 背景信息得分
+    entity_life_cycle: user
+  - name: stage
+    description: 阶段
+    entity_life_cycle: user
+  - name: basic
+    description: 基本信息
+    entity_life_cycle: user
+  - name: bg_add
+    description: 背景信息额外问题
+    entity_life_cycle: user
+  - name: bg_2
+    description: 背景信息回答问题
+    entity_life_cycle: user
+  - name: re_score
+    description: 行为反应得分
+    entity_life_cycle: user
+  - name: re_add_behavior
+    description: 行为反应行为
+    entity_life_cycle: user
+  - name: re_add_reaction
+    description: 行为反应反应
+    entity_life_cycle: user
+  - name: re_2
+    description: 行为反应回答问题
+    entity_life_cycle: user
+  - name: po_score
+    description: 积极策略得分
+    entity_life_cycle: user
+  - name: po_add
+    description: 积极策略额外问题
+    entity_life_cycle: user
+  - name: po_2
+    description: 积极策略回答问题
+    entity_life_cycle: user
+  - name: un
+    description: 是否进入到反馈生成阶段
+    entity_life_cycle: user
+workflow:
+  history_chat_rounds: 2
+  global_config:
+    backup_reply:
+      chat:
+        additional_requirements: ''
+        character_style: 你是一位客服人员，善于耐心友好地回复用户的问题
+        enable_reasoning_visible: false
+        max_output_tokens: 2048
+        model_id: ${MODEL_ID}
+        model_name: ${MODEL_NAME}
+        model_url: ${MODEL_ENDPOINT}
+        model_value: ${MODEL_ID}
+        reasoning_model: false
+        temperature: 0.0001
+        top_p: 0.0001
+        web_search:
+          enable: false
+      knowledge:
+        datasets: []
+        enable_reasoning_visible: false
+        max_output_tokens: 1024
+        metadata_filters:
+          condition: or
+          filters: []
+          tag_filters: []
+        model_id: ${MODEL_ID}
+        model_name: ${MODEL_NAME}
+        model_url: ${MODEL_ENDPOINT}
+        model_value: ${MODEL_ID}
+        reasoning_model: false
+        scoring_threshold: 0.01
+        strategy: mixed_retrieval
+        temperature: 0.0001
+        top_k: 6
+        top_p: 0.0001
+        web_search:
+          enable: false
+    history_chat_rounds: 2
+  nodes:
+  - id: node_001
+    type: start
+    name: 开始
+    inputs: []
+    outputs: []
+  - id: node_002
+    type: end
+    name: 结束
+    inputs:
+    - name: result1
+      type: string
+      required: false
+    - name: output
+      type: string
+      required: false
+    outputs: []
+    settings:
+      content: '{{result1}}{{output}}'
+      streaming: false
+      terminate_plan: template
+  - id: node_003
+    type: llm
+    name: 基本信息模块
+    inputs:
+    - name: user_input
+      type: string
+      required: true
+    - name: basic
+      type: string
+      required: true
+    - name: reply
+      type: string
+      required: true
+    outputs:
+    - name: gender
+      type: string
+      required: false
+      description: 学生性别：字符串，学生的性别。男性为"男"，女性为"女"，如果没有相关信息，返回""。
+    - name: age
+      type: number
+      required: false
+      description: 学生年龄：整数，学生的年龄。如果没有相关信息，返回0。
+    - name: diagnosis_report
+      type: string
+      required: false
+      description: 医学诊断报告：字符串，学生的医学诊断报告，如果没有学生没有诊断报告，返回"无"；如果还没有问到该点，返回空字符串""
+    - name: behavior
+      type: string
+      required: false
+      description: 问题行为表现：字符串，该学生的问题行为具体表现，如果未记录，返回空字符串""
+    - name: trigger_situation
+      type: string
+      required: false
+      description: 问题行为的触发情境：字符串，该学生发生问题行为时的情境，如果未记录，返回空字符串""
+    - name: frequency
+      type: string
+      required: false
+      description: 问题行为发生的频率：字符串，该学生问题行为发生的频率，如果未记录，返回空字符串""
+    settings:
+      max_output_tokens: 32768
+      model_id: ${MODEL_ID}
+      model_name: ${MODEL_NAME}
+      model_type: common
+      model_url: ${MODEL_ENDPOINT}
+      model_value: ${MODEL_ID}
+      multimodal_model: false
+      prompt: '你是一个FBA指导的教育决策支持助手，正在系统化地向老师收集一位学生的信息，以描述其基本情况，并对问题行为进行清晰、可操作的界定。目前你进入到了 “基本信息与问题界定” 阶段。在该阶段，你的任务是：收集学生的基本信息，并基于访谈内容，对其问题行为进行具体、可观察的描述，而非分析原因或判断行为功能。请根据你与老师的访谈记录，判断访谈中是否涉及以下基本信息；如有涉及，请你仅基于老师回答中的内容进行整理与概括。
+
+
+        【基本信息】：
+
+        学生性别
+
+        学生年龄
+
+        学生的诊断报告（如果有）
+
+        问题行为的具体表现
+
+        问题行为的触发情境
+
+        问题行为的发生频率
+
+
+        【要求】：
+
+        - 在原先已填写的基本信息基础上，对未填写的内容进行补充
+
+        - 不得删除或否定原先已填写且明确的信息；如原信息表述较为模糊，可在不改变原意的前提下补充细节
+
+        - 内容需高度概括，单项字数不超过 70 字
+
+        - 问题行为表现必须为具体、可观察、可描述的动作或语言
+
+        - 不记录“不乖”“不听话”“态度差”等模糊或评价性词汇
+
+        - 若问题行为描述无法明确具体行为表现，视为模糊，不记录任何内容
+
+        - 仅记录访谈中明确提到的内容，不得产生任何“幻觉”
+
+        - 本任务为信息抽取与行为界定任务，不进行原因分析或功能判断
+
+
+        【输出参数】：
+
+        - 学生性别：字符串，学生的性别。男性为"男"，女性为"女"，如果没有相关信息，返回空字符串""
+
+        - 学生年龄：整数，学生的年龄。如果没有相关信息，输出整数0
+
+        - 医学诊断报告：字符串，学生的医学诊断报告，如果没有学生没有诊断报告，返回"无"；如果还没有问到该点，返回空字符串""
+
+        - 问题行为表现：字符串，该学生的问题行为具体表现，如果未记录或较为模糊，返回空字符串""
+
+        - 问题行为的触发情境：字符串，该学生发生问题行为时的情境，如果未记录，返回空字符串""
+
+        - 问题行为发生的频率：字符串，该学生问题行为发生的频率，如果未记录，返回空字符串""
+
+
+        【原先的基本信息】：
+
+        {{basic}}
+
+
+        【你的问题】：
+
+        {{reply}}
+
+
+        【老师的回答】：
+
+        {{user_input}}'
+      reasoning_model: false
+      system: '你始终以FBA指导的教育决策支持助手身份进行思考与回应。
+
+        以可观察的行为与环境互动为核心视角
+
+        优先描述事实，避免心理动机、性格或意图推断
+
+        不补全未提供信息，证据不足时保持不确定
+
+        使用专业、冷静、非评价性语言
+
+        不使用标签化、道德化表述
+
+        不进行临床诊断或越权判断
+
+        明确区分观察、事实与假设
+
+        尊重学生隐私与职业伦理
+
+        行为准则：描述先于解释，证据先于判断，支持先于控制'
+      temperature: 0.0001
+      top_p: 0.0001
+      web_search:
+        enable: false
+  - id: node_004
+    type: memory
+    name: 初始读取
+    inputs:
+    - name: stage
+      type: string
+      required: true
+      literal_value: stage
+    - name: basic
+      type: string
+      required: true
+      literal_value: basic
+    - name: bg_score
+      type: string
+      required: true
+      literal_value: bg_score
+    - name: bg_add
+      type: string
+      required: true
+      literal_value: bg_add
+    - name: bg_2
+      type: string
+      required: true
+      literal_value: bg_2
+    - name: re_score
+      type: string
+      required: true
+      literal_value: re_score
+    - name: re_add_behavior
+      type: string
+      required: true
+      literal_value: re_add_behavior
+    - name: re_add_reaction
+      type: string
+      required: true
+      literal_value: re_add_reaction
+    - name: re_2
+      type: string
+      required: true
+      literal_value: re_2
+    - name: po_score
+      type: string
+      required: true
+      literal_value: po_score
+    - name: po_add
+      type: string
+      required: true
+      literal_value: po_add
+    - name: po_2
+      type: string
+      required: true
+      literal_value: po_2
+    - name: un
+      type: string
+      required: true
+      literal_value: un
+    outputs:
+    - name: stage
+      type: string
+      required: false
+    - name: basic
+      type: string
+      required: false
+    - name: bg_score
+      type: string
+      required: false
+    - name: bg_add
+      type: string
+      required: false
+    - name: bg_2
+      type: string
+      required: false
+    - name: re_score
+      type: string
+      required: false
+    - name: re_add_behavior
+      type: string
+      required: false
+    - name: re_add_reaction
+      type: string
+      required: false
+    - name: re_2
+      type: string
+      required: false
+    - name: po_score
+      type: string
+      required: false
+    - name: po_add
+      type: string
+      required: false
+    - name: po_2
+      type: string
+      required: false
+    - name: un
+      type: string
+      required: false
+    settings:
+      mod: read
+  - id: node_005
+    type: code
+    name: 阶段转整数
+    inputs:
+    - name: stage
+      type: string
+      required: true
+    outputs:
+    - name: stage
+      type: number
+      required: false
+    settings:
+      code: "def main(params):\n    # 创建一个字典作为输出变量\n    output_object = {}\n    \n    # 将字符串数字转换为整数，如果无法转换则输出0\n    try:\n\
+        \        output_object[\"stage\"] = int(params['stage'])\n    except (ValueError, KeyError):\n        output_object[\"\
+        stage\"] = 0\n    \n    # 返回输出字典\n    return output_object"
+      language: Python
+  - id: node_006
+    type: llm
+    name: 生活背景评分
+    inputs:
+    - name: q1
+      type: string
+      required: true
+    - name: user_input
+      type: string
+      required: true
+    - name: reply
+      type: string
+      required: true
+    - name: q2
+      type: string
+      required: true
+    outputs:
+    - name: score_1
+      type: integer
+      required: false
+      description: 题目1得分
+    - name: additional_1
+      type: string
+      required: false
+      description: 额外题目1答案。对于没有答案的题目，返回空字符串""
+    - name: score_2
+      type: integer
+      required: false
+      description: 题目2得分
+    - name: additional_2
+      type: string
+      required: false
+      description: 额外题目2答案。对于没有答案的题目，返回空字符串""
+    - name: output
+      type: string
+      required: false
+      description: 原因解释，解释这么填写的原因
+    settings:
+      max_output_tokens: 32768
+      model_id: ${MODEL_ID}
+      model_name: ${MODEL_NAME}
+      model_type: common
+      model_url: ${MODEL_ENDPOINT}
+      model_value: ${MODEL_ID}
+      multimodal_model: false
+      prompt: '以下是另一个FBA指导的教育决策支持助手正在系统化的向老师收集一位问题学生的信息，以分析他产生问题行为的成因与功能。 现在他们进入到了“生活背景”阶段，在该阶段下你需要收集可能影响学生行为的健康、家庭、环境等信息。请你根据FBA指导的教育决策支持助手与老师的访谈记录，判断访谈中是否涉及到了以下生活背景问题，如果有涉及，请你根据描述的情况打分。若题目存在额外问题，你还要收集额外问题的答案。
+
+
+        【生活背景问题】：
+
+        - 题目1：{{q1}}
+
+        - 题目2：{{q2}}
+
+
+        【要求】：
+
+        - 你的任务是信息抽取与规则判断，而非原因分析或主观解释
+
+        - 根据老师回答中的明确描述进行判断与评分，不得产生任何“幻觉”
+
+        - 当老师明确表示不知道答案时，视为未观察到该问题，默认该学生不存在题目所描述的问题，评分为1或2
+
+        - 当题目存在额外问题时，还要填写额外问题的答案
+
+        - 额外问题只能填写访谈中明确提到的内容，不得产生任何“幻觉”
+
+        - 额外问题的答案需高度概括，字数不超过 30 字
+
+        - 当提供的题目已经有得分时，保持原得分不变，仅补充该题目的额外问题答案
+
+        - 必须对每一道生活背景问题分别给出评分结果
+
+
+        【FBA指导的教育决策支持助手的提问方式】：
+
+        {{reply}}
+
+
+        【老师的回答】：
+
+        {{user_input}}
+
+        '
+      reasoning_model: false
+      system: '你始终以FBA指导的教育决策支持助手身份进行思考与回应。
+
+        以可观察的行为与环境互动为核心视角
+
+        优先描述事实，避免心理动机、性格或意图推断
+
+        不补全未提供信息，证据不足时保持不确定
+
+        使用专业、冷静、非评价性语言
+
+        不使用标签化、道德化表述
+
+        不进行临床诊断或越权判断
+
+        明确区分观察、事实与假设
+
+        尊重学生隐私与职业伦理
+
+        行为准则：描述先于解释，证据先于判断，支持先于控制'
+      temperature: 0.0001
+      top_p: 0.0001
+      web_search:
+        enable: false
+  - id: node_007
+    type: memory
+    name: 进入2阶段
+    inputs:
+    - name: stage
+      type: string
+      required: true
+      literal_value: '2'
+    outputs:
+    - name: isSuccess
+      type: boolean
+      required: true
+    - name: stage
+      type: string
+      required: false
+    settings:
+      mod: write
+  - id: node_008
+    type: switch
+    name: 分支器_1
+    inputs:
+    - {}
+    outputs: []
+  - id: node_009
+    type: llm
+    name: 语句生成模块
+    inputs:
+    - name: string
+      type: string
+      required: true
+    outputs:
+    - name: outcome
+      type: string
+      required: false
+    settings:
+      max_output_tokens: 32768
+      model_id: ${MODEL_ID}
+      model_name: ${MODEL_NAME}
+      model_type: common
+      model_url: ${MODEL_ENDPOINT}
+      model_value: ${MODEL_ID}
+      multimodal_model: false
+      prompt: '{{string}}
+
+        '
+      reasoning_model: false
+      system: '你始终以FBA指导的教育决策支持助手身份进行思考与回应。
+
+        以可观察的行为与环境互动为核心视角
+
+        优先描述事实，避免心理动机、性格或意图推断
+
+        不补全未提供信息，证据不足时保持不确定
+
+        使用专业、冷静、非评价性语言
+
+        不使用标签化、道德化表述
+
+        不进行临床诊断或越权判断
+
+        明确区分观察、事实与假设
+
+        尊重学生隐私与职业伦理
+
+        行为准则：描述先于解释，证据先于判断，支持先于控制'
+      temperature: 0.0001
+      top_p: 0.0001
+      web_search:
+        enable: false
+  - id: node_010
+    type: memory
+    name: 基本信息写入
+    inputs:
+    - name: basic
+      type: string
+      required: true
+    outputs:
+    - name: isSuccess
+      type: boolean
+      required: true
+    - name: basic
+      type: string
+      required: false
+    settings:
+      mod: write
+  - id: node_011
+    type: code
+    name: 基本信息
+    inputs:
+    - name: gender
+      type: string
+      required: true
+    - name: age
+      type: number
+      required: true
+    - name: diagnosis_report
+      type: string
+      required: true
+    - name: behavior
+      type: string
+      required: true
+    - name: trigger_situation
+      type: string
+      required: true
+    - name: frequency
+      type: string
+      required: true
+    outputs:
+    - name: json_result
+      type: string
+      required: false
+    settings:
+      code: "import json\n\ndef main(params):\n    # 创建一个字典作为输出变量\n    output_object = {\n        # 将所有输入参数转换为JSON格式字符串\n\
+        \        \"json_result\": json.dumps(params, ensure_ascii=False, indent=2)\n    }\n    \n    # 返回输出字典\n    return\
+        \ output_object\n"
+      language: Python
+  - id: node_012
+    type: code
+    name: 基本信息阶段判断
+    inputs:
+    - name: gender
+      type: string
+      required: true
+    - name: age
+      type: number
+      required: true
+    - name: diagnosis_report
+      type: string
+      required: true
+    - name: trigger_situation
+      type: string
+      required: true
+    - name: behavior
+      type: string
+      required: true
+    - name: frequency
+      type: string
+      required: true
+    outputs:
+    - name: stage
+      type: number
+      required: false
+    settings:
+      code: "def main(params):\n    # 创建一个字典作为输出变量\n    output_object = {\n        \"stage\": 0  # 默认为0\n    }\n    \n   \
+        \ # 获取6个独立变量\n    gender = params.get('gender', '')\n    age = params.get('age', 0)\n    diagnosis_report = params.get('diagnosis_report',\
+        \ '')\n    trigger_situation = params.get('trigger_situation', '')\n    behavior = params.get('behavior', '')\n  \
+        \  frequency = params.get('frequency', '')\n    \n    # 检查条件：\n    # 1. 第1、3到6个变量均不为空字符串（gender, diagnosis_report,\
+        \ trigger_situation, behavior, frequency）\n    # 2. 第2个变量的值大于等于0（age >= 0）\n    if (gender != '' and \n        diagnosis_report\
+        \ != '' and \n        trigger_situation != '' and \n        behavior != '' and \n        frequency != '' and \n  \
+        \      age > 0):\n        output_object[\"stage\"] = 1\n    \n    return output_object\n\n"
+      language: Python
+  - id: node_013
+    type: code
+    name: 背景更新
+    inputs:
+    - name: score_1
+      type: integer
+      required: true
+    - name: additional_1
+      type: string
+      required: true
+    - name: score_2
+      type: integer
+      required: true
+    - name: additional_2
+      type: string
+      required: true
+    - name: bg_score
+      type: list
+      required: true
+    - name: bg_add
+      type: list
+      required: true
+    - name: bg_2
+      type: list
+      required: true
+    outputs:
+    - name: bg_score
+      type: list
+      required: false
+    - name: bg_add
+      type: list
+      required: false
+    - name: bg_score_str
+      type: string
+      required: false
+    - name: bg_add_str
+      type: string
+      required: false
+    settings:
+      code: "def main(params):\n    # 创建一个字典作为输出变量\n    output_object = {\n        \"bg_score\": [],\n        \"bg_add\":\
+        \ [],\n        \"bg_score_str\": \"\",\n        \"bg_add_str\": \"\"\n    }\n    \n    # 获取输入数据\n    score_1 = params.get('score_1',\
+        \ 0)\n    score_2 = params.get('score_2', 0)\n    additional_1 = params.get('additional_1', '')\n    additional_2\
+        \ = params.get('additional_2', '')\n    \n    # 获取当前的bg_score和bg_add\n    bg_score = params.get('bg_score', [])\n\
+        \    bg_add = params.get('bg_add', [])\n    \n    # 确保bg_score至少有11个元素\n    while len(bg_score) < 11:\n        bg_score.append(0)\n\
+        \    \n    # 确保bg_add至少有8个元素\n    while len(bg_add) < 8:\n        bg_add.append('')\n    \n    # 获取需要填写的问题序号\n   \
+        \ bg_2 = params.get('bg_2', [1, 2])\n    while len(bg_2) < 2:\n        bg_2.append(1)\n    \n    # 定义题目与bg_add索引的映射关系\n\
+        \    # 题号：bg_add索引（只有有额外问题的题目才有映射）\n    question_to_add_index = {\n        2: 0,   # 问题2 -> bg_add[0]\n        4:\
+        \ 1,   # 问题4 -> bg_add[1]\n        6: 2,   # 问题6 -> bg_add[2]\n        7: 3,   # 问题7 -> bg_add[3]\n        8: 4, \
+        \  # 问题8 -> bg_add[4]\n        9: 5,   # 问题9 -> bg_add[5]\n        10: 6,  # 问题10 -> bg_add[6]\n        11: 7   #\
+        \ 问题11 -> bg_add[7]\n    }\n\n    # 空值判断函数\n    def is_blank(x) -> bool:\n        if x is None:\n            return\
+        \ True\n        if isinstance(x, str):\n            s = x.strip()\n            return s == \"\" or s.lower() in (\"\
+        null\", \"none\", \"undefined\")\n        return False\n    \n    # 创建bg_score和bg_add的副本用于更新\n    new_bg_score = bg_score[:]\n\
+        \    new_bg_add = bg_add[:]\n    \n    # 更新问题1的数据\n    question_1_num = bg_2[0]\n    if 1 <= question_1_num <= 11:\n\
+        \        # 【修改】更新bg_score：score > 0 时覆盖任意bg_score；score = 0 时不覆盖\n        if score_1 > 0:\n            new_bg_score[question_1_num\
+        \ - 1] = score_1\n        \n        # 【修改】如果该题目有额外问题，且更新后的bg_score对应位置不为0时，才更新bg_add\n        if question_1_num in\
+        \ question_to_add_index:\n            add_index = question_to_add_index[question_1_num]\n            # 先检查更新后的bg_score是否为0\n\
+        \            updated_score = new_bg_score[question_1_num - 1]\n            if updated_score != 0 and not is_blank(additional_1):\n\
+        \                new_bg_add[add_index] = additional_1\n    \n    # 更新问题2的数据\n    question_2_num = bg_2[1]\n    if\
+        \ 1 <= question_2_num <= 11:\n        # 【修改】更新bg_score：score > 0 时覆盖任意bg_score；score = 0 时不覆盖\n        if score_2\
+        \ > 0:\n            new_bg_score[question_2_num - 1] = score_2\n        \n        # 【修改】如果该题目有额外问题，且更新后的bg_score对应位置不为0时，才更新bg_add\n\
+        \        if question_2_num in question_to_add_index:\n            add_index = question_to_add_index[question_2_num]\n\
+        \            # 先检查更新后的bg_score是否为0\n            updated_score = new_bg_score[question_2_num - 1]\n            if updated_score\
+        \ != 0 and not is_blank(additional_2):\n                new_bg_add[add_index] = additional_2\n    \n    # 输出更新后的数据（数组形式）\n\
+        \    output_object[\"bg_score\"] = new_bg_score\n    output_object[\"bg_add\"] = new_bg_add\n    \n    # 将更新后的数据转换为字符串\n\
+        \    import json\n    output_object[\"bg_score_str\"] = json.dumps(new_bg_score, ensure_ascii=False)\n    output_object[\"\
+        bg_add_str\"] = json.dumps(new_bg_add, ensure_ascii=False)\n    \n    return output_object\n"
+      language: Python
+  - id: node_014
+    type: message
+    name: 消息
+    inputs:
+    - name: result1
+      type: string
+      required: false
+      literal_value: 亲爱的家长/老师，
+    - name: result2
+      type: string
+      required: false
+      literal_value: 🎉非常感谢您的耐心参与和详细分享！我们已经收集完了所有必要的信息，正在为这位学生生成个性化的反馈报告。
+    - name: result3
+      type: string
+      required: false
+      literal_value: ⏰请您稍等4-5分钟，我们将为您呈现专业的分析结果和建议 ✨
+    outputs: []
+    settings:
+      message_template: '{{result1}}
+
+        {{result2}}
+
+        {{result3}}'
+      streaming: false
+      terminate_plan: template
+  - id: node_015
+    type: code
+    name: 教师访谈表完整版
+    inputs:
+    - name: bg_score
+      type: string
+      required: true
+    - name: bg_add
+      type: string
+      required: true
+    - name: re_score
+      type: string
+      required: true
+    - name: re_add_behavior
+      type: string
+      required: true
+    - name: re_add_reaction
+      type: string
+      required: true
+    - name: po_score
+      type: string
+      required: true
+    - name: po_add
+      type: string
+      required: true
+    - name: basic
+      type: string
+      required: true
+    outputs:
+    - name: filled_questions_bg
+      type: string
+      required: false
+    - name: unfilled_questions_bg
+      type: string
+      required: false
+    - name: filled_questions_re
+      type: string
+      required: false
+    - name: unfilled_questions_re
+      type: string
+      required: false
+    - name: filled_questions_po
+      type: string
+      required: false
+    - name: unfilled_questions_po
+      type: string
+      required: false
+    - name: basic_text
+      type: string
+      required: false
+    settings:
+      code: "import json\n\ndef main(params):\n    # 创建一个字典作为输出变量\n    output_object = {\n        \"filled_questions_bg\"\
+        : \"\",\n        \"unfilled_questions_bg\": \"\",\n        \"filled_questions_re\": \"\",\n        \"unfilled_questions_re\"\
+        : \"\",\n        \"filled_questions_po\": \"\",\n        \"unfilled_questions_po\": \"\"\n    }\n    \n    # 解析 BG\
+        \ 输入字符串为列表\n    bg_score_str = params.get('bg_score', '[]')\n    bg_add_str = params.get('bg_add', '[]')\n    try:\n\
+        \        bg_scores = json.loads(bg_score_str)\n        if not isinstance(bg_scores, list):\n            bg_scores\
+        \ = []\n    except:\n        bg_scores = []\n    try:\n        bg_add = json.loads(bg_add_str)\n        if not isinstance(bg_add,\
+        \ list):\n            bg_add = []\n    except:\n        bg_add = []\n    \n    # 确保 BG 数组长度\n    while len(bg_scores)\
+        \ < 11:\n        bg_scores.append(0)\n    while len(bg_add) < 8:\n        bg_add.append('')\n    \n    # 定义 BG 问题的模板\n\
+        \    bg_questions = [\n        {\n            \"title\": \"该学生的总体健康状况与其他学生相比\",\n            \"options\": [\"更糟\"\
+        , \"差一点\", \"差不多\", \"好一点\", \"更好\"],\n            \"has_additional\": False,\n            \"additional_condition\"\
+        : None,\n            \"additional_index\": None,\n            \"additional_template\": \"\"\n        },\n        {\n\
+        \            \"title\": \"该学生的行为受其情绪的影响程度\",\n            \"options\": [\"一点也不\", \"有一点点\", \"有点\", \"有些\", \"非常大\"\
+        ],\n            \"has_additional\": True,\n            \"additional_condition\": 3,\n            \"additional_index\"\
+        : 0,\n            \"additional_template\": \"学生情绪不佳时行为的变化是{}\"\n        },\n        {\n            \"title\": \"该学生的饮食与其他孩子相比\"\
+        ,\n            \"options\": [\"更糟\", \"有点糟\", \"差不多\", \"好一点\", \"更好\"],\n            \"has_additional\": False,\n\
+        \            \"additional_condition\": None,\n            \"additional_index\": None,\n            \"additional_template\"\
+        : \"\"\n        },\n        {\n            \"title\": \"该学生的饮食影响他的行为的程度\",\n            \"options\": [\"很多\", \"有些\"\
+        , \"有点\", \"有一点点\", \"很少\"],\n            \"has_additional\": True,\n            \"additional_condition\": 3,\n  \
+        \          \"additional_index\": 1,\n            \"additional_template\": \"学生的饮食较少影响他行为的原因是{}\"\n        },\n   \
+        \     {\n            \"title\": \"该学生的睡眠时间与班上的其他同学相比\",\n            \"options\": [\"多很多\", \"多一点\", \"差不多\", \"少一点\"\
+        , \"少很多\"],\n            \"has_additional\": False,\n            \"additional_condition\": None,\n            \"additional_index\"\
+        : None,\n            \"additional_template\": \"\"\n        },\n        {\n            \"title\": \"该学生的行为是否会受到他或她睡眠量的影响:\"\
+        ,\n            \"options\": [\"不会\", \"会\"],\n            \"has_additional\": True,\n            \"additional_condition\"\
+        : 2,\n            \"additional_index\": 2,\n            \"additional_template\": \"孩子的睡眠量具体影响他行为的方式是{}\"\n       \
+        \ },\n        {\n            \"title\": \"该学生是否因遭受虐待而影响了他/她在学校的行为\",\n            \"options\": [\"否\", \"是\"],\n \
+        \           \"has_additional\": True,\n            \"additional_condition\": 2,\n            \"additional_index\"\
+        : 3,\n            \"additional_template\": \"该学生因遭受虐待而影响了他/她在学校的行为的原因是{}\"\n        },\n        {\n            \"\
+        title\": \"该学生是否因父母健康问题而影响了他/她在学校的行为\",\n            \"options\": [\"否\", \"是\"],\n            \"has_additional\"\
+        : True,\n            \"additional_condition\": 2,\n            \"additional_index\": 4,\n            \"additional_template\"\
+        : \"该学生因父母健康问题而影响了他/她在学校的行为的原因是{}\"\n        },\n        {\n            \"title\": \"该学生是否因父母争吵问题而影响了他/她在学校的行为\",\n\
+        \            \"options\": [\"否\", \"是\"],\n            \"has_additional\": True,\n            \"additional_condition\"\
+        : 2,\n            \"additional_index\": 5,\n            \"additional_template\": \"该学生因父母争吵问题而影响了他/她在学校的行为的原因是{}\"\
+        \n        },\n        {\n            \"title\": \"该学生是否因兄弟姐妹问题而影响了他/她在学校的行为\",\n            \"options\": [\"否\", \"\
+        是\"],\n            \"has_additional\": True,\n            \"additional_condition\": 2,\n            \"additional_index\"\
+        : 6,\n            \"additional_template\": \"该学生因兄弟姐妹问题而影响了他/她在学校的行为的原因是{}\"\n        },\n        {\n            \"\
+        title\": \"该学生服用的药物对其行为的影响\",\n            \"options\": [\"该学生没有服用药物\", \"行为更糟\", \"有点更糟\", \"无效\", \"有点改善\", \"有效改善\"\
+        ],\n            \"has_additional\": True,\n            \"additional_condition\": 2,\n            \"additional_index\"\
+        : 7,\n            \"additional_template\": \"该学生在服用的药物是{}\"\n        }\n    ]\n    \n    # 分类 BG 已填写和未填写的问题\n    bg_filled_list\
+        \ = []\n    bg_unfilled_list = []\n    \n    for i in range(11):\n        question = bg_questions[i]\n        score\
+        \ = bg_scores[i]\n        \n        # 判断问题是否完全填写\n        is_filled = False\n        \n        if score > 0:\n   \
+        \         # 主问题有答案\n            if question[\"has_additional\"] and score >= question[\"additional_condition\"]:\n\
+        \                # 需要额外答案\n                if bg_add[question[\"additional_index\"]]:\n                    is_filled\
+        \ = True\n            else:\n                # 不需要额外答案\n                is_filled = True\n        \n        if is_filled:\n\
+        \            # 构建陈述句\n            statement = f\"{i+1}. {question['title']}：{question['options'][score-1]}\"\n   \
+        \         \n            # 如果有额外信息，添加额外信息\n            if question[\"has_additional\"] and score >= question[\"additional_condition\"\
+        ]:\n                additional_info = bg_add[question[\"additional_index\"]]\n                if additional_info:\n\
+        \                    statement += f\"\\n{question['additional_template'].format(additional_info)}\"\n            \n\
+        \            bg_filled_list.append(statement)\n        else:\n            # 构建未填写问题的展示（仅显示题目标题）\n            unfilled_question\
+        \ = f\"{i+1}. {question['title']}\"\n            \n            bg_unfilled_list.append(unfilled_question)\n    \n\
+        \    # 组装 BG 输出\n    output_object[\"filled_questions_bg\"] = \"\\n\\n\".join(bg_filled_list)\n    output_object[\"\
+        unfilled_questions_bg\"] = \"\\n\\n\".join(bg_unfilled_list)\n    \n    # 解析 RE 输入字符串为列表\n    re_score_str = params.get('re_score',\
+        \ '[]')\n    re_add_behavior_str = params.get('re_add_behavior', '[]')\n    re_add_reaction_str = params.get('re_add_reaction',\
+        \ '[]')\n    try:\n        re_scores = json.loads(re_score_str)\n        if not isinstance(re_scores, list):\n   \
+        \         re_scores = []\n    except:\n        re_scores = []\n    try:\n        re_add_behavior = json.loads(re_add_behavior_str)\n\
+        \        if not isinstance(re_add_behavior, list):\n            re_add_behavior = []\n    except:\n        re_add_behavior\
+        \ = []\n    try:\n        re_add_reaction = json.loads(re_add_reaction_str)\n        if not isinstance(re_add_reaction,\
+        \ list):\n            re_add_reaction = []\n    except:\n        re_add_reaction = []\n    \n    # 确保 RE 数组长度\n  \
+        \  while len(re_scores) < 13:\n        re_scores.append(0)\n    while len(re_add_behavior) < 13:\n        re_add_behavior.append('')\n\
+        \    while len(re_add_reaction) < 13:\n        re_add_reaction.append('')\n    \n    # 定义 RE 问题的模板\n    re_questions\
+        \ = [\n        {\n            \"title\": \"当只有其他孩子在场时，问题行为发生的可能性\",\n            \"options\": [\"不太可能\", \"有点可能\"\
+        , \"有可能\", \"很有可能\", \"非常可能\"],\n            \"has_additional\": True,\n            \"additional_condition\": 3,\n\
+        \            \"behavior_template\": \"发生的问题行为：{}\",\n            \"reaction_template\": \"其他孩子的反应：{}\"\n        },\n\
+        \        {\n            \"title\": \"当只有成年人在场时，问题行为发生的可能性\",\n            \"options\": [\"不太可能\", \"有点可能\", \"有可能\"\
+        , \"很有可能\", \"非常可能\"],\n            \"has_additional\": True,\n            \"additional_condition\": 3,\n        \
+        \    \"behavior_template\": \"发生的问题行为：{}\",\n            \"reaction_template\": \"成年人的反应：{}\"\n        },\n      \
+        \  {\n            \"title\": \"当孩子和大人都在场时，问题行为发生的可能性\",\n            \"options\": [\"不太可能\", \"有点可能\", \"有可能\", \"\
+        很有可能\", \"非常可能\"],\n            \"has_additional\": True,\n            \"additional_condition\": 3,\n            \"\
+        behavior_template\": \"发生的问题行为：{}\",\n            \"reaction_template\": \"他们的反应：{}\"\n        },\n        {\n   \
+        \         \"title\": \"当没有其他人时，问题行为发生的可能性\",\n            \"options\": [\"不太可能\", \"有点可能\", \"有可能\", \"很有可能\", \"\
+        非常可能\"],\n            \"has_additional\": True,\n            \"additional_condition\": 3,\n            \"behavior_template\"\
+        : \"发生的问题行为：{}\",\n            \"reaction_template\": \"人们发现后的反应：{}\"\n        },\n        {\n            \"title\"\
+        : \"当该学生被要求完成他/她觉得简单的任务时，问题行为发生的可能性\",\n            \"options\": [\"不太可能\", \"有点可能\", \"有可能\", \"很有可能\", \"非常可能\"\
+        ],\n            \"has_additional\": True,\n            \"additional_condition\": 3,\n            \"behavior_template\"\
+        : \"发生的问题行为：{}\",\n            \"reaction_template\": \"其他人的反应：{}\"\n        },\n        {\n            \"title\"\
+        : \"当该学生被要求完成他/她觉得无聊的任务时，问题行为发生的可能性\",\n            \"options\": [\"不太可能\", \"有点可能\", \"有可能\", \"很有可能\", \"非常可能\"\
+        ],\n            \"has_additional\": True,\n            \"additional_condition\": 3,\n            \"behavior_template\"\
+        : \"发生的问题行为：{}\",\n            \"reaction_template\": \"其他人的反应：{}\"\n        },\n        {\n            \"title\"\
+        : \"当该学生被要求完成他/她觉得困难的任务时，问题行为发生的可能性\",\n            \"options\": [\"不太可能\", \"有点可能\", \"有可能\", \"很有可能\", \"非常可能\"\
+        ],\n            \"has_additional\": True,\n            \"additional_condition\": 3,\n            \"behavior_template\"\
+        : \"发生的问题行为：{}\",\n            \"reaction_template\": \"其他人的反应：{}\"\n        },\n        {\n            \"title\"\
+        : \"当该学生被要求完成团体活动时，问题行为发生的可能性\",\n            \"options\": [\"不太可能\", \"有点可能\", \"有可能\", \"很有可能\", \"非常可能\"],\n  \
+        \          \"has_additional\": True,\n            \"additional_condition\": 3,\n            \"behavior_template\"\
+        : \"发生的问题行为：{}\",\n            \"reaction_template\": \"其他人的反应：{}\"\n        },\n        {\n            \"title\"\
+        : \"当该学生被要求完成独立任务时，问题行为发生的可能性\",\n            \"options\": [\"不太可能\", \"有点可能\", \"有可能\", \"很有可能\", \"非常可能\"],\n  \
+        \          \"has_additional\": True,\n            \"additional_condition\": 3,\n            \"behavior_template\"\
+        : \"发生的问题行为：{}\",\n            \"reaction_template\": \"其他人的反应：{}\"\n        },\n        {\n            \"title\"\
+        : \"当该学生处于结构化情境（例如完成课堂练习）时，问题行为发生的可能性\",\n            \"options\": [\"不太可能\", \"有点可能\", \"有可能\", \"很有可能\", \"非常可能\"\
+        ],\n            \"has_additional\": True,\n            \"additional_condition\": 3,\n            \"behavior_template\"\
+        : \"发生的问题行为：{}\",\n            \"reaction_template\": \"其他人的反应：{}\"\n        },\n        {\n            \"title\"\
+        : \"当该学生处于无结构情境（例如课间休息、自助餐厅或空闲时间）时，问题行为发生的可能性\",\n            \"options\": [\"不太可能\", \"有点可能\", \"有可能\", \"很有可能\"\
+        , \"非常可能\"],\n            \"has_additional\": True,\n            \"additional_condition\": 3,\n            \"behavior_template\"\
+        : \"发生的问题行为：{}\",\n            \"reaction_template\": \"其他人的反应：{}\"\n        },\n        {\n            \"title\"\
+        : \"当日常活动中该学生面临意外的变化（例如消防演习、集合）时，问题行为发生的可能性\",\n            \"options\": [\"不太可能\", \"有点可能\", \"有可能\", \"很有可能\", \"\
+        非常可能\"],\n            \"has_additional\": True,\n            \"additional_condition\": 3,\n            \"behavior_template\"\
+        : \"发生的问题行为：{}\",\n            \"reaction_template\": \"其他人的反应：{}\"\n        },\n        {\n            \"title\"\
+        : \"当喜欢的活动结束或喜欢的物品被拿走时，问题行为发生的可能性\",\n            \"options\": [\"不太可能\", \"有点可能\", \"有可能\", \"很有可能\", \"非常可能\"],\n\
+        \            \"has_additional\": True,\n            \"additional_condition\": 3,\n            \"behavior_template\"\
+        : \"发生的问题行为：{}\",\n            \"reaction_template\": \"其他人的反应：{}\"\n        }\n    ]\n    \n    # 分类 RE 已填写和未填写的问题\n\
+        \    re_filled_list = []\n    re_unfilled_list = []\n    \n    for i in range(13):\n        question = re_questions[i]\n\
+        \        score = re_scores[i]\n        \n        # 判断问题是否完全填写\n        is_filled = False\n        \n        if score\
+        \ > 0:\n            # 主问题有答案\n            if question[\"has_additional\"] and score >= question[\"additional_condition\"\
+        ]:\n                # 需要额外答案（behavior 和 reaction 都要有）\n                if re_add_behavior[i] and re_add_reaction[i]:\n\
+        \                    is_filled = True\n            else:\n                # 不需要额外答案（得分小于3）\n                is_filled\
+        \ = True\n        \n        if is_filled:\n            # 构建陈述句\n            statement = f\"{i+1}. {question['title']}：{question['options'][score-1]}\"\
+        \n            \n            # 如果有额外信息，添加额外信息\n            if question[\"has_additional\"] and score >= question[\"\
+        additional_condition\"]:\n                behavior_info = re_add_behavior[i]\n                reaction_info = re_add_reaction[i]\n\
+        \                if behavior_info:\n                    statement += f\"\\n{question['behavior_template'].format(behavior_info)}\"\
+        \n                if reaction_info:\n                    statement += f\"\\n{question['reaction_template'].format(reaction_info)}\"\
+        \n            \n            re_filled_list.append(statement)\n        else:\n            # 构建未填写问题的展示（仅显示题目标题）\n \
+        \           unfilled_question = f\"{i+1}. {question['title']}\"\n            \n            re_unfilled_list.append(unfilled_question)\n\
+        \    \n    # 组装 RE 输出\n    output_object[\"filled_questions_re\"] = \"\\n\\n\".join(re_filled_list)\n    output_object[\"\
+        unfilled_questions_re\"] = \"\\n\\n\".join(re_unfilled_list)\n    \n    # 解析 PO 输入字符串为列表\n    po_score_str = params.get('po_score',\
+        \ '[]')\n    po_add_str = params.get('po_add', '[]')\n    try:\n        po_scores = json.loads(po_score_str)\n   \
+        \     if not isinstance(po_scores, list):\n            po_scores = []\n    except:\n        po_scores = []\n    try:\n\
+        \        po_add = json.loads(po_add_str)\n        if not isinstance(po_add, list):\n            po_add = []\n    except:\n\
+        \        po_add = []\n    \n    # 确保 PO 数组长度\n    while len(po_scores) < 9:\n        po_scores.append(0)\n    while\
+        \ len(po_add) < 6:\n        po_add.append('')\n    \n    # 定义 PO 问题的模板\n    po_questions = [\n        {\n        \
+        \    \"title\": \"该学生更喜欢和别人一起玩多于独自玩\",\n            \"options\": [\"非常少\", \"有点少\", \"差不多\", \"有点多\", \"非常多\"],\n\
+        \            \"has_additional\": False,\n            \"additional_condition\": None,\n            \"additional_index\"\
+        : None,\n            \"additional_template\": \"\"\n        },\n        {\n            \"title\": \"相比大多数孩子，其他同学邀请跟该学生玩耍、游戏的频率\"\
+        ,\n            \"options\": [\"非常少\", \"有点少\", \"差不多\", \"有点多\", \"非常多\"],\n            \"has_additional\": False,\n\
+        \            \"additional_condition\": None,\n            \"additional_index\": None,\n            \"additional_template\"\
+        : \"\"\n        },\n        {\n            \"title\": \"相比大多数孩子，其他同学邀请该学生参与团体活动的频率\",\n            \"options\": [\"\
+        非常少\", \"有点少\", \"差不多\", \"有点多\", \"非常多\"],\n            \"has_additional\": False,\n            \"additional_condition\"\
+        : None,\n            \"additional_index\": None,\n            \"additional_template\": \"\"\n        },\n        {\n\
+        \            \"title\": \"该学生使用积极策略来引起老师注意的频率\",\n            \"options\": [\"从不\", \"很少\", \"偶尔\", \"经常\", \"总是\"\
+        ],\n            \"has_additional\": True,\n            \"additional_condition\": 3,\n            \"additional_index\"\
+        : 0,\n            \"additional_template\": \"该学生使用的积极策略是{}\"\n        },\n        {\n            \"title\": \"该学生使用积极策略来引起同伴注意的频率\"\
+        ,\n            \"options\": [\"从不\", \"很少\", \"偶尔\", \"经常\", \"总是\"],\n            \"has_additional\": True,\n   \
+        \         \"additional_condition\": 3,\n            \"additional_index\": 1,\n            \"additional_template\"\
+        : \"该学生使用的积极策略是{}\"\n        },\n        {\n            \"title\": \"该学生使用积极策略来让老师知道他/她需要休息的频率\",\n            \"\
+        options\": [\"从不\", \"很少\", \"偶尔\", \"经常\", \"总是\"],\n            \"has_additional\": True,\n            \"additional_condition\"\
+        : 3,\n            \"additional_index\": 2,\n            \"additional_template\": \"该学生使用的积极策略是{}\"\n        },\n \
+        \       {\n            \"title\": \"该学生使用积极策略来让老师知道他/她想要参与喜欢的活动或玩某个东西的频率\",\n            \"options\": [\"从不\", \"\
+        很少\", \"偶尔\", \"经常\", \"总是\"],\n            \"has_additional\": True,\n            \"additional_condition\": 3,\n\
+        \            \"additional_index\": 3,\n            \"additional_template\": \"该学生使用的积极策略是{}\"\n        },\n      \
+        \  {\n            \"title\": \"该学生使用积极策略来让老师知道他/她想要自己平静一下的频率\",\n            \"options\": [\"从不\", \"很少\", \"偶尔\"\
+        , \"经常\", \"总是\"],\n            \"has_additional\": True,\n            \"additional_condition\": 3,\n            \"\
+        additional_index\": 4,\n            \"additional_template\": \"该学生使用的积极策略是{}\"\n        },\n        {\n          \
+        \  \"title\": \"该学生使用积极策略来让同伴知道他/她想要独处的频率\",\n            \"options\": [\"从不\", \"很少\", \"偶尔\", \"经常\", \"总是\"],\n\
+        \            \"has_additional\": True,\n            \"additional_condition\": 3,\n            \"additional_index\"\
+        : 5,\n            \"additional_template\": \"该学生使用的积极策略是{}\"\n        }\n    ]\n    \n    # 分类 PO 已填写和未填写的问题\n   \
+        \ po_filled_list = []\n    po_unfilled_list = []\n    \n    for i in range(9):\n        question = po_questions[i]\n\
+        \        score = po_scores[i]\n        \n        # 判断问题是否完全填写\n        is_filled = False\n        \n        if score\
+        \ > 0:\n            # 主问题有答案\n            if question[\"has_additional\"] and score >= question[\"additional_condition\"\
+        ]:\n                # 需要额外答案\n                if po_add[question[\"additional_index\"]]:\n                    is_filled\
+        \ = True\n            else:\n                # 不需要额外答案\n                is_filled = True\n        \n        if is_filled:\n\
+        \            # 构建陈述句\n            statement = f\"{i+1}. {question['title']}：{question['options'][score-1]}\"\n   \
+        \         \n            # 如果有额外信息，添加额外信息\n            if question[\"has_additional\"] and score >= question[\"additional_condition\"\
+        ]:\n                additional_info = po_add[question[\"additional_index\"]]\n                if additional_info:\n\
+        \                    statement += f\"\\n{question['additional_template'].format(additional_info)}\"\n            \n\
+        \            po_filled_list.append(statement)\n        else:\n            # 构建未填写问题的展示（仅显示题目标题）\n            unfilled_question\
+        \ = f\"{i+1}. {question['title']}\"\n            \n            po_unfilled_list.append(unfilled_question)\n    \n\
+        \    # 组装 PO 输出\n    output_object[\"filled_questions_po\"] = \"\\n\\n\".join(po_filled_list)\n    output_object[\"\
+        unfilled_questions_po\"] = \"\\n\\n\".join(po_unfilled_list)\n    \n    # 解析 basic 输入字符串为字典并转换为格式化文本\n    basic_str\
+        \ = params.get('basic', '{}')\n    try:\n        basic_data = json.loads(basic_str)\n        if isinstance(basic_data,\
+        \ dict):\n            basic_text = f\"性别：{basic_data.get('gender', '')}\\n\"\n            basic_text += f\"年龄：{basic_data.get('age',\
+        \ 0)}\\n\"\n            basic_text += f\"诊断报告：{basic_data.get('diagnosis_report', '')}\\n\"\n            basic_text\
+        \ += f\"问题行为表现：{basic_data.get('behavior', '')}\\n\"\n            basic_text += f\"问题行为的触发情境：{basic_data.get('trigger_situation',\
+        \ '')}\\n\"\n            basic_text += f\"问题行为的发生频率：{basic_data.get('frequency', '')}\\n\"\n            output_object[\"\
+        basic_text\"] = basic_text\n        else:\n            output_object[\"basic_text\"] = \"\"\n    except:\n       \
+        \ output_object[\"basic_text\"] = \"\"\n    \n    return output_object\n"
+      language: Python
+  - id: node_016
+    type: switch
+    name: 阶段判断
+    inputs:
+    - {}
+    - {}
+    - {}
+    - {}
+    outputs: []
+  - id: node_017
+    type: text_processor
+    name: 基本信息提示词
+    inputs:
+    - name: String1
+      type: string
+      required: true
+    - name: String2
+      type: string
+      required: true
+    - name: String3
+      type: string
+      required: true
+    - name: String4
+      type: string
+      required: true
+    outputs:
+    - name: output
+      type: string
+      required: false
+    settings:
+      combine:
+        message_template: '你是一个FBA指导的教育决策支持助手，你正在系统化的向老师收集一位问题学生的信息，以分析他产生问题行为的成因与功能。 现在你进入到了“问题界定”阶段，在该阶段下你需要收集学生的基本信息并用系统化的方法界定该学生的问题行为。现在请你向老师提问“指定问题”。
+
+
+          【注意要点】：
+
+          - 先详细回应老师的发言，然后才开始正式提问
+
+          - 当老师有疑问时，你要用“你的专业知识”进行更详细的回答，然后再继续提问
+
+          - 根据【指定问题】进行提问，不可以向老师提问除了“指定问题”以外的任何问题
+
+          - 在每次回复中，你都必须要提问老师1~2个问题，但是不能提问2个以上的问题
+
+          - 以"孩子"来代指该同学，不要主动提到该同学的任何私密信息
+
+          - 绝对不要提到你是 AI 或你在扮演角色
+
+
+          【你对老师的要求】：
+
+          - 引导老师聚焦在最核心、最需要关注的一个问题行为上展开，不要涉及多个问题行为
+
+          - 引导老师对该学生的行为描述具体化，避免老师使用 “不乖”“不听话” 等模糊词汇，推荐老师使用可观察的动作、语言（如 “上课时离开座位、拍打同学桌子”）。
+
+          - 引导老师从事实出发，不做主观猜测。
+
+          - 引导老师客观评价该同学，不添加过多主观情感。
+
+
+          【语言与语气】：
+
+          - 不使用括号
+
+          - 语言内容丰富，有深刻的洞察，有专业性
+
+          - 语气温暖、和蔼、有耐心
+
+          - 提问形式自然，和正常聊天一样
+
+
+          【已收集的信息】：
+
+          {{String4}}
+
+
+          【你的上一个问题】：
+
+          {{String2}}
+
+
+          【老师对上一个问题的回答】：
+
+          {{String3}}
+
+
+          【你的专业知识】：
+
+          暂无
+
+
+          【指定问题】：
+
+          {{String1}}'
+      separate:
+        symbol:
+          custom_symbol_list: []
+          used_symbol_list: []
+      type: combine
+  - id: node_018
+    type: code
+    name: 基本信息指定问题
+    inputs:
+    - name: gender
+      type: string
+      required: true
+    - name: age
+      type: number
+      required: true
+    - name: diagnosis_report
+      type: string
+      required: true
+    - name: trigger_situation
+      type: string
+      required: true
+    - name: behavior
+      type: string
+      required: true
+    - name: frequency
+      type: string
+      required: true
+    outputs:
+    - name: unfilled_fields
+      type: string
+      required: false
+    settings:
+      code: "def main(params):\n    # 创建一个字典作为输出变量\n    output_object = {\n        \"unfilled_fields\": \"\"  # 改为字符串\n  \
+        \  }\n    \n    # 获取6个独立变量\n    gender = params.get('gender', '')\n    age = params.get('age', 0)\n    diagnosis_report\
+        \ = params.get('diagnosis_report', '')\n    trigger_situation = params.get('trigger_situation', '')\n    behavior\
+        \ = params.get('behavior', '')\n    frequency = params.get('frequency', '')\n    \n    # 定义变量与对应字段的映射\n    fields\
+        \ = [\n        {'value': gender, 'name': '学生性别', 'type': 'string'},\n        {'value': age, 'name': '学生年龄', 'type':\
+        \ 'age'},\n        {'value': diagnosis_report, 'name': '学生的诊断报告（如果有）', 'type': 'string'},\n        {'value': behavior,\
+        \ 'name': '问题行为表现', 'type': 'string'},\n        {'value': trigger_situation, 'name': '问题行为的触发情境', 'type': 'string'},\n\
+        \        {'value': frequency, 'name': '问题行为的发生频率', 'type': 'string'}\n    ]\n    \n    # 找到前两个未填写的字段\n    unfilled_list\
+        \ = []\n    unfilled_count = 0\n    \n    for field in fields:\n        is_unfilled = False\n        \n        # 根据字段类型判断是否未填写\n\
+        \        if field['type'] == 'string':\n            # 字符串变量：空字符串时视为未填写\n            is_unfilled = field['value'] ==\
+        \ ''\n        elif field['type'] == 'age':\n            # 年龄变量：小于等于0时视为未填写\n            is_unfilled = field['value']\
+        \ <= 0\n        \n        if is_unfilled:\n            unfilled_list.append(field['name'])\n            unfilled_count\
+        \ += 1\n            if unfilled_count == 2:\n                break\n    \n    # 将列表转换为字符串，每个字段分行\n    output_object[\"\
+        unfilled_fields\"] = '\\n'.join(unfilled_list)\n    \n    return output_object\n"
+      language: Python
+  - id: node_019
+    type: merge_variable
+    name: 提示词聚合
+    inputs: []
+    outputs:
+    - name: Group1
+      type: string
+      required: false
+    settings:
+      groups:
+      - members:
+        - content:
+            ref_node_id: node_017
+            ref_var_name: output
+          type: ref
+        - content:
+            ref_node_id: node_020
+            ref_var_name: output
+          type: ref
+        - content:
+            ref_node_id: node_027
+            ref_var_name: output
+          type: ref
+        - content:
+            ref_node_id: node_028
+            ref_var_name: output
+          type: ref
+        - content:
+            ref_node_id: node_055
+            ref_var_name: output
+          type: ref
+        - content:
+            ref_node_id: node_053
+            ref_var_name: output
+          type: ref
+        - content:
+            ref_node_id: node_072
+            ref_var_name: output
+          type: ref
+        name: Group1
+      strategy: first_non_empty
+  - id: node_020
+    type: text_processor
+    name: 进入生活背景提示词
+    inputs:
+    - name: String1
+      type: string
+      required: true
+    outputs:
+    - name: output
+      type: string
+      required: false
+    settings:
+      combine:
+        message_template: '你是一个FBA指导的教育决策支持助手，你正在系统化的向老师收集一位问题学生的信息，以分析他产生问题行为的成因与功能。现在你进入到了“生活背景”阶段，在该阶段下你需要收集可能影响学生行为的健康、家庭、环境等信息。现在请你向老师提问“指定问题”。
+
+
+          【注意要点】：
+
+          - 由于你们刚到这个阶段，在提问问题前，你需要先向老师简单的介绍一下这个阶段，并说明在这个阶段中可能会花费的时间（10分钟）
+
+          - 根据【指定问题】进行提问，不可以向老师提问除了“指定问题”以外的任何问题
+
+          - 在每次回复中，你都必须要提问老师1~2个问题，但是不能提问2个以上的问题
+
+          - 以"孩子"来代指该同学，不要主动提到该同学的任何私密信息
+
+          - 绝对不要提到你是 AI 或你在扮演角色
+
+
+          【你对老师的要求】：
+
+          - 引导老师从事实出发，不做主观猜测。
+
+          - 引导老师客观评价该同学，不添加过多主观情感。
+
+
+          【语言与语气】：
+
+          - 语言内容丰富，有深刻的洞察，有专业性
+
+          - 语气温暖、和蔼、有耐心
+
+          - 对老师的回复应当有适当的回应
+
+          - 提问形式自然，和正常聊天一样
+
+          - 即使指定问题中存在分数选项也不出现数字或让老师打分
+
+          - 不用括号补充任何内容
+
+
+          【该学生的基本信息与问题界定】：
+
+          {{String1}}
+
+
+          【你的专业知识】：
+
+          暂无
+
+
+          【指定问题】：
+
+          - 该学生的总体健康状况与其他学生相比如何？ 1.更糟 2.差一点 3.差不多 4.好一点 5.更好",
+
+          - 该学生行为受其情绪的影响程度有多大？ 1.一点也不 2.有一点点 3.有点 4.有些 5.非常 额外问题（得分大于等于3时）：孩子情绪不佳时行为是否更好或更差？"'
+      separate:
+        symbol:
+          custom_symbol_list: []
+          used_symbol_list: []
+      type: combine
+  - id: node_021
+    type: llm
+    name: 生活背景确定关键问题
+    inputs:
+    - name: filled
+      type: string
+      required: true
+    - name: unfilled
+      type: string
+      required: true
+    - name: basic
+      type: string
+      required: true
+    - name: conversation
+      type: string
+      required: true
+    outputs:
+    - name: number_1
+      type: integer
+      required: false
+      description: 第一个选择的问题题号
+    - name: number_2
+      type: integer
+      required: false
+      description: 第二个选择的问题题号
+    - name: output
+      type: string
+      required: false
+      description: 原因解释：选择该题号的原因
+    settings:
+      max_output_tokens: 32768
+      model_id: ${MODEL_ID}
+      model_name: ${MODEL_NAME}
+      model_type: common
+      model_url: ${MODEL_ENDPOINT}
+      model_value: ${MODEL_ID}
+      multimodal_model: false
+      prompt: '你是一个FBA指导的教育决策支持助手，你正在系统化的向老师收集一位问题学生的信息，以分析他产生问题行为的成因与功能。 现在你进入到了“生活背景”阶段，在该阶段下你需要收集可能影响学生行为的健康、家庭、环境等信息。请判断【可选问题】中是否存在可能与该学生目前的问题行为有关的问题，如果存在，请选出相关性最高的两个选项。
+
+
+        【评判标准】：
+
+        - 根据该学生的特点，有针对性的选择问题
+
+
+        【该学生的问题行为相关信息】：
+
+        {{basic}}
+
+
+        【已收集的背景信息】：
+
+        {{filled}}
+
+
+        【聊天记录】：
+
+        {{conversation}}
+
+
+        【可选问题】：
+
+        {{unfilled}}
+
+        '
+      reasoning_model: false
+      system: '你始终以FBA指导的教育决策支持助手身份进行思考与回应。
+
+        以可观察的行为与环境互动为核心视角
+
+        优先描述事实，避免心理动机、性格或意图推断
+
+        不补全未提供信息，证据不足时保持不确定
+
+        使用专业、冷静、非评价性语言
+
+        不使用标签化、道德化表述
+
+        不进行临床诊断或越权判断
+
+        明确区分观察、事实与假设
+
+        尊重学生隐私与职业伦理
+
+        行为准则：描述先于解释，证据先于判断，支持先于控制'
+      temperature: 0.0001
+      top_p: 0.0001
+      web_search:
+        enable: false
+  - id: node_022
+    type: code
+    name: 背景提取两个问题
+    inputs:
+    - name: bg_score
+      type: list
+      required: true
+    - name: bg_2
+      type: list
+      required: true
+    outputs:
+    - name: question_1
+      type: string
+      required: false
+    - name: question_2
+      type: string
+      required: false
+    - name: unfilled_number
+      type: integer
+      required: false
+    settings:
+      code: "def main(params):\n    # 创建一个字典作为输出变量\n    output_object = {\n        \"question_1\": \"\",\n        \"question_2\"\
+        : \"\",\n        \"unfilled_number\": 0\n    }\n    \n    # 获取输入数据\n    scores = params.get('bg_score', [])\n    #\
+        \ 确保scores数组至少有11个元素，不足的用0补充\n    while len(scores) < 11:\n        scores.append(0)\n    \n    # 获取额外问题答案\n    bg_add\
+        \ = params.get('bg_add', [])\n    # 确保bg_add数组至少有8个元素，不足的用空字符串补充\n    while len(bg_add) < 8:\n        bg_add.append('')\n\
+        \    \n    # 获取要调用的题目编号（bg_2包含两个整数，表示题目1-11）\n    bg_2 = params.get('bg_2', [1, 2])\n    # 确保bg_2至少有2个元素\n    while\
+        \ len(bg_2) < 2:\n        bg_2.append(1)\n    \n    # 定义所有问题的模板（添加 additional_index 字段）\n    questions = [\n     \
+        \   {\n            \"title\": \"该学生的总体健康状况与其他学生相比如何？\",\n            \"options\": \"1更糟 2差一点 3差不多 4好一点 5更好\",\n  \
+        \          \"has_additional\": False,\n            \"additional_condition\": None,\n            \"additional_question\"\
+        : \"\",\n            \"additional_index\": None\n        },\n        {\n            \"title\": \"该学生行为受其情绪的影响程度有多大？\"\
+        ,\n            \"options\": \"1一点也不 2有一点点 3有点 4有些 5非常大\",\n            \"has_additional\": True,\n            \"additional_condition\"\
+        : 3,\n            \"additional_question\": \"额外问题（得分大于等于3时）：孩子情绪不佳时行为是否更好或更差？\",\n            \"additional_index\"\
+        : 0\n        },\n        {\n            \"title\": \"该学生的饮食与其他孩子相比如何？\",\n            \"options\": \"1更糟 2有点糟 3差不多\
+        \ 4好一点 5更好\",\n            \"has_additional\": False,\n            \"additional_condition\": None,\n            \"\
+        additional_question\": \"\",\n            \"additional_index\": None\n        },\n        {\n            \"title\"\
+        : \"该学生的饮食在多大程度上影响他的行为？\",\n            \"options\": \"1很多 2有些 3有点 4有一点点 5很少\",\n            \"has_additional\": True,\n\
+        \            \"additional_condition\": 3,\n            \"additional_question\": \"额外问题（得分大于等于3时）：学生的饮食较少影响他行为的原因是？\"\
+        ,\n            \"additional_index\": 1\n        },\n        {\n            \"title\": \"该学生的睡眠时间与班上的其他同学相比如何？\",\n\
+        \            \"options\": \"1多很多 2多一点 3差不多 4少一点 5少很多\",\n            \"has_additional\": False,\n            \"additional_condition\"\
+        : None,\n            \"additional_question\": \"\",\n            \"additional_index\": None\n        },\n        {\n\
+        \            \"title\": \"该学生的行为会受到他或她睡眠量的影响吗？\",\n            \"options\": \"1不会 2会\",\n            \"has_additional\"\
+        : True,\n            \"additional_condition\": 2,\n            \"additional_question\": \"额外问题（得分等于2时）：孩子的睡眠量具体是如何影响他的行为的？\"\
+        ,\n            \"additional_index\": 2\n        },\n        {\n            \"title\": \"该学生是否因遭受虐待而影响了他/她在学校的行为？\"\
+        ,\n            \"options\": \"1否 2是\",\n            \"has_additional\": True,\n            \"additional_condition\"\
+        : 2,\n            \"additional_question\": \"额外问题（得分等于2时）：该学生因遭受虐待而影响了他/她在学校的行为的原因是？\",\n            \"additional_index\"\
+        : 3\n        },\n        {\n            \"title\": \"该学生是否因父母健康问题而影响了他/她在学校的行为？\",\n            \"options\": \"1否\
+        \ 2是\",\n            \"has_additional\": True,\n            \"additional_condition\": 2,\n            \"additional_question\"\
+        : \"额外问题（得分等于2时）：该学生因父母健康问题而影响了他/她在学校的行为的原因是？\",\n            \"additional_index\": 4\n        },\n        {\n   \
+        \         \"title\": \"该学生是否因父母争吵问题而影响了他/她在学校的行为？\",\n            \"options\": \"1否 2是\",\n            \"has_additional\"\
+        : True,\n            \"additional_condition\": 2,\n            \"additional_question\": \"额外问题（得分等于2时）：该学生因父母争吵问题而影响了他/她在学校的行为的原因是？\"\
+        ,\n            \"additional_index\": 5\n        },\n        {\n            \"title\": \"该学生是否因兄弟姐妹问题而影响了他/她在学校的行为？\"\
+        ,\n            \"options\": \"1否 2是\",\n            \"has_additional\": True,\n            \"additional_condition\"\
+        : 2,\n            \"additional_question\": \"额外问题（得分等于2时）：该学生因兄弟姐妹问题而影响了他/她在学校的行为的原因是？\",\n            \"additional_index\"\
+        : 6\n        },\n        {\n            \"title\": \"该学生在服用什么药物？你认为这在多大程度上是正确的药物，会影响这个孩子的行为吗？\",\n            \"options\"\
+        : \"1该学生没有服用药物 2行为更糟 3有点更糟 4无效 5有点改善 6有效改善\",\n            \"has_additional\": True,\n            \"additional_condition\"\
+        : 2,\n            \"additional_question\": \"额外问题（得分大于等于2时）：该学生在服用什么药物？\",\n            \"additional_index\": 7\n\
+        \        }\n    ]\n    \n    # 统计未填写的题目数量\n    unfilled_count = 0\n    for i in range(11):\n        question = questions[i]\n\
+        \        score = scores[i]\n        \n        # 判断问题是否完全填写（使用与第一段代码相同的逻辑）\n        is_filled = False\n        \n \
+        \       if score > 0:\n            # 主问题有答案\n            if question[\"has_additional\"] and score >= question[\"\
+        additional_condition\"]:\n                # 需要额外答案\n                if bg_add[question[\"additional_index\"]]:\n \
+        \                   is_filled = True\n            else:\n                # 不需要额外答案\n                is_filled = True\n\
+        \        \n        if not is_filled:\n            unfilled_count += 1\n    \n    # 根据bg_2调用指定的题目\n    for i, question_key\
+        \ in enumerate(['question_1', 'question_2']):\n        # 获取题目编号（bg_2中的值是1-11，需要转换为索引0-10）\n        question_index\
+        \ = bg_2[i] - 1\n        \n        # 确保索引在有效范围内\n        if question_index < 0 or question_index >= 11:\n        \
+        \    output_object[question_key] = \"\"\n            continue\n        \n        question = questions[question_index]\n\
+        \        score = scores[question_index]\n        \n        # 判断该题目是否已完全填写\n        is_filled = False\n        if score\
+        \ > 0:\n            if question[\"has_additional\"] and score >= question[\"additional_condition\"]:\n           \
+        \     # 需要额外答案\n                if bg_add[question[\"additional_index\"]]:\n                    is_filled = True\n\
+        \            else:\n                # 不需要额外答案\n                is_filled = True\n        \n        # 如果题目已完全填写，输出空字符串\n\
+        \        if is_filled:\n            output_object[question_key] = \"\"\n            continue\n        \n        #\
+        \ 构建题目内容（仅当题目未完全填写时）\n        question_content = f\"{question['title']}\\n{question['options']}\"\n        \n    \
+        \    # 如果该题目已有得分，显示得分\n        if score > 0:\n            question_content += f\"\\n当前得分：{score}\"\n        \n   \
+        \     # 如果有额外问题，添加额外问题部分\n        if question[\"has_additional\"]:\n            question_content += f\"\\n\\n{question['additional_question']}\"\
+        \n            \n            # 如果已有得分且满足额外问题条件，提示需要填写额外问题\n            if score > 0 and score >= question[\"additional_condition\"\
+        ]:\n                question_content += \"\\n【此额外问题需要填写】\"\n        \n        output_object[question_key] = question_content\n\
+        \    \n    # 设置未填写题目数量\n    output_object[\"unfilled_number\"] = unfilled_count\n    \n    return output_object\n"
+      language: Python
+  - id: node_023
+    type: code
+    name: 生活背景已填写和未填写
+    inputs:
+    - name: bg_score
+      type: list
+      required: true
+    - name: bg_add
+      type: list
+      required: true
+    outputs:
+    - name: filled_questions
+      type: string
+      required: false
+    - name: unfilled_questions
+      type: string
+      required: false
+    - name: unfilled_number
+      type: integer
+      required: false
+    settings:
+      code: "def main(params):\n    # 创建一个字典作为输出变量\n    output_object = {\n        \"filled_questions\": \"\",\n        \"\
+        unfilled_questions\": \"\",\n        \"unfilled_number\": 0\n    }\n    \n    # 获取输入数据\n    scores = params.get('bg_score',\
+        \ [])\n    # 确保scores数组至少有11个元素，不足的用0补充\n    while len(scores) < 11:\n        scores.append(0)\n    \n    # 合并所有additional问题为字符串列表\n\
+        \    bg_add = params.get('bg_add', [])\n    # 确保bg_add数组至少有8个元素，不足的用空字符串补充\n    while len(bg_add) < 8:\n        bg_add.append('')\n\
+        \    \n    # 定义所有问题的模板\n    questions = [\n        {\n            \"title\": \"该学生的总体健康状况与其他学生相比\",\n            \"\
+        options\": [\"更糟\", \"差一点\", \"差不多\", \"好一点\", \"更好\"],\n            \"has_additional\": False,\n            \"additional_condition\"\
+        : None,\n            \"additional_index\": None,\n            \"additional_template\": \"\"\n        },\n        {\n\
+        \            \"title\": \"该学生的行为受其情绪的影响程度\",\n            \"options\": [\"一点也不\", \"有一点点\", \"有点\", \"有些\", \"非常大\"\
+        ],\n            \"has_additional\": True,\n            \"additional_condition\": 3,\n            \"additional_index\"\
+        : 0,\n            \"additional_template\": \"学生情绪不佳时行为的变化是{}\"\n        },\n        {\n            \"title\": \"该学生的饮食与其他孩子相比\"\
+        ,\n            \"options\": [\"更糟\", \"有点糟\", \"差不多\", \"好一点\", \"更好\"],\n            \"has_additional\": False,\n\
+        \            \"additional_condition\": None,\n            \"additional_index\": None,\n            \"additional_template\"\
+        : \"\"\n        },\n        {\n            \"title\": \"该学生的饮食影响他的行为的程度\",\n            \"options\": [\"很多\", \"有些\"\
+        , \"有点\", \"有一点点\", \"很少\"],\n            \"has_additional\": True,\n            \"additional_condition\": 3,\n  \
+        \          \"additional_index\": 1,\n            \"additional_template\": \"学生的饮食较少影响他行为的原因是{}\"\n        },\n   \
+        \     {\n            \"title\": \"该学生的睡眠时间与班上的其他同学相比\",\n            \"options\": [\"多很多\", \"多一点\", \"差不多\", \"少一点\"\
+        , \"少很多\"],\n            \"has_additional\": False,\n            \"additional_condition\": None,\n            \"additional_index\"\
+        : None,\n            \"additional_template\": \"\"\n        },\n        {\n            \"title\": \"该学生的行为是否会受到他或她睡眠量的影响:\"\
+        ,\n            \"options\": [\"不会\", \"会\"],\n            \"has_additional\": True,\n            \"additional_condition\"\
+        : 2,\n            \"additional_index\": 2,\n            \"additional_template\": \"孩子的睡眠量具体影响他行为的方式是{}\"\n       \
+        \ },\n        {\n            \"title\": \"该学生是否因遭受不平等对待而影响了他/她在学校的行为\",\n            \"options\": [\"否\", \"是\"],\n\
+        \            \"has_additional\": True,\n            \"additional_condition\": 2,\n            \"additional_index\"\
+        : 3,\n            \"additional_template\": \"该学生因遭受虐待而影响了他/她在学校的行为的原因是{}\"\n        },\n        {\n            \"\
+        title\": \"该学生是否因父母健康问题而影响了他/她在学校的行为\",\n            \"options\": [\"否\", \"是\"],\n            \"has_additional\"\
+        : True,\n            \"additional_condition\": 2,\n            \"additional_index\": 4,\n            \"additional_template\"\
+        : \"该学生因父母健康问题而影响了他/她在学校的行为的原因是{}\"\n        },\n        {\n            \"title\": \"该学生是否因父母争吵问题而影响了他/她在学校的行为\",\n\
+        \            \"options\": [\"否\", \"是\"],\n            \"has_additional\": True,\n            \"additional_condition\"\
+        : 2,\n            \"additional_index\": 5,\n            \"additional_template\": \"该学生因父母争吵问题而影响了他/她在学校的行为的原因是{}\"\
+        \n        },\n        {\n            \"title\": \"该学生是否因兄弟姐妹问题而影响了他/她在学校的行为\",\n            \"options\": [\"否\", \"\
+        是\"],\n            \"has_additional\": True,\n            \"additional_condition\": 2,\n            \"additional_index\"\
+        : 6,\n            \"additional_template\": \"该学生因兄弟姐妹问题而影响了他/她在学校的行为的原因是{}\"\n        },\n        {\n            \"\
+        title\": \"该学生服用的药物对其行为的影响\",\n            \"options\": [\"该学生没有服用药物\", \"行为更糟\", \"有点更糟\", \"无效\", \"有点改善\", \"有效改善\"\
+        ],\n            \"has_additional\": True,\n            \"additional_condition\": 2,\n            \"additional_index\"\
+        : 7,\n            \"additional_template\": \"该学生在服用的药物是{}\"\n        }\n    ]\n    \n    # 分类已填写和未填写的问题\n    filled_list\
+        \ = []\n    unfilled_list = []\n    \n    for i in range(11):\n        question = questions[i]\n        score = scores[i]\n\
+        \        \n        # 判断问题是否完全填写\n        is_filled = False\n        \n        if score > 0:\n            # 主问题有答案\n\
+        \            if question[\"has_additional\"] and score >= question[\"additional_condition\"]:\n                # 需要额外答案\n\
+        \                if bg_add[question[\"additional_index\"]]:\n                    is_filled = True\n            else:\n\
+        \                # 不需要额外答案\n                is_filled = True\n        \n        if is_filled:\n            # 构建陈述句\n\
+        \            statement = f\"{i+1}. {question['title']}：{question['options'][score-1]}\"\n            \n          \
+        \  # 如果有额外信息，添加额外信息\n            if question[\"has_additional\"] and score >= question[\"additional_condition\"]:\n\
+        \                additional_info = bg_add[question[\"additional_index\"]]\n                if additional_info:\n \
+        \                   statement += f\"\\n{question['additional_template'].format(additional_info)}\"\n            \n\
+        \            statement += \"\\n\"\n            filled_list.append(statement)\n        else:\n            # 构建未填写问题的展示（仅显示题目标题）\n\
+        \            unfilled_question = f\"{i+1}. {question['title']}\"\n            unfilled_question += \"\\n\"\n     \
+        \       unfilled_list.append(unfilled_question)\n    \n    # 组装输出\n    output_object[\"filled_questions\"] = \"\\\
+        n\\n\".join(filled_list)\n    output_object[\"unfilled_questions\"] = \"\\n\\n\".join(unfilled_list)\n    output_object[\"\
+        unfilled_number\"] = len(unfilled_list)\n    \n    return output_object\n\n\n\n"
+      language: Python
+  - id: node_024
+    type: chat
+    name: 信息收集
+    inputs:
+    - name: unfilled_questions
+      type: string
+      required: false
+    outputs:
+    - name: query
+      type: string
+      required: false
+    - name: chatflowHistory
+      type: string
+      required: false
+    - name: fileUrls
+      type: list
+      required: false
+    - name: fileNames
+      type: list
+      required: false
+    - name: number
+      type: integer
+      required: false
+      description: 用户选择的选项题号。如果没有选择问题选项或完全无关，返回0
+    settings:
+      model:
+        chat_history: true
+        max_output_tokens: 1024
+        model_id: ${MODEL_ID}
+        model_name: ${MODEL_NAME}
+        model_type: common
+        model_url: ${MODEL_ENDPOINT}
+        model_value: ${MODEL_ID}
+        reasoning_model: false
+        system: ''
+        temperature: 0.0001
+      params:
+      - desc: 用户选择的选项题号。如果没有选择问题选项或完全无关，返回0
+        meta:
+          editable: true
+          id: ref_0001
+          isDefaultParam: false
+          isModelOutputsConfigParam: false
+          isStreamingParam: false
+        name: number
+        required: false
+        type: integer
+        value:
+          type: generated
+      question_template: '以下是一些可能会间接影响该学生行为表现的背景因素。请您根据自己的观察判断，哪一个因素【最可能】与该学生目前的问题行为有关？如果您觉得都没有明显关联，也可以不进行选择（回复一个数字即可）。
+
+
+        {{unfilled_questions}}
+
+        '
+      streaming: true
+  - id: node_025
+    type: code
+    name: 背景字符串转列表
+    inputs:
+    - name: bg_score
+      type: string
+      required: true
+    - name: bg_add
+      type: string
+      required: true
+    - name: bg_2
+      type: string
+      required: true
+    outputs:
+    - name: bg_score_list
+      type: list
+      required: false
+    - name: bg_add_list
+      type: list
+      required: false
+    - name: bg_2_list
+      type: list
+      required: false
+    settings:
+      code: "import json\n\ndef main(params):\n    # ① 默认值\n    default_bg_score = [0] * 11\n    default_bg_add   = [\"\"\
+        ] * 8\n    default_bg_2 = [1, 2]\n\n    # ② 取入参\n    bg_score_str = params.get('bg_score', '')\n    bg_add_str   =\
+        \ params.get('bg_add', '')\n    bg_2_str = params.get('bg_2', '')\n\n    # ③ 尝试转换 bg_score，如果失败或不符合要求就用默认值\n    try:\n\
+        \        bg_score_list = json.loads(bg_score_str)\n        # 必须是列表且长度为 11\n        if not isinstance(bg_score_list,\
+        \ list) or len(bg_score_list) != 11:\n            raise ValueError(\"bg_score length error\")\n        # 尝试转为 int\n\
+        \        bg_score_list = [int(x) for x in bg_score_list]\n    except Exception:\n        bg_score_list = default_bg_score\n\
+        \n    # ④ 尝试转换 bg_add，如果失败或不符合要求就用默认值\n    try:\n        bg_add_list = json.loads(bg_add_str)\n        # 必须是列表且长度为\
+        \ 8\n        if not isinstance(bg_add_list, list) or len(bg_add_list) != 8:\n            raise ValueError(\"bg_add\
+        \ length error\")\n        # 统一转为字符串\n        bg_add_list = [str(x) for x in bg_add_list]\n    except Exception:\n\
+        \        bg_add_list = default_bg_add\n\n    # ③ 尝试转换 bg_2，如果失败或不符合要求就用默认值\n    try:\n        bg_2_list = json.loads(bg_2_str)\n\
+        \        # 必须是列表\n        if not isinstance(bg_2_list, list):\n            raise ValueError(\"bg_2 length error\"\
+        )\n        # 尝试转为 int\n        bg_2_list = [int(x) for x in bg_2_list]\n    except Exception:\n        bg_2_list =\
+        \ default_bg_2\n\n    # ⑤ 组织输出\n    output_object = {\n        \"bg_score_list\": bg_score_list,  # 11 个整数\n     \
+        \   \"bg_add_list\": bg_add_list,       # 8 个字符串\n        \"bg_2_list\": bg_2_list    # 2 个整数\n    }\n    return output_object"
+      language: Python
+  - id: node_026
+    type: switch
+    name: 用户是否需要补充问题
+    inputs:
+    - {}
+    outputs: []
+  - id: node_027
+    type: text_processor
+    name: 生活背景提示词
+    inputs:
+    - name: String1
+      type: string
+      required: true
+    - name: String2
+      type: string
+      required: true
+    - name: String3
+      type: string
+      required: true
+    - name: String5
+      type: string
+      required: true
+    - name: String6
+      type: string
+      required: true
+    - name: String7
+      type: string
+      required: true
+    outputs:
+    - name: output
+      type: string
+      required: false
+    settings:
+      combine:
+        message_template: '你是一个FBA指导的教育决策支持助手，你正在系统化的向老师收集一位问题学生的信息，以分析他产生问题行为的成因与功能。 现在你进入到了“生活背景”阶段，在该阶段下你需要收集可能影响学生行为的健康、家庭、环境等信息。现在请你向老师提问“指定问题”。
+
+
+          【注意要点】：
+
+          - 先回应老师的发言，运用你的专业知识分析当前已有的信息，然后才开始正式提问
+
+          - 根据【指定问题】进行提问，不可以向老师提问除了“指定问题”以外的任何问题
+
+          - 在每次回复中，你都必须要提问老师1~2个问题，但是不能提问2个以上的问题
+
+          - 以"孩子"来代指该同学，不要主动提到该同学的任何私密信息
+
+          - 绝对不要提到你是 AI 或你在扮演角色
+
+
+          【你对老师的要求】：
+
+          - 引导老师从事实出发，不做主观猜测。
+
+          - 引导老师客观评价该同学，不添加过多主观情感。
+
+
+          【语言与语气】：
+
+          - 语言内容丰富，有深刻的洞察，有专业性
+
+          - 语气温暖、和蔼、有耐心
+
+          - 提问形式自然，和正常聊天一样
+
+          - 即使指定问题中存在分数选项也不出现数字或让老师打分
+
+          - 不用括号补充任何内容
+
+
+          【该学生的问题行为相关信息】：
+
+          {{String1}}
+
+
+          【该学生已有的生活背景信息】：
+
+          {{String2}}
+
+
+          【你的上一个问题】：
+
+          {{String5}}
+
+
+          【老师对上一个问题的回答】：
+
+          {{String6}}
+
+
+          【你的专业知识】：
+
+          暂定
+
+
+          【指定问题】：
+
+          {{String3}}
+
+          {{String7}}'
+      separate:
+        symbol:
+          custom_symbol_list: []
+          used_symbol_list: []
+      type: combine
+  - id: node_028
+    type: text_processor
+    name: 进入行为反应提示词
+    inputs:
+    - name: String1
+      type: string
+      required: true
+    outputs:
+    - name: output
+      type: string
+      required: false
+    settings:
+      combine:
+        message_template: '你是一个人本主义流派的FBA指导的教育决策支持助手，你正在系统化的向老师收集一位问题学生的信息，以分析他产生问题行为的成因与功能。 现在你进入到了“行为触发情境与反应”阶段，在该阶段下你需要收集学生的问题行为的触发情境与他人反应等信息。现在请你向老师提问“指定问题”。
+
+
+
+          【注意要点】：
+
+          - 由于你们刚到这个阶段，在提问问题前，你需要先向老师简单的介绍一下这个阶段，并说明在这个阶段中可能会花费的时间（10分钟）
+
+          - 根据【指定问题】进行提问，不可以向老师提问除了“指定问题”以外的任何问题
+
+          - 在每次回复中，你都必须要提问老师1~2个问题，但是不能提问2个以上的问题
+
+          - 以"孩子"来代指该同学，不要主动提到该同学的任何私密信息
+
+          - 绝对不要提到你是 AI 或你在扮演角色
+
+
+          【你对老师的要求】：
+
+          - 引导老师对该学生的行为描述具体化，避免使用模糊词汇，推荐老师使用可观察的动作、语言。
+
+          - 引导老师从事实出发，不做主观猜测。
+
+          - 引导老师客观评价该同学，不添加过多主观情感。
+
+
+          【语言与语气】：
+
+          - 语言内容丰富，有深刻的洞察，有专业性
+
+          - 语气温暖、和蔼、有耐心
+
+          - 对老师的回复应当有适当的回应
+
+          - 提问形式自然，和正常聊天一样
+
+          - 即使指定问题中存在分数选项也不出现数字或让老师打分
+
+          - 不用括号补充任何内容
+
+
+          【该学生的基本信息与问题界定】：
+
+          {{String1}}
+
+
+          【指定问题】：
+
+          - 当只有其他孩子在场时，问题行为发生的可能性有多大？ 1不太可能 2有点可能 3有可能 4很有可能 5非常可能 得分大于等于3时的额外问题： 当只有其他孩子在场时，会发生哪些问题行为？ 这些行为发生时，其他孩子的反应是什么？
+
+
+          【你的专业知识】：
+
+          暂无'
+      separate:
+        symbol:
+          custom_symbol_list: []
+          used_symbol_list: []
+      type: combine
+  - id: node_029
+    type: memory
+    name: 生活背景转阶段
+    inputs:
+    - name: stage
+      type: string
+      required: true
+      literal_value: '3'
+    - name: bg_score
+      type: string
+      required: true
+    - name: bg_add
+      type: string
+      required: true
+    outputs:
+    - name: isSuccess
+      type: boolean
+      required: true
+    - name: stage
+      type: string
+      required: false
+    - name: bg_score
+      type: string
+      required: false
+    - name: bg_add
+      type: string
+      required: false
+    settings:
+      mod: write
+  - id: node_030
+    type: merge_variable
+    name: 补充问题聚合
+    inputs: []
+    outputs:
+    - name: Group1
+      type: string
+      required: false
+    settings:
+      groups:
+      - members:
+        - content:
+            ref_node_id: node_033
+            ref_var_name: bg_2
+          type: ref
+        - content:
+            ref_node_id: node_034
+            ref_var_name: bg_2
+          type: ref
+        - content:
+            ref_node_id: node_004
+            ref_var_name: bg_2
+          type: ref
+        name: Group1
+      strategy: first_non_empty
+  - id: node_031
+    type: switch
+    name: 背景阶段判断
+    inputs:
+    - {}
+    - {}
+    outputs: []
+  - id: node_032
+    type: memory
+    name: 生活背景存储
+    inputs:
+    - name: bg_2
+      type: string
+      required: true
+    - name: bg_score
+      type: string
+      required: true
+    - name: bg_add
+      type: string
+      required: true
+    outputs:
+    - name: isSuccess
+      type: boolean
+      required: true
+    - name: bg_2
+      type: string
+      required: false
+    - name: bg_score
+      type: string
+      required: false
+    - name: bg_add
+      type: string
+      required: false
+    settings:
+      mod: write
+  - id: node_033
+    type: code
+    name: 确定补充问题
+    inputs:
+    - name: number1
+      type: integer
+      required: true
+    - name: number2
+      type: integer
+      required: true
+    outputs:
+    - name: bg_2
+      type: string
+      required: false
+    settings:
+      code: "def main(params):\n    # 创建一个字典作为输出变量\n    output_object = {\n        \"bg_2\": \"\"\n    }\n    \n    # 获取输入参数\n\
+        \    number1 = params.get('number1', None)\n    number2 = params.get('number2', None)\n    \n    # 创建bg_2列表\n    bg_2\
+        \ = []\n    \n    # 处理number1：如果为空值，添加0，否则添加该值\n    if number1 is None or number1 == '' or number1 == 0:\n       \
+        \ bg_2.append(0)\n    else:\n        bg_2.append(number1)\n    \n    # 处理number2：如果为空值，添加0，否则添加该值\n    if number2\
+        \ is None or number2 == '' or number2 == 0:\n        bg_2.append(0)\n    else:\n        bg_2.append(number2)\n   \
+        \ \n\n    # 将列表转换为字符串输出\n    # 格式：[值1, 值2, -1]\n    output_object[\"bg_2\"] = str(bg_2)\n    \n    return output_object"
+      language: Python
+  - id: node_034
+    type: code
+    name: 用户确定补充问题
+    inputs:
+    - name: number1
+      type: integer
+      required: true
+    - name: number2
+      type: integer
+      required: true
+      literal_value: 0
+    outputs:
+    - name: bg_2
+      type: string
+      required: false
+    settings:
+      code: "def main(params):\n    # 创建一个字典作为输出变量\n    output_object = {\n        \"bg_2\": \"\"\n    }\n    \n    # 获取输入参数\n\
+        \    number1 = params.get('number1', None)\n    number2 = params.get('number2', None)\n    \n    # 创建bg_2列表\n    bg_2\
+        \ = []\n    \n    # 处理number1：如果为空值，添加0，否则添加该值\n    if number1 is None or number1 == '' or number1 == 0:\n       \
+        \ bg_2.append(0)\n    else:\n        bg_2.append(number1)\n    \n    # 处理number2：如果为空值，添加0，否则添加该值\n    if number2\
+        \ is None or number2 == '' or number2 == 0:\n        bg_2.append(0)\n    else:\n        bg_2.append(number2)\n   \
+        \ \n    # 在列表末尾添加-1\n    bg_2.append(-1)\n    \n    # 将列表转换为字符串输出\n    # 格式：[值1, 值2, -1]\n    output_object[\"bg_2\"\
+        ] = str(bg_2)\n    \n    return output_object\n"
+      language: Python
+  - id: node_035
+    type: code
+    name: 列表转字符串
+    inputs:
+    - name: bg_score
+      type: list
+      required: true
+    - name: bg_add
+      type: list
+      required: true
+    outputs:
+    - name: bg_score
+      type: string
+      required: false
+    - name: bg_add
+      type: string
+      required: false
+    settings:
+      code: "def main(params):\n    # 创建一个字典作为输出变量\n    output_object = {\n        \"bg_score\": \"\",\n        \"bg_add\"\
+        : \"\"\n    }\n    \n    # 获取输入数据\n    bg_score = params.get('bg_score', [])\n    bg_add = params.get('bg_add', [])\n\
+        \    \n    # 将bg_score转换为字符串\n    # 方式1：转换为JSON格式的字符串\n    import json\n    output_object[\"bg_score\"] = json.dumps(bg_score,\
+        \ ensure_ascii=False)\n    output_object[\"bg_add\"] = json.dumps(bg_add, ensure_ascii=False)\n    \n    return output_object\n"
+      language: Python
+  - id: node_036
+    type: code
+    name: 指定问题
+    inputs:
+    - name: bg_score
+      type: list
+      required: true
+    - name: bg_2
+      type: string
+      required: true
+    outputs:
+    - name: question_1
+      type: string
+      required: false
+    - name: question_2
+      type: string
+      required: false
+    settings:
+      code: "import json\n\ndef main(params):\n    # 创建一个字典作为输出变量\n    output_object = {\n        \"question_1\": \"\",\n\
+        \        \"question_2\": \"\"\n    }\n    \n    # 获取输入数据\n    scores = params.get('bg_score', [])\n    # 确保scores数组至少有11个元素，不足的用0补充\n\
+        \    while len(scores) < 11:\n        scores.append(0)\n    \n    # ① 默认值\n    default_bg_2 = [1, 2]  # 改为 [1, 2]\
+        \ 更合理\n\n    # ② 取入参\n    bg_2_raw = params.get('bg_2', '')\n\n    # ③ 尝试转换 bg_2\n    try:\n        # 如果 bg_2 已经是列表，直接使用\n\
+        \        if isinstance(bg_2_raw, list):\n            bg_2 = [int(x) for x in bg_2_raw]\n        # 如果是字符串，尝试 JSON 解析\n\
+        \        elif isinstance(bg_2_raw, str) and bg_2_raw:\n            bg_2 = json.loads(bg_2_raw)\n            if not\
+        \ isinstance(bg_2, list):\n                raise ValueError(\"bg_2 must be a list\")\n            bg_2 = [int(x) for\
+        \ x in bg_2]\n        else:\n            bg_2 = default_bg_2\n    except Exception:\n        bg_2 = default_bg_2\n\
+        \n    # 确保bg_2至少有2个元素\n    while len(bg_2) < 2:\n        bg_2.append(1)\n    \n    # 定义所有问题的模板\n    questions = [\n\
+        \        {\n            \"title\": \"- 该学生的总体健康状况与其他学生相比如何？\",\n            \"options\": \"1.更糟 2.差一点 3.差不多 4.好一点\
+        \ 5.更好\",\n            \"has_additional\": False,\n            \"additional_condition\": None,\n            \"additional_question\"\
+        : \"\"\n        },\n        {\n            \"title\": \"- 该学生行为受其情绪的影响程度有多大？\",\n            \"options\": \"1.一点也不\
+        \ 2.有一点点 3.有点 4.有些 5.非常大\",\n            \"has_additional\": True,\n            \"additional_condition\": 3,\n   \
+        \         \"additional_question\": \"额外问题（得分大于等于3时）：孩子情绪不佳时行为是否更好或更差？\"\n        },\n        {\n            \"title\"\
+        : \"- 该学生的饮食与其他孩子相比如何？\",\n            \"options\": \"1.更糟 2.有点糟 3.差不多 4.好一点 5.更好\",\n            \"has_additional\"\
+        : False,\n            \"additional_condition\": None,\n            \"additional_question\": \"\"\n        },\n   \
+        \     {\n            \"title\": \"- 该学生的饮食在多大程度上影响他的行为？\",\n            \"options\": \"1.很多 2.有些 3.有点 4.有一点点 5.很少\"\
+        ,\n            \"has_additional\": True,\n            \"additional_condition\": 3,\n            \"additional_question\"\
+        : \"额外问题（得分大于等于3时）：学生的饮食较少影响他行为的原因是？\"\n        },\n        {\n            \"title\": \"- 该学生的睡眠时间与班上的其他同学相比如何？\"\
+        ,\n            \"options\": \"1.多很多 2.多一点 3.差不多 4.少一点 5.少很多\",\n            \"has_additional\": False,\n         \
+        \   \"additional_condition\": None,\n            \"additional_question\": \"\"\n        },\n        {\n          \
+        \  \"title\": \"- 该学生的行为会受到他或她睡眠量的影响吗？\",\n            \"options\": \"1.不会 2.会\",\n            \"has_additional\"\
+        : True,\n            \"additional_condition\": 2,\n            \"additional_question\": \"额外问题（得分等于2时）：孩子的睡眠量具体是如何影响他的行为的？\"\
+        \n        },\n        {\n            \"title\": \"- 该学生是否因遭受虐待而影响了他/她在学校的行为？\",\n            \"options\": \"1.否 2.是\"\
+        ,\n            \"has_additional\": True,\n            \"additional_condition\": 2,\n            \"additional_question\"\
+        : \"额外问题（得分等于2时）：该学生因遭受虐待而影响了他/她在学校的行为的原因是？\"\n        },\n        {\n            \"title\": \"- 该学生是否因父母健康问题而影响了他/她在学校的行为？\"\
+        ,\n            \"options\": \"1.否 2.是\",\n            \"has_additional\": True,\n            \"additional_condition\"\
+        : 2,\n            \"additional_question\": \"额外问题（得分等于2时）：该学生因父母健康问题而影响了他/她在学校的行为的原因是？\"\n        },\n        {\n\
+        \            \"title\": \"- 该学生是否因父母争吵问题而影响了他/她在学校的行为？\",\n            \"options\": \"1.否 2.是\",\n            \"has_additional\"\
+        : True,\n            \"additional_condition\": 2,\n            \"additional_question\": \"额外问题（得分等于2时）：该学生因父母争吵问题而影响了他/她在学校的行为的原因是？\"\
+        \n        },\n        {\n            \"title\": \"- 该学生是否因兄弟姐妹问题而影响了他/她在学校的行为？\",\n            \"options\": \"1.否\
+        \ 2.是\",\n            \"has_additional\": True,\n            \"additional_condition\": 2,\n            \"additional_question\"\
+        : \"额外问题（得分等于2时）：该学生因兄弟姐妹问题而影响了他/她在学校的行为的原因是？\"\n        },\n        {\n            \"title\": \"- 该学生在服用什么药物？你认为这在多大程度上是正确的药物，会影响这个孩子的行为吗？\"\
+        ,\n            \"options\": \"1.该学生没有服用药物 2.行为更糟 3.有点更糟 4.无效 5.有点改善 6.有效改善\",\n            \"has_additional\": True,\n\
+        \            \"additional_condition\": 2,\n            \"additional_question\": \"额外问题（得分大于等于2时）：该学生在服用什么药物？\"\n \
+        \       }\n    ]\n    \n    # 根据bg_2调用指定的题目\n    for i, question_key in enumerate(['question_1', 'question_2']):\n\
+        \        # 获取题目编号\n        question_num = bg_2[i]\n        \n        # 如果 bg_2 对应位置为 0，question 为空\n        if question_num\
+        \ == 0:\n            output_object[question_key] = \"\"\n            continue\n        \n        # 转换为索引（bg_2中的值是1-11，需要转换为索引0-10）\n\
+        \        question_index = question_num - 1\n        \n        # 确保索引在有效范围内\n        if question_index < 0 or question_index\
+        \ >= 11:\n            output_object[question_key] = \"\"\n            continue\n        \n        question = questions[question_index]\n\
+        \        score = scores[question_index]\n        \n        # 构建题目内容\n        question_content = f\"{question['title']}\\\
+        n{question['options']}\"\n        \n        # 如果该题目已有得分，显示得分\n        if score > 0:\n            question_content\
+        \ += f\"\\n当前得分：{score}\"\n        \n        # 如果有额外问题，添加额外问题部分\n        if question[\"has_additional\"]:\n      \
+        \      question_content += f\"\\n\\n{question['additional_question']}\"\n            \n            # 如果已有得分且满足额外问题条件，提示需要填写额外问题\n\
+        \            if score > 0 and score >= question[\"additional_condition\"]:\n                question_content += \"\
+        \\n——此额外问题需要填写\"\n        \n        output_object[question_key] = question_content\n    \n    return output_object\n\
+        \n\n"
+      language: Python
+  - id: node_037
+    type: code
+    name: AI回复
+    inputs:
+    - name: history
+      type: string
+      required: true
+    - name: user_input
+      type: string
+      required: true
+    outputs:
+    - name: assistant_input
+      type: string
+      required: false
+    - name: conversation
+      type: string
+      required: false
+    settings:
+      code: "def main(params):\n    # 创建一个字典作为输出变量\n    output_object = {\n        \"conversation\": \"\",\n        \"assistant_input\"\
+        : \"\"\n    }\n    \n    # 获取输入的两个字符串变量\n    user_input = params.get('user_input', '')\n    history = params.get('history',\
+        \ '')\n    \n    # 提取Assistant的最后一句发言（从原history中提取）\n    if history:\n        # 分割历史对话,找到所有Assistant的发言\n        #\
+        \ 使用\"Assistant：\"作为分隔符\n        parts = history.split('Assistant：')\n        \n        # 如果存在Assistant的发言(parts长度大于1)\n\
+        \        if len(parts) > 1:\n            # 获取最后一个Assistant发言部分\n            last_assistant_part = parts[-1]\n    \
+        \        \n            # 去除可能存在的后续User发言\n            # 如果后面还有\"User：\",则只取到\"User：\"之前的内容\n            if 'User：'\
+        \ in last_assistant_part:\n                assistant_input = last_assistant_part.split('User：')[0].strip()\n     \
+        \       else:\n                assistant_input = last_assistant_part.strip()\n            \n            output_object[\"\
+        assistant_input\"] = assistant_input\n        else:\n            # 如果没有找到Assistant的发言,返回空字符串\n            output_object[\"\
+        assistant_input\"] = \"\"\n    else:\n        # 如果history为空,返回空字符串\n        output_object[\"assistant_input\"] = \"\
+        \"\n    \n    # 将历史对话中的User和Assistant替换为老师和FBA指导的教育决策支持助手\n    if history:\n        # 替换历史对话中的角色名称\n        formatted_history\
+        \ = history.replace('User：', '老师：').replace('Assistant：', 'FBA指导的教育决策支持助手：')\n        # 在末尾添加新的老师发言\n        conversation\
+        \ = formatted_history + f\"\\n\\n老师：{user_input}\"\n    else:\n        # 如果没有历史对话，直接创建新的老师发言\n        conversation\
+        \ = f\"老师：{user_input}\"\n    \n    output_object[\"conversation\"] = conversation\n    \n    return output_object\n"
+      language: Python
+  - id: node_038
+    type: code
+    name: 行为字符串转列表
+    inputs:
+    - name: re_score
+      type: string
+      required: true
+    - name: re_add_behavior
+      type: string
+      required: true
+    - name: re_2
+      type: string
+      required: true
+    - name: re_add_reaction
+      type: string
+      required: true
+    outputs:
+    - name: re_score_list
+      type: list
+      required: false
+    - name: re_add_behavior_list
+      type: list
+      required: false
+    - name: re_add_reaction_list
+      type: list
+      required: false
+    - name: re_2_list
+      type: list
+      required: false
+    settings:
+      code: "import json\n\ndef main(params):\n    # ① 默认值\n    default_re_score = [0] * 13\n    default_re_add_behavior =\
+        \ [\"\"] * 13\n    default_re_add_reaction = [\"\"] * 13\n    default_re_2 = [1, 2]\n\n    # ② 取入参\n    re_score_str\
+        \ = params.get('re_score', '')\n    re_add_behavior_str = params.get('re_add_behavior', '')\n    re_add_reaction_str\
+        \ = params.get('re_add_reaction', '')\n    re_2_str = params.get('re_2', '')\n\n    # ③ 尝试转换 re_score，如果失败或不符合要求就用默认值\n\
+        \    try:\n        re_score_list = json.loads(re_score_str)\n        # 必须是列表且长度为 13\n        if not isinstance(re_score_list,\
+        \ list) or len(re_score_list) != 13:\n            raise ValueError(\"re_score length error\")\n        # 尝试转为 int\n\
+        \        re_score_list = [int(x) for x in re_score_list]\n    except Exception:\n        re_score_list = default_re_score\n\
+        \n    # ④ 尝试转换 re_add_behavior，如果失败或不符合要求就用默认值\n    try:\n        re_add_behavior_list = json.loads(re_add_behavior_str)\n\
+        \        # 必须是列表且长度为 13\n        if not isinstance(re_add_behavior_list, list) or len(re_add_behavior_list) != 13:\n\
+        \            raise ValueError(\"re_add_behavior length error\")\n        # 统一转为字符串\n        re_add_behavior_list =\
+        \ [str(x) for x in re_add_behavior_list]\n    except Exception:\n        re_add_behavior_list = default_re_add_behavior\n\
+        \n    # ⑤ 尝试转换 re_add_reaction，如果失败或不符合要求就用默认值\n    try:\n        re_add_reaction_list = json.loads(re_add_reaction_str)\n\
+        \        # 必须是列表且长度为 13\n        if not isinstance(re_add_reaction_list, list) or len(re_add_reaction_list) != 13:\n\
+        \            raise ValueError(\"re_add_reaction length error\")\n        # 统一转为字符串\n        re_add_reaction_list =\
+        \ [str(x) for x in re_add_reaction_list]\n    except Exception:\n        re_add_reaction_list = default_re_add_reaction\n\
+        \n    # ⑥ 尝试转换 re_2，如果失败或不符合要求就用默认值\n    try:\n        re_2_list = json.loads(re_2_str)\n        # 必须是列表\n       \
+        \ if not isinstance(re_2_list, list):\n            raise ValueError(\"re_2 length error\")\n        # 尝试转为 int\n \
+        \       re_2_list = [int(x) for x in re_2_list]\n    except Exception:\n        re_2_list = default_re_2\n\n    #\
+        \ ⑦ 组织输出\n    output_object = {\n        \"re_score_list\": re_score_list,              # 13 个整数\n        \"re_add_behavior_list\"\
+        : re_add_behavior_list, # 13 个字符串\n        \"re_add_reaction_list\": re_add_reaction_list, # 13 个字符串\n        \"re_2_list\"\
+        : re_2_list                        # 2 个整数\n    }\n    return output_object\n"
+      language: Python
+  - id: node_039
+    type: code
+    name: 行为提取两个问题
+    inputs:
+    - name: re_score
+      type: list
+      required: true
+    - name: re_2
+      type: list
+      required: true
+    - name: re_add_behavior_list
+      type: list
+      required: true
+    - name: re_add_reaction_list
+      type: list
+      required: true
+    outputs:
+    - name: question_1
+      type: string
+      required: false
+    - name: question_2
+      type: string
+      required: false
+    - name: unfilled_number
+      type: integer
+      required: false
+    settings:
+      code: "def main(params):\n    # 创建一个字典作为输出变量\n    output_object = {\n        \"question_1\": \"\",\n        \"question_2\"\
+        : \"\",\n        \"unfilled_number\": 0\n    }\n    \n    # 获取输入数据\n    scores = params.get('re_score', [])\n    #\
+        \ 确保scores数组至少有13个元素，不足的用0补充\n    while len(scores) < 13:\n        scores.append(0)\n    \n    # 获取额外问题的答案\n    behaviors\
+        \ = params.get('re_add_behavior_list', [])\n    reactions = params.get('re_add_reaction_list', [])\n    # 确保数组至少有13个元素\n\
+        \    while len(behaviors) < 13:\n        behaviors.append(\"\")\n    while len(reactions) < 13:\n        reactions.append(\"\
+        \")\n    \n    # 获取要调用的题目编号（re_2包含两个整数,表示题目1-13）\n    re_2 = params.get('re_2', [1, 2])\n    # 确保re_2至少有2个元素\n   \
+        \ while len(re_2) < 2:\n        re_2.append(1)\n    \n    # 定义所有问题的模板\n    questions = [\n        {\n            \"\
+        title\": \"当只有其他孩子在场时，问题行为发生的可能性有多大？\",\n            \"options\": \"1不太可能 2有点可能 3有可能 4很有可能 5非常可能\",\n            \"\
+        has_additional\": True,\n            \"additional_condition\": 3,\n            \"additional_questions\": [\n     \
+        \           \"额外问题1（得分大于等于3时）：当只有其他孩子在场时，会发生哪些问题行为？\",\n                \"额外问题2（得分大于等于3时）：这些行为发生时，其他孩子的反应是什么？\"\n\
+        \            ]\n        },\n        {\n            \"title\": \"当只有成年人在场时，问题行为发生的可能性有多大？\",\n            \"options\"\
+        : \"1不太可能 2有点可能 3有可能 4很有可能 5非常可能\",\n            \"has_additional\": True,\n            \"additional_condition\":\
+        \ 3,\n            \"additional_questions\": [\n                \"额外问题1（得分大于等于3时）：当只有成年人在场时，会发生哪些问题行为？\",\n       \
+        \         \"额外问题2（得分大于等于3时）：这些行为发生时，成年人的反应是什么？\"\n            ]\n        },\n        {\n            \"title\": \"\
+        当孩子和大人都在场时，问题行为发生的可能性有多大？\",\n            \"options\": \"1不太可能 2有点可能 3有可能 4很有可能 5非常可能\",\n            \"has_additional\"\
+        : True,\n            \"additional_condition\": 3,\n            \"additional_questions\": [\n                \"额外问题1（得分大于等于3时）：当孩子和大人都在场时，会发生哪些问题行为？\"\
+        ,\n                \"额外问题2（得分大于等于3时）：这些行为发生时，他们的反应是什么？\"\n            ]\n        },\n        {\n            \"title\"\
+        : \"当没有其他人时，问题行为发生的可能性有多大？\",\n            \"options\": \"1不太可能 2有点可能 3有可能 4很有可能 5非常可能\",\n            \"has_additional\"\
+        : True,\n            \"additional_condition\": 3,\n            \"additional_questions\": [\n                \"额外问题1（得分大于等于3时）：当没有其他人时，会发生哪些问题行为？\"\
+        ,\n                \"额外问题2（得分大于等于3时）：如果人们发现这些行为发生了，他们通常会如何反应？\"\n            ]\n        },\n        {\n          \
+        \  \"title\": \"当该学生被要求完成他/她觉得简单的任务时，问题行为发生的可能性有多大？\",\n            \"options\": \"1不太可能 2有点可能 3有可能 4很有可能 5非常可能\"\
+        ,\n            \"has_additional\": True,\n            \"additional_condition\": 3,\n            \"additional_questions\"\
+        : [\n                \"额外问题1（得分大于等于3时）：当该学生被要求完成他/她觉得简单的任务时，会发生哪些问题行为？\",\n                \"额外问题2（得分大于等于3时）：当该学生在这种情况下表现出这些行为时，其他人通常如何反应？\"\
+        \n            ]\n        },\n        {\n            \"title\": \"当该学生被要求完成他/她觉得无聊的任务时，问题行为发生的可能性有多大？\",\n        \
+        \    \"options\": \"1不太可能 2有点可能 3有可能 4很有可能 5非常可能\",\n            \"has_additional\": True,\n            \"additional_condition\"\
+        : 3,\n            \"additional_questions\": [\n                \"额外问题1（得分大于等于3时）：当该学生被要求完成他/她觉得无聊的任务时，会发生哪些问题行为？\"\
+        ,\n                \"额外问题2（得分大于等于3时）：当该学生在这种情况下表现出这些行为时，其他人通常如何反应？\"\n            ]\n        },\n        {\n     \
+        \       \"title\": \"当该学生被要求完成他/她觉得困难的任务时，问题行为发生的可能性有多大？\",\n            \"options\": \"1不太可能 2有点可能 3有可能 4很有可能 5非常可能\"\
+        ,\n            \"has_additional\": True,\n            \"additional_condition\": 3,\n            \"additional_questions\"\
+        : [\n                \"额外问题1（得分大于等于3时）：当该学生被要求完成他/她觉得困难的任务时，会发生哪些问题行为？\",\n                \"额外问题2（得分大于等于3时）：当该学生在这种情况下表现出这些行为时，其他人通常如何反应？\"\
+        \n            ]\n        },\n        {\n            \"title\": \"当该学生被要求完成团体活动时，问题行为发生的可能性有多大？\",\n            \"\
+        options\": \"1不太可能 2有点可能 3有可能 4很有可能 5非常可能\",\n            \"has_additional\": True,\n            \"additional_condition\"\
+        : 3,\n            \"additional_questions\": [\n                \"额外问题1（得分大于等于3时）：当该学生被要求完成团体活动时，会发生哪些问题行为？\",\n  \
+        \              \"额外问题2（得分大于等于3时）：当该学生在这种情况下表现出这些行为时，其他人通常如何反应？\"\n            ]\n        },\n        {\n         \
+        \   \"title\": \"当该学生被要求完成独立任务时，问题行为发生的可能性有多大？\",\n            \"options\": \"1不太可能 2有点可能 3有可能 4很有可能 5非常可能\",\n  \
+        \          \"has_additional\": True,\n            \"additional_condition\": 3,\n            \"additional_questions\"\
+        : [\n                \"额外问题1（得分大于等于3时）：当该学生被要求完成独立任务时，会发生哪些问题行为？\",\n                \"额外问题2（得分大于等于3时）：当该学生在这种情况下表现出这些行为时，其他人通常如何反应？\"\
+        \n            ]\n        },\n        {\n            \"title\": \"当该学生处于结构化情境，例如完成课堂练习时，问题行为发生的可能性有多大？\",\n       \
+        \     \"options\": \"1不太可能 2有点可能 3有可能 4很有可能 5非常可能\",\n            \"has_additional\": True,\n            \"additional_condition\"\
+        : 3,\n            \"additional_questions\": [\n                \"额外问题1（得分大于等于3时）：当该学生处于结构化情境，例如完成课堂练习时，会发生哪些问题行为？\"\
+        ,\n                \"额外问题2（得分大于等于3时）：当该学生在这种情况下表现出这些行为时，其他人通常如何反应？\"\n            ]\n        },\n        {\n     \
+        \       \"title\": \"当该学生处于无结构情境时，例如课间休息、自助餐厅或空闲时间等情境中，问题行为发生的可能性有多大？\",\n            \"options\": \"1不太可能 2有点可能 3有可能\
+        \ 4很有可能 5非常可能\",\n            \"has_additional\": True,\n            \"additional_condition\": 3,\n            \"\
+        additional_questions\": [\n                \"额外问题1（得分大于等于3时）：当该学生处于无结构情境时，例如课间休息、自助餐厅或空闲时间等情境中，会发生哪些问题行为？\",\n   \
+        \             \"额外问题2（得分大于等于3时）：当该学生在这种情况下表现出这些行为时，其他人通常如何反应？\"\n            ]\n        },\n        {\n          \
+        \  \"title\": \"当日常活动中该学生面临意外的变化发生时，例如，消防演习、集合时，问题行为发生的可能性有多大？\",\n            \"options\": \"1不太可能 2有点可能 3有可能 4很有可能\
+        \ 5非常可能\",\n            \"has_additional\": True,\n            \"additional_condition\": 3,\n            \"additional_questions\"\
+        : [\n                \"额外问题1（得分大于等于3时）：当日常活动中该学生面临意外的变化发生时，例如，消防演习、集合时，会发生哪些问题行为？\",\n                \"额外问题2（得分大于等于3时）：当该学生在这种情况下表现出这些行为时，其他人通常如何反应？\"\
+        \n            ]\n        },\n        {\n            \"title\": \"当喜欢的活动结束或喜欢的物品被拿走时，问题行为发生的可能性有多大？\",\n          \
+        \  \"options\": \"1不太可能 2有点可能 3有可能 4很有可能 5非常可能\",\n            \"has_additional\": True,\n            \"additional_condition\"\
+        : 3,\n            \"additional_questions\": [\n                \"额外问题1（得分大于等于3时）：当喜欢的活动结束或喜欢的物品被拿走时会发生什么问题行为？\",\n\
+        \                \"额外问题2（得分大于等于3时）：当该学生在这种情况下表现出这些行为时，其他人通常如何反应？\"\n            ]\n        }\n    ]\n    \n    # 统计所有13道题的未填写完毕数量\n\
+        \    unfilled_count = 0\n    for i in range(13):\n        score = scores[i]\n        behavior = behaviors[i]\n   \
+        \     reaction = reactions[i]\n        question = questions[i]\n        \n        # 判断题目是否未填写完毕\n        is_unfilled\
+        \ = False\n        \n        if score == 0:\n            # 主问题未填写\n            is_unfilled = True\n        elif question[\"\
+        has_additional\"] and score >= question[\"additional_condition\"]:\n            # 主问题已填写且得分>=3,但额外问题未完全填写\n      \
+        \      if not behavior or not reaction:\n                is_unfilled = True\n        \n        if is_unfilled:\n \
+        \           unfilled_count += 1\n    \n    # 根据re_2调用指定的题目\n    for i, question_key in enumerate(['question_1', 'question_2']):\n\
+        \        # 获取题目编号（re_2中的值是1-13，需要转换为索引0-12）\n        question_index = re_2[i] - 1\n        \n        # 确保索引在有效范围内\n\
+        \        if question_index < 0 or question_index >= 13:\n            output_object[question_key] = \"\"\n        \
+        \    continue\n        \n        question = questions[question_index]\n        score = scores[question_index]\n  \
+        \      behavior = behaviors[question_index]\n        reaction = reactions[question_index]\n        \n        # 判断该题目是否已完全填写\n\
+        \        is_filled = False\n        if score > 0:\n            if question[\"has_additional\"] and score >= question[\"\
+        additional_condition\"]:\n                # 需要额外答案（behavior 和 reaction 都要有）\n                if behavior and reaction:\n\
+        \                    is_filled = True\n            else:\n                # 不需要额外答案（得分小于3）\n                is_filled\
+        \ = True\n        \n        # 如果题目已完全填写，输出空字符串\n        if is_filled:\n            output_object[question_key] = \"\
+        \"\n            continue\n        \n        # 构建题目内容（仅当题目未完全填写时）\n        question_content = f\"{question['title']}\\\
+        n{question['options']}\"\n        \n        # 如果该题目已有得分，显示得分\n        if score > 0:\n            question_content\
+        \ += f\"\\n当前得分：{score}\"\n        \n        # 如果有额外问题，添加额外问题部分\n        if question[\"has_additional\"]:\n      \
+        \      question_content += \"\\n\"\n            \n            # 显示额外问题1（问题行为）\n            question_content += f\"\
+        \\n{question['additional_questions'][0]}\"\n            if score > 0 and score >= question[\"additional_condition\"\
+        ]:\n                if behavior:\n                    question_content += f\"\\n已填写：{behavior}\"\n               \
+        \ else:\n                    question_content += \"\\n【此问题需要填写】\"\n            \n            # 显示额外问题2（他人反应）\n   \
+        \         question_content += f\"\\n{question['additional_questions'][1]}\"\n            if score > 0 and score >=\
+        \ question[\"additional_condition\"]:\n                if reaction:\n                    question_content += f\"\\\
+        n已填写：{reaction}\"\n                else:\n                    question_content += \"\\n【此问题需要填写】\"\n        \n   \
+        \     output_object[question_key] = question_content\n    \n    # 设置未填写题目数量\n    output_object[\"unfilled_number\"\
+        ] = unfilled_count\n    \n    return output_object\n"
+      language: Python
+  - id: node_040
+    type: llm
+    name: 问题行为评分
+    inputs:
+    - name: q1
+      type: string
+      required: true
+    - name: user_input
+      type: string
+      required: true
+    - name: reply
+      type: string
+      required: true
+    - name: q2
+      type: string
+      required: true
+    outputs:
+    - name: score_1
+      type: integer
+      required: false
+      description: 题目得分
+    - name: behavior_1
+      type: string
+      required: false
+      description: 问题行为答案：第1个额外题目的文字描述答案（该学生在该情况下会表现出哪些问题行为），对于没有答案的题目，返回空字符串""
+    - name: reaction_1
+      type: string
+      required: false
+      description: 典型反应答案：第1个额外题目的文字描述答案（该学生在该情况下表现出问题行为时，其他人会有哪些反应），对于没有答案的题目，返回空字符串""
+    - name: output
+      type: string
+      required: false
+      description: 原因解释，解释这么填写的原因
+    settings:
+      max_output_tokens: 32768
+      model_id: ${MODEL_ID}
+      model_name: ${MODEL_NAME}
+      model_type: common
+      model_url: ${MODEL_ENDPOINT}
+      model_value: ${MODEL_ID}
+      multimodal_model: false
+      prompt: '以下是另一个FBA指导的教育决策支持助手正在系统化的向老师收集一位问题学生的信息，以分析他产生问题行为的成因与功能。 现在他们进入到了“行为触发情境与反应”阶段，在该阶段下你需要收集学生的问题行为的触发情境与他人反应等信息。请你根据FBA指导的教育决策支持助手与老师的访谈记录，判断访谈中是否涉及到了以下行为与反应问题，如果有涉及，请你根据描述的情况打分。若题目存在额外问题，你还要收集额外问题的答案。
+
+
+        【行为与反应问题】：
+
+        {{q1}}
+
+
+        【要求】：
+
+        - 你的任务是信息抽取与规则判断，而非原因分析或主观解释
+
+        - 根据老师回答中的明确描述进行判断与评分，不得产生任何“幻觉”
+
+        - 当老师明确表示不知道答案时，视为未观察到该问题，默认该学生不存在题目所描述的问题，评分为 2
+
+        - 当题目存在额外问题时，还要填写额外问题的答案
+
+        - 额外问题只能填写访谈中明确提到的内容，不得产生任何“幻觉”
+
+        - 额外问题的答案需高度概括，字数不超过 30 字
+
+        - 当提供的题目已经有得分时，保持原得分不变，仅补充该题目的额外问题答案
+
+
+        【FBA指导的教育决策支持助手的提问方式】：
+
+        {{reply}}
+
+
+        【老师的回答】：
+
+        {{user_input}}
+
+        '
+      reasoning_model: false
+      system: '你始终以FBA指导的教育决策支持助手身份进行思考与回应。
+
+        以可观察的行为与环境互动为核心视角
+
+        优先描述事实，避免心理动机、性格或意图推断
+
+        不补全未提供信息，证据不足时保持不确定
+
+        使用专业、冷静、非评价性语言
+
+        不使用标签化、道德化表述
+
+        不进行临床诊断或越权判断
+
+        明确区分观察、事实与假设
+
+        尊重学生隐私与职业伦理
+
+        行为准则：描述先于解释，证据先于判断，支持先于控制
+
+        '
+      temperature: 0.0001
+      top_p: 0.0001
+      web_search:
+        enable: false
+  - id: node_041
+    type: code
+    name: 行为更新
+    inputs:
+    - name: score_1
+      type: integer
+      required: true
+    - name: behavior_1
+      type: string
+      required: true
+    - name: score_2
+      type: integer
+      required: true
+      literal_value: 0
+    - name: behavior_2
+      type: string
+      required: true
+      literal_value: ' '
+    - name: re_score
+      type: list
+      required: true
+    - name: re_add_behavior
+      type: list
+      required: true
+    - name: re_2
+      type: list
+      required: true
+    - name: reaction_1
+      type: string
+      required: true
+    - name: reaction_2
+      type: string
+      required: true
+      literal_value: ' '
+    - name: re_add_reaction
+      type: list
+      required: true
+    outputs:
+    - name: re_score
+      type: list
+      required: false
+    - name: re_add_behavior
+      type: list
+      required: false
+    - name: re_add_reaction
+      type: list
+      required: false
+    - name: re_score_str
+      type: string
+      required: false
+    - name: re_add_behavior_str
+      type: string
+      required: false
+    - name: re_add_reaction_str
+      type: string
+      required: false
+    settings:
+      code: "def main(params):\n    output_object = {\n        \"re_score\": [],\n        \"re_add_behavior\": [],\n     \
+        \   \"re_add_reaction\": [],\n        \"re_score_str\": \"\",\n        \"re_add_behavior_str\": \"\",\n        \"\
+        re_add_reaction_str\": \"\"\n    }\n\n    score_1 = params.get('score_1', 0)\n    score_2 = params.get('score_2',\
+        \ 0)\n    behavior_1 = params.get('behavior_1', '')\n    behavior_2 = params.get('behavior_2', '')\n    reaction_1\
+        \ = params.get('reaction_1', '')\n    reaction_2 = params.get('reaction_2', '')\n\n    re_score = params.get('re_score',\
+        \ [])\n    re_add_behavior = params.get('re_add_behavior', [])\n    re_add_reaction = params.get('re_add_reaction',\
+        \ [])\n\n    while len(re_score) < 13:\n        re_score.append(0)\n    while len(re_add_behavior) < 13:\n       \
+        \ re_add_behavior.append('')\n    while len(re_add_reaction) < 13:\n        re_add_reaction.append('')\n\n    re_2\
+        \ = params.get('re_2', [1, 2])\n    while len(re_2) < 2:\n        re_2.append(1)\n\n    def has_extra(question_num:\
+        \ int) -> bool:\n        return 1 <= question_num <= 13\n\n    # ✅ 关键：更稳的\"空值判断\"\n    def is_blank(x) -> bool:\n\
+        \        if x is None:\n            return True\n        if isinstance(x, str):\n            s = x.strip()\n     \
+        \       return s == \"\" or s.lower() in (\"null\", \"none\", \"undefined\")\n        # 非字符串：通常你这里也不希望用来覆盖（可按需调整）\n\
+        \        return False\n\n    new_re_score = re_score[:]\n    new_re_add_behavior = re_add_behavior[:]\n    new_re_add_reaction\
+        \ = re_add_reaction[:]\n\n    # 更新问题1\n    question_1_num = re_2[0]\n    if 1 <= question_1_num <= 13:\n        #\
+        \ 大于0的score覆盖任意re_score；等于0的score不覆盖\n        if score_1 > 0:\n            new_re_score[question_1_num - 1] = score_1\n\
+        \        \n        # 只有当对应位置的re_score不为0时，才更新额外字段\n        if new_re_score[question_1_num - 1] != 0:\n           \
+        \ if has_extra(question_1_num):\n                if not is_blank(behavior_1):\n                    new_re_add_behavior[question_1_num\
+        \ - 1] = behavior_1\n                if not is_blank(reaction_1):\n                    new_re_add_reaction[question_1_num\
+        \ - 1] = reaction_1\n\n    # 更新问题2\n    question_2_num = re_2[1]\n    if 1 <= question_2_num <= 13:\n        # 大于0的score覆盖任意re_score；等于0的score不覆盖\n\
+        \        if score_2 > 0:\n            new_re_score[question_2_num - 1] = score_2\n        \n        # 只有当对应位置的re_score不为0时，才更新额外字段\n\
+        \        if new_re_score[question_2_num - 1] != 0:\n            if has_extra(question_2_num):\n                if\
+        \ not is_blank(behavior_2):\n                    new_re_add_behavior[question_2_num - 1] = behavior_2\n          \
+        \      if not is_blank(reaction_2):\n                    new_re_add_reaction[question_2_num - 1] = reaction_2\n\n\
+        \    output_object[\"re_score\"] = new_re_score\n    output_object[\"re_add_behavior\"] = new_re_add_behavior\n  \
+        \  output_object[\"re_add_reaction\"] = new_re_add_reaction\n\n    import json\n    output_object[\"re_score_str\"\
+        ] = json.dumps(new_re_score, ensure_ascii=False)\n    output_object[\"re_add_behavior_str\"] = json.dumps(new_re_add_behavior,\
+        \ ensure_ascii=False)\n    output_object[\"re_add_reaction_str\"] = json.dumps(new_re_add_reaction, ensure_ascii=False)\n\
+        \n    return output_object\n"
+      language: Python
+  - id: node_042
+    type: switch
+    name: 行为阶段判断
+    inputs:
+    - {}
+    - {}
+    outputs: []
+  - id: node_043
+    type: code
+    name: 行为反应已填写和未填写
+    inputs:
+    - name: re_score
+      type: list
+      required: true
+    - name: re_add_behavior
+      type: list
+      required: true
+    - name: re_add_reaction
+      type: list
+      required: true
+    outputs:
+    - name: filled_questions
+      type: string
+      required: false
+    - name: unfilled_questions
+      type: string
+      required: false
+    - name: unfilled_number
+      type: integer
+      required: false
+    - name: significant_number
+      type: integer
+      required: false
+    settings:
+      code: "def main(params):\n    # 创建一个字典作为输出变量\n    output_object = {\n        \"filled_questions\": \"\",\n        \"\
+        unfilled_questions\": \"\",\n        \"unfilled_number\": 0,\n        \"significant_number\": 0\n    }\n    \n   \
+        \ # 获取输入数据\n    scores = params.get('re_score', [])\n    # 确保scores数组至少有13个元素,不足的用0补充\n    while len(scores) < 13:\n\
+        \        scores.append(0)\n    \n    # 获取额外问题答案\n    re_add_behavior = params.get('re_add_behavior', [])\n    re_add_reaction\
+        \ = params.get('re_add_reaction', [])\n    # 确保数组至少有13个元素,不足的用空字符串补充\n    while len(re_add_behavior) < 13:\n     \
+        \   re_add_behavior.append('')\n    while len(re_add_reaction) < 13:\n        re_add_reaction.append('')\n    \n \
+        \   # 定义所有问题的模板\n    questions = [\n        {\n            \"title\": \"当只有其他孩子在场时,问题行为发生的可能性\",\n            \"options\"\
+        : [\"不太可能\", \"有点可能\", \"有可能\", \"很有可能\", \"非常可能\"],\n            \"has_additional\": True,\n            \"additional_condition\"\
+        : 3,\n            \"behavior_template\": \"发生的问题行为:{}\",\n            \"reaction_template\": \"其他孩子的反应:{}\"\n    \
+        \    },\n        {\n            \"title\": \"当只有成年人在场时,问题行为发生的可能性\",\n            \"options\": [\"不太可能\", \"有点可能\"\
+        , \"有可能\", \"很有可能\", \"非常可能\"],\n            \"has_additional\": True,\n            \"additional_condition\": 3,\n\
+        \            \"behavior_template\": \"发生的问题行为:{}\",\n            \"reaction_template\": \"成年人的反应:{}\"\n        },\n\
+        \        {\n            \"title\": \"当孩子和大人都在场时,问题行为发生的可能性\",\n            \"options\": [\"不太可能\", \"有点可能\", \"有可能\"\
+        , \"很有可能\", \"非常可能\"],\n            \"has_additional\": True,\n            \"additional_condition\": 3,\n        \
+        \    \"behavior_template\": \"发生的问题行为:{}\",\n            \"reaction_template\": \"他们的反应:{}\"\n        },\n       \
+        \ {\n            \"title\": \"当没有其他人时,问题行为发生的可能性\",\n            \"options\": [\"不太可能\", \"有点可能\", \"有可能\", \"很有可能\"\
+        , \"非常可能\"],\n            \"has_additional\": True,\n            \"additional_condition\": 3,\n            \"behavior_template\"\
+        : \"发生的问题行为:{}\",\n            \"reaction_template\": \"人们发现后的反应:{}\"\n        },\n        {\n            \"title\"\
+        : \"当该学生被要求完成他/她觉得简单的任务时,问题行为发生的可能性\",\n            \"options\": [\"不太可能\", \"有点可能\", \"有可能\", \"很有可能\", \"非常可能\"\
+        ],\n            \"has_additional\": True,\n            \"additional_condition\": 3,\n            \"behavior_template\"\
+        : \"发生的问题行为:{}\",\n            \"reaction_template\": \"其他人的反应:{}\"\n        },\n        {\n            \"title\"\
+        : \"当该学生被要求完成他/她觉得无聊的任务时,问题行为发生的可能性\",\n            \"options\": [\"不太可能\", \"有点可能\", \"有可能\", \"很有可能\", \"非常可能\"\
+        ],\n            \"has_additional\": True,\n            \"additional_condition\": 3,\n            \"behavior_template\"\
+        : \"发生的问题行为:{}\",\n            \"reaction_template\": \"其他人的反应:{}\"\n        },\n        {\n            \"title\"\
+        : \"当该学生被要求完成他/她觉得困难的任务时,问题行为发生的可能性\",\n            \"options\": [\"不太可能\", \"有点可能\", \"有可能\", \"很有可能\", \"非常可能\"\
+        ],\n            \"has_additional\": True,\n            \"additional_condition\": 3,\n            \"behavior_template\"\
+        : \"发生的问题行为:{}\",\n            \"reaction_template\": \"其他人的反应:{}\"\n        },\n        {\n            \"title\"\
+        : \"当该学生被要求完成团体活动时,问题行为发生的可能性\",\n            \"options\": [\"不太可能\", \"有点可能\", \"有可能\", \"很有可能\", \"非常可能\"],\n  \
+        \          \"has_additional\": True,\n            \"additional_condition\": 3,\n            \"behavior_template\"\
+        : \"发生的问题行为:{}\",\n            \"reaction_template\": \"其他人的反应:{}\"\n        },\n        {\n            \"title\"\
+        : \"当该学生被要求完成独立任务时,问题行为发生的可能性\",\n            \"options\": [\"不太可能\", \"有点可能\", \"有可能\", \"很有可能\", \"非常可能\"],\n  \
+        \          \"has_additional\": True,\n            \"additional_condition\": 3,\n            \"behavior_template\"\
+        : \"发生的问题行为:{}\",\n            \"reaction_template\": \"其他人的反应:{}\"\n        },\n        {\n            \"title\"\
+        : \"当该学生处于结构化情境(例如完成课堂练习)时,问题行为发生的可能性\",\n            \"options\": [\"不太可能\", \"有点可能\", \"有可能\", \"很有可能\", \"非常可能\"\
+        ],\n            \"has_additional\": True,\n            \"additional_condition\": 3,\n            \"behavior_template\"\
+        : \"发生的问题行为:{}\",\n            \"reaction_template\": \"其他人的反应:{}\"\n        },\n        {\n            \"title\"\
+        : \"当该学生处于无结构情境(例如课间休息、自助餐厅或空闲时间)时,问题行为发生的可能性\",\n            \"options\": [\"不太可能\", \"有点可能\", \"有可能\", \"很有可能\"\
+        , \"非常可能\"],\n            \"has_additional\": True,\n            \"additional_condition\": 3,\n            \"behavior_template\"\
+        : \"发生的问题行为:{}\",\n            \"reaction_template\": \"其他人的反应:{}\"\n        },\n        {\n            \"title\"\
+        : \"当日常活动中该学生面临意外的变化(例如消防演习、集合)时,问题行为发生的可能性\",\n            \"options\": [\"不太可能\", \"有点可能\", \"有可能\", \"很有可能\", \"\
+        非常可能\"],\n            \"has_additional\": True,\n            \"additional_condition\": 3,\n            \"behavior_template\"\
+        : \"发生的问题行为:{}\",\n            \"reaction_template\": \"其他人的反应:{}\"\n        },\n        {\n            \"title\"\
+        : \"当喜欢的活动结束或喜欢的物品被拿走时,问题行为发生的可能性\",\n            \"options\": [\"不太可能\", \"有点可能\", \"有可能\", \"很有可能\", \"非常可能\"],\n\
+        \            \"has_additional\": True,\n            \"additional_condition\": 3,\n            \"behavior_template\"\
+        : \"发生的问题行为:{}\",\n            \"reaction_template\": \"其他人的反应:{}\"\n        }\n    ]\n    \n    # 分类已填写和未填写的问题\n\
+        \    filled_list = []\n    unfilled_list = []\n    significant_count = 0  # 统计已填写题目中得分>=3的数量\n    \n    for i in range(13):\n\
+        \        question = questions[i]\n        score = scores[i]\n        \n        # 判断问题是否完全填写\n        is_filled = False\n\
+        \        \n        if score > 0:\n            # 主问题有答案\n            if question[\"has_additional\"] and score >= question[\"\
+        additional_condition\"]:\n                # 需要额外答案(behavior 和 reaction 都要有)\n                if re_add_behavior[i]\
+        \ and re_add_reaction[i]:\n                    is_filled = True\n            else:\n                # 不需要额外答案(得分小于3)\n\
+        \                is_filled = True\n        \n        if is_filled:\n            # 构建陈述句\n            statement = f\"\
+        {i+1}. {question['title']}:{question['options'][score-1]}\"\n            \n            # 如果有额外信息,添加额外信息\n        \
+        \    if question[\"has_additional\"] and score >= question[\"additional_condition\"]:\n                behavior_info\
+        \ = re_add_behavior[i]\n                reaction_info = re_add_reaction[i]\n                if behavior_info:\n  \
+        \                  statement += f\"\\n{question['behavior_template'].format(behavior_info)}\"\n                if\
+        \ reaction_info:\n                    statement += f\"\\n{question['reaction_template'].format(reaction_info)}\"\n\
+        \            \n            filled_list.append(statement + \"\\n\")\n            \n            # 统计得分>=3的已填写题目\n  \
+        \          if score >= 3:\n                significant_count += 1\n        else:\n            # 构建未填写问题的展示(仅显示题目标题)\n\
+        \            unfilled_question = f\"{i+1}. {question['title']}\"\n            \n            unfilled_list.append(unfilled_question\
+        \ + \"\\n\")\n    \n    # 组装输出\n    output_object[\"filled_questions\"] = \"\\n\\n\".join(filled_list)\n    output_object[\"\
+        unfilled_questions\"] = \"\\n\\n\".join(unfilled_list)\n    output_object[\"unfilled_number\"] = len(unfilled_list)\n\
+        \    output_object[\"significant_number\"] = significant_count\n    \n    return output_object\n"
+      language: Python
+  - id: node_044
+    type: llm
+    name: 行为反应确定关键问题
+    inputs:
+    - name: filled
+      type: string
+      required: true
+    - name: unfilled
+      type: string
+      required: true
+    - name: basic
+      type: string
+      required: true
+    - name: conversation
+      type: string
+      required: true
+    outputs:
+    - name: number
+      type: integer
+      required: false
+      description: 选择的问题题号
+    - name: output
+      type: string
+      required: false
+      description: 原因解释：选择该题号的原因
+    settings:
+      max_output_tokens: 32768
+      model_id: ${MODEL_ID}
+      model_name: ${MODEL_NAME}
+      model_type: common
+      model_url: ${MODEL_ENDPOINT}
+      model_value: ${MODEL_ID}
+      multimodal_model: false
+      prompt: '你是一个FBA指导的教育决策支持助手，你正在系统化的向老师收集一位问题学生的信息，以分析他产生问题行为的成因与功能。现在你进入到了“行为触发情境与反应”阶段，在该阶段下你需要收集学生的问题行为的触发情境与他人反应等信息。请判断【可选问题】中是否存在可能引发该学生问题行为的情境，如果存在，请选出可能性最高的选项。
+
+
+        【评判标准】：
+
+        - 根据该学生的特点，有针对性的选择问题
+
+
+        【该学生的问题行为相关信息】：
+
+        {{basic}}
+
+
+        【已收集的行为反应信息】：
+
+        {{filled}}
+
+
+        【聊天记录】：
+
+        {{conversation}}
+
+
+        【可选问题】：
+
+        {{unfilled}}
+
+        '
+      reasoning_model: false
+      system: '你始终以FBA指导的教育决策支持助手身份进行思考与回应。
+
+        以可观察的行为与环境互动为核心视角
+
+        优先描述事实，避免心理动机、性格或意图推断
+
+        不补全未提供信息，证据不足时保持不确定
+
+        使用专业、冷静、非评价性语言
+
+        不使用标签化、道德化表述
+
+        不进行临床诊断或越权判断
+
+        明确区分观察、事实与假设
+
+        尊重学生隐私与职业伦理
+
+        行为准则：描述先于解释，证据先于判断，支持先于控制'
+      temperature: 0.0001
+      top_p: 0.0001
+      web_search:
+        enable: false
+  - id: node_045
+    type: chat
+    name: 信息收集2
+    inputs:
+    - name: unfilled_questions
+      type: string
+      required: false
+    outputs:
+    - name: query
+      type: string
+      required: false
+    - name: chatflowHistory
+      type: string
+      required: false
+    - name: fileUrls
+      type: list
+      required: false
+    - name: fileNames
+      type: list
+      required: false
+    - name: number
+      type: integer
+      required: false
+      description: 用户选择的选项题号。如果没有选择问题选项或完全无关，返回0
+    settings:
+      model:
+        chat_history: true
+        max_output_tokens: 1024
+        model_id: ${MODEL_ID}
+        model_name: ${MODEL_NAME}
+        model_type: common
+        model_url: ${MODEL_ENDPOINT}
+        model_value: ${MODEL_ID}
+        reasoning_model: false
+        system: ''
+        temperature: 0.0001
+      params:
+      - desc: 用户选择的选项题号。如果没有选择问题选项或完全无关，返回0
+        meta:
+          editable: true
+          id: ref_0002
+          isDefaultParam: false
+          isModelOutputsConfigParam: false
+          isStreamingParam: false
+        name: number
+        required: false
+        type: integer
+        value:
+          type: generated
+      question_template: '以下列出了多种常见情境，这些情境有时可能会影响学生出现问题行为的可能性。请您根据日常观察，选出【最有可能】引发该学生问题行为的那一项。如果您觉得都不明显，也可以不进行选择（回复一个数字即可）。
+
+
+        {{unfilled_questions}}
+
+        '
+      streaming: true
+  - id: node_046
+    type: switch
+    name: 用户是否需要补充问题2
+    inputs:
+    - {}
+    outputs: []
+  - id: node_047
+    type: code
+    name: 列表转字符串2
+    inputs:
+    - name: re_score
+      type: list
+      required: true
+    - name: re_add_behavior
+      type: list
+      required: true
+    - name: re_add_reaction
+      type: list
+      required: true
+    outputs:
+    - name: re_score
+      type: string
+      required: false
+    - name: re_add_behavior
+      type: string
+      required: false
+    - name: re_add_reaction
+      type: string
+      required: false
+    settings:
+      code: "def main(params):\n    # 创建一个字典作为输出变量\n    output_object = {\n        \"re_score\": \"\",\n        \"re_add_behavior\"\
+        : \"\",\n        \"re_add_reaction\": \"\"\n    }\n    \n    # 获取输入数据\n    re_score = params.get('re_score', [])\n\
+        \    re_add_behavior = params.get('re_add_behavior', [])\n    re_add_reaction = params.get('re_add_reaction', [])\n\
+        \    \n    # 将数组转换为JSON格式的字符串\n    import json\n    output_object[\"re_score\"] = json.dumps(re_score, ensure_ascii=False)\n\
+        \    output_object[\"re_add_behavior\"] = json.dumps(re_add_behavior, ensure_ascii=False)\n    output_object[\"re_add_reaction\"\
+        ] = json.dumps(re_add_reaction, ensure_ascii=False)\n    \n    return output_object\n"
+      language: Python
+  - id: node_048
+    type: code
+    name: 用户确定补充问题2
+    inputs:
+    - name: number1
+      type: integer
+      required: true
+    - name: number2
+      type: integer
+      required: true
+      literal_value: 0
+    outputs:
+    - name: re_2
+      type: string
+      required: false
+    settings:
+      code: "def main(params):\n    # 创建一个字典作为输出变量\n    output_object = {\n        \"re_2\": \"\"\n    }\n    \n    # 获取输入参数\n\
+        \    number1 = params.get('number1', None)\n    number2 = params.get('number2', None)\n    \n    # 创建re_2列表\n    re_2\
+        \ = []\n    \n    # 处理number1：如果为空值，添加0，否则添加该值\n    if number1 is None or number1 == '' or number1 == 0:\n       \
+        \ re_2.append(0)\n    else:\n        re_2.append(number1)\n    \n    # 处理number2：如果为空值，添加0，否则添加该值\n    if number2\
+        \ is None or number2 == '' or number2 == 0:\n        re_2.append(0)\n    else:\n        re_2.append(number2)\n   \
+        \ \n    # 在列表末尾添加-1\n    re_2.append(-1)\n    \n    # 将列表转换为字符串输出\n    # 格式：[值1, 值2, -1]\n    output_object[\"re_2\"\
+        ] = str(re_2)\n    \n    return output_object\n"
+      language: Python
+  - id: node_049
+    type: code
+    name: 确定补充问题2
+    inputs:
+    - name: number1
+      type: integer
+      required: true
+    - name: number2
+      type: integer
+      required: true
+      literal_value: 0
+    outputs:
+    - name: re_2
+      type: string
+      required: false
+    settings:
+      code: "def main(params):\n    # 创建一个字典作为输出变量\n    output_object = {\n        \"re_2\": \"\"\n    }\n    \n    # 获取输入参数\n\
+        \    number1 = params.get('number1', None)\n    number2 = params.get('number2', None)\n    \n    # 创建re_2列表\n    re_2\
+        \ = []\n    \n    # 处理number1：如果为空值，添加0，否则添加该值\n    if number1 is None or number1 == '' or number1 == 0:\n       \
+        \ re_2.append(0)\n    else:\n        re_2.append(number1)\n    \n    # 处理number2：如果为空值，添加0，否则添加该值\n    if number2\
+        \ is None or number2 == '' or number2 == 0:\n        re_2.append(0)\n    else:\n        re_2.append(number2)\n   \
+        \ \n\n    # 将列表转换为字符串输出\n    # 格式：[值1, 值2, -1]\n    output_object[\"re_2\"] = str(re_2)\n    \n    return output_object"
+      language: Python
+  - id: node_050
+    type: merge_variable
+    name: 补充问题聚合2
+    inputs: []
+    outputs:
+    - name: Group1
+      type: string
+      required: false
+    settings:
+      groups:
+      - members:
+        - content:
+            ref_node_id: node_049
+            ref_var_name: re_2
+          type: ref
+        - content:
+            ref_node_id: node_048
+            ref_var_name: re_2
+          type: ref
+        - content:
+            ref_node_id: node_004
+            ref_var_name: re_2
+          type: ref
+        name: Group1
+      strategy: first_non_empty
+  - id: node_051
+    type: memory
+    name: 行为反应转阶段
+    inputs:
+    - name: stage
+      type: string
+      required: true
+      literal_value: '4'
+    - name: re_score
+      type: string
+      required: true
+    - name: re_add_behavior
+      type: string
+      required: true
+    - name: re_add_reaction
+      type: string
+      required: true
+    outputs:
+    - name: isSuccess
+      type: boolean
+      required: true
+    - name: stage
+      type: string
+      required: false
+    - name: re_score
+      type: string
+      required: false
+    - name: re_add_behavior
+      type: string
+      required: false
+    - name: re_add_reaction
+      type: string
+      required: false
+    settings:
+      mod: write
+  - id: node_052
+    type: memory
+    name: 行为反应存储
+    inputs:
+    - name: re_2
+      type: string
+      required: true
+    - name: re_score
+      type: string
+      required: true
+    - name: re_add_behavior
+      type: string
+      required: true
+    - name: re_add_reaction
+      type: string
+      required: true
+    outputs:
+    - name: isSuccess
+      type: boolean
+      required: true
+    - name: re_2
+      type: string
+      required: false
+    - name: re_score
+      type: string
+      required: false
+    - name: re_add_behavior
+      type: string
+      required: false
+    - name: re_add_reaction
+      type: string
+      required: false
+    settings:
+      mod: write
+  - id: node_053
+    type: text_processor
+    name: 进入积极策略提示词
+    inputs:
+    - name: String1
+      type: string
+      required: true
+    outputs:
+    - name: output
+      type: string
+      required: false
+    settings:
+      combine:
+        message_template: "你是一个人本主义流派的FBA指导的教育决策支持助手，你正在系统化的向老师收集一位问题学生的信息，以分析他产生问题行为的成因与功能。现在你进入到了“社交技能与积极策略”阶段，在该阶段下你需要评估学生的社交能力及积极行为模式。现在请你向老师提问“指定问题”。\n\
+          \n\n【注意要点】：\n- 由于你们刚到这个阶段，在提问问题前，你需要先向老师简单的介绍一下这个阶段，并说明在这个阶段中可能会花费的时间（10分钟）\n- 根据【指定问题】进行提问，不可以向老师提问除了“指定问题”以外的任何问题\n\
+          - 在每次回复中，你都必须要提问老师1~2个问题，但是不能提问2个以上的问题\n- 以\"孩子\"来代指该同学，不要主动提到该同学的任何私密信息\n- 绝对不要提到你是 AI 或你在扮演角色\n\n【你对老师的要求】：\n\
+          - 引导老师对该学生的行为描述具体化，避免使用模糊词汇，推荐老师使用可观察的动作、语言。\n- 引导老师从事实出发，不做主观猜测。\n- 引导老师客观评价该同学，不添加过多主观情感。\n\n【语言与语气】：\n- 语言内容丰富，有深刻的洞察，有专业性\n\
+          - 语气温暖、和蔼、有耐心\n- 对老师的回复应当有适当的回应\n- 提问形式自然，和正常聊天一样\n- 即使指定问题中存在分数选项也不出现数字或让老师打分\n- 不用括号补充任何内容\n\n【该学生的基本信息与问题界定】：\n\
+          {{String1}}\n\n【你的专业知识】：\n暂无\n\n【指定问题】：\n - 该学生使用积极策略来引起您的注意的频率有多大？ 1.从不 2.很少 3.偶尔 4.经常 5.总是 额外问题（得分大于等于3时）：该学生会使用哪些积极策略来引起您的注意？\"\
+          ,\n - 该学生使用积极策略来引起同伴的注意的频率有多大？ 1.从不 2.很少 3.偶尔 4.经常 5.总是 额外问题（得分大于等于3时）：该学生会使用哪些积极策略来引起同伴的注意？\""
+      separate:
+        symbol:
+          custom_symbol_list: []
+          used_symbol_list: []
+      type: combine
+  - id: node_054
+    type: code
+    name: 指定问题2
+    inputs:
+    - name: re_score
+      type: list
+      required: true
+    - name: re_2
+      type: string
+      required: true
+    - name: re_add_behavior
+      type: list
+      required: true
+    - name: re_add_reaction
+      type: list
+      required: true
+    outputs:
+    - name: question_1
+      type: string
+      required: false
+    - name: question_2
+      type: string
+      required: false
+    settings:
+      code: "import json\n\ndef main(params):\n    # 创建一个字典作为输出变量\n    output_object = {\n        \"question_1\": \"\",\n\
+        \        \"question_2\": \"\"\n    }\n    \n    # 获取输入数据\n    scores = params.get('re_score', [])\n    # 确保scores数组至少有13个元素,不足的用0补充\n\
+        \    while len(scores) < 13:\n        scores.append(0)\n    \n    # 获取额外问题的答案\n    behaviors = params.get('re_add_behavior',\
+        \ [])\n    reactions = params.get('re_add_reaction', [])\n    # 确保数组至少有13个元素\n    while len(behaviors) < 13:\n   \
+        \     behaviors.append(\"\")\n    while len(reactions) < 13:\n        reactions.append(\"\")\n    \n    # ① 默认值\n\
+        \    default_re_2 = [1, 2]\n\n    # ② 取入参\n    re_2_raw = params.get('re_2', '')\n\n    # ③ 尝试转换 re_2\n    try:\n\
+        \        # 如果 re_2 已经是列表,直接使用\n        if isinstance(re_2_raw, list):\n            re_2 = [int(x) for x in re_2_raw]\n\
+        \        # 如果是字符串,尝试 JSON 解析\n        elif isinstance(re_2_raw, str) and re_2_raw:\n            re_2 = json.loads(re_2_raw)\n\
+        \            if not isinstance(re_2, list):\n                raise ValueError(\"re_2 must be a list\")\n         \
+        \   re_2 = [int(x) for x in re_2]\n        else:\n            re_2 = default_re_2\n    except Exception:\n       \
+        \ re_2 = default_re_2\n\n    # 确保re_2至少有2个元素\n    while len(re_2) < 2:\n        re_2.append(1)\n    \n    # 定义所有问题的模板\n\
+        \    questions = [\n        {\n            \"title\": \"- 当只有其他孩子在场时,问题行为发生的可能性有多大?\",\n            \"options\": \"\
+        1不太可能 2有点可能 3有可能 4很有可能 5非常可能\",\n            \"has_additional\": True,\n            \"additional_condition\": 3,\n\
+        \            \"additional_questions\": [\n                \"额外问题1(得分大于等于3时):当只有其他孩子在场时,会发生哪些问题行为?\",\n           \
+        \     \"额外问题2(得分大于等于3时):这些行为发生时,其他孩子的反应是什么?\"\n            ]\n        },\n        {\n            \"title\": \"- 当只有成年人在场时,问题行为发生的可能性有多大?\"\
+        ,\n            \"options\": \"1不太可能 2有点可能 3有可能 4很有可能 5非常可能\",\n            \"has_additional\": True,\n           \
+        \ \"additional_condition\": 3,\n            \"additional_questions\": [\n                \"额外问题1(得分大于等于3时):当只有成年人在场时,会发生哪些问题行为?\"\
+        ,\n                \"额外问题2(得分大于等于3时):这些行为发生时,成年人的反应是什么?\"\n            ]\n        },\n        {\n            \"title\"\
+        : \"- 当孩子和大人都在场时,问题行为发生的可能性有多大?\",\n            \"options\": \"1不太可能 2有点可能 3有可能 4很有可能 5非常可能\",\n            \"has_additional\"\
+        : True,\n            \"additional_condition\": 3,\n            \"additional_questions\": [\n                \"额外问题1(得分大于等于3时):当孩子和大人都在场时,会发生哪些问题行为?\"\
+        ,\n                \"额外问题2(得分大于等于3时):这些行为发生时,他们的反应是什么?\"\n            ]\n        },\n        {\n            \"title\"\
+        : \"- 当没有其他人时,问题行为发生的可能性有多大?\",\n            \"options\": \"1不太可能 2有点可能 3有可能 4很有可能 5非常可能\",\n            \"has_additional\"\
+        : True,\n            \"additional_condition\": 3,\n            \"additional_questions\": [\n                \"额外问题1(得分大于等于3时):当没有其他人时,会发生哪些问题行为?\"\
+        ,\n                \"额外问题2(得分大于等于3时):如果人们发现这些行为发生了,他们通常会如何反应?\"\n            ]\n        },\n        {\n          \
+        \  \"title\": \"- 当该学生被要求完成他/她觉得简单的任务时,问题行为发生的可能性有多大?\",\n            \"options\": \"1不太可能 2有点可能 3有可能 4很有可能 5非常可能\"\
+        ,\n            \"has_additional\": True,\n            \"additional_condition\": 3,\n            \"additional_questions\"\
+        : [\n                \"额外问题1(得分大于等于3时):当该学生被要求完成他/她觉得简单的任务时,会发生哪些问题行为?\",\n                \"额外问题2(得分大于等于3时):当该学生在这种情况下表现出这些行为时,其他人通常如何反应?\"\
+        \n            ]\n        },\n        {\n            \"title\": \"- 当该学生被要求完成他/她觉得无聊的任务时,问题行为发生的可能性有多大?\",\n      \
+        \      \"options\": \"1不太可能 2有点可能 3有可能 4很有可能 5非常可能\",\n            \"has_additional\": True,\n            \"additional_condition\"\
+        : 3,\n            \"additional_questions\": [\n                \"额外问题1(得分大于等于3时):当该学生被要求完成他/她觉得无聊的任务时,会发生哪些问题行为?\"\
+        ,\n                \"额外问题2(得分大于等于3时):当该学生在这种情况下表现出这些行为时,其他人通常如何反应?\"\n            ]\n        },\n        {\n     \
+        \       \"title\": \"- 当该学生被要求完成他/她觉得困难的任务时,问题行为发生的可能性有多大?\",\n            \"options\": \"1不太可能 2有点可能 3有可能 4很有可能 5非常可能\"\
+        ,\n            \"has_additional\": True,\n            \"additional_condition\": 3,\n            \"additional_questions\"\
+        : [\n                \"额外问题1(得分大于等于3时):当该学生被要求完成他/她觉得困难的任务时,会发生哪些问题行为?\",\n                \"额外问题2(得分大于等于3时):当该学生在这种情况下表现出这些行为时,其他人通常如何反应?\"\
+        \n            ]\n        },\n        {\n            \"title\": \"- 当该学生被要求完成团体活动时,问题行为发生的可能性有多大?\",\n            \"\
+        options\": \"1不太可能 2有点可能 3有可能 4很有可能 5非常可能\",\n            \"has_additional\": True,\n            \"additional_condition\"\
+        : 3,\n            \"additional_questions\": [\n                \"额外问题1(得分大于等于3时):当该学生被要求完成团体活动时,会发生哪些问题行为?\",\n  \
+        \              \"额外问题2(得分大于等于3时):当该学生在这种情况下表现出这些行为时,其他人通常如何反应?\"\n            ]\n        },\n        {\n         \
+        \   \"title\": \"- 当该学生被要求完成独立任务时,问题行为发生的可能性有多大?\",\n            \"options\": \"1不太可能 2有点可能 3有可能 4很有可能 5非常可能\",\n\
+        \            \"has_additional\": True,\n            \"additional_condition\": 3,\n            \"additional_questions\"\
+        : [\n                \"额外问题1(得分大于等于3时):当该学生被要求完成独立任务时,会发生哪些问题行为?\",\n                \"额外问题2(得分大于等于3时):当该学生在这种情况下表现出这些行为时,其他人通常如何反应?\"\
+        \n            ]\n        },\n        {\n            \"title\": \"- 当该学生处于结构化情境,例如完成课堂练习时,问题行为发生的可能性有多大?\",\n     \
+        \       \"options\": \"1不太可能 2有点可能 3有可能 4很有可能 5非常可能\",\n            \"has_additional\": True,\n            \"additional_condition\"\
+        : 3,\n            \"additional_questions\": [\n                \"额外问题1(得分大于等于3时):当该学生处于结构化情境,例如完成课堂练习时,会发生哪些问题行为?\"\
+        ,\n                \"额外问题2(得分大于等于3时):当该学生在这种情况下表现出这些行为时,其他人通常如何反应?\"\n            ]\n        },\n        {\n     \
+        \       \"title\": \"- 当该学生处于无结构情境时,例如课间休息、自助餐厅或空闲时间等情境中,问题行为发生的可能性有多大?\",\n            \"options\": \"1不太可能 2有点可能\
+        \ 3有可能 4很有可能 5非常可能\",\n            \"has_additional\": True,\n            \"additional_condition\": 3,\n         \
+        \   \"additional_questions\": [\n                \"额外问题1(得分大于等于3时):当该学生处于无结构情境时,例如课间休息、自助餐厅或空闲时间等情境中,会发生哪些问题行为?\"\
+        ,\n                \"额外问题2(得分大于等于3时):当该学生在这种情况下表现出这些行为时,其他人通常如何反应?\"\n            ]\n        },\n        {\n     \
+        \       \"title\": \"- 当日常活动中该学生面临意外的变化发生时,例如,消防演习、集合时,问题行为发生的可能性有多大?\",\n            \"options\": \"1不太可能 2有点可能 3有可能\
+        \ 4很有可能 5非常可能\",\n            \"has_additional\": True,\n            \"additional_condition\": 3,\n            \"\
+        additional_questions\": [\n                \"额外问题1(得分大于等于3时):当日常活动中该学生面临意外的变化发生时,例如,消防演习、集合时,会发生哪些问题行为?\",\n     \
+        \           \"额外问题2(得分大于等于3时):当该学生在这种情况下表现出这些行为时,其他人通常如何反应?\"\n            ]\n        },\n        {\n            \"\
+        title\": \"- 当喜欢的活动结束或喜欢的物品被拿走时,问题行为发生的可能性有多大?\",\n            \"options\": \"1不太可能 2有点可能 3有可能 4很有可能 5非常可能\",\n  \
+        \          \"has_additional\": True,\n            \"additional_condition\": 3,\n            \"additional_questions\"\
+        : [\n                \"额外问题1(得分大于等于3时):当喜欢的活动结束或喜欢的物品被拿走时会发生什么问题行为?\",\n                \"额外问题2(得分大于等于3时):当该学生在这种情况下表现出这些行为时,其他人通常如何反应?\"\
+        \n            ]\n        }\n    ]\n    \n    # 根据re_2调用指定的题目\n    for i, question_key in enumerate(['question_1',\
+        \ 'question_2']):\n        # 检查re_2对应位置是否为0，如果为0则question为空\n        if re_2[i] == 0:\n            output_object[question_key]\
+        \ = \"\"\n            continue\n        \n        # 获取题目编号(re_2中的值是1-13,需要转换为索引0-12)\n        question_index = re_2[i]\
+        \ - 1\n        \n        # 确保索引在有效范围内\n        if question_index < 0 or question_index >= 13:\n            output_object[question_key]\
+        \ = \"\"\n            continue\n        \n        question = questions[question_index]\n        score = scores[question_index]\n\
+        \        behavior = behaviors[question_index]\n        reaction = reactions[question_index]\n        \n        # 构建题目内容\n\
+        \        question_content = f\"{question['title']}\\n{question['options']}\"\n        \n        # 如果该题目已有得分,显示得分\n\
+        \        if score > 0:\n            question_content += f\"\\n当前得分:{score}\"\n        \n        # 如果有额外问题,添加额外问题部分\n\
+        \        if question[\"has_additional\"]:\n            question_content += \"\\n\"\n            \n            # 显示额外问题1(问题行为)\n\
+        \            question_content += f\"\\n{question['additional_questions'][0]}\"\n            if score > 0 and score\
+        \ >= question[\"additional_condition\"]:\n                if behavior:\n                    question_content += f\"\
+        \\n已填写:{behavior}\"\n                else:\n                    question_content += \"\\n——此问题需要填写\"\n           \
+        \ \n            # 显示额外问题2(他人反应)\n            question_content += f\"\\n{question['additional_questions'][1]}\"\n \
+        \           if score > 0 and score >= question[\"additional_condition\"]:\n                if reaction:\n        \
+        \            question_content += f\"\\n已填写:{reaction}\"\n                else:\n                    question_content\
+        \ += \"\\n——此问题需要填写\"\n        \n        output_object[question_key] = question_content\n    \n    return output_object\n"
+      language: Python
+  - id: node_055
+    type: text_processor
+    name: 行为反应提示词
+    inputs:
+    - name: String1
+      type: string
+      required: true
+    - name: String2
+      type: string
+      required: true
+    - name: String3
+      type: string
+      required: true
+    - name: String5
+      type: string
+      required: true
+    - name: String6
+      type: string
+      required: true
+    - name: String7
+      type: string
+      required: true
+    outputs:
+    - name: output
+      type: string
+      required: false
+    settings:
+      combine:
+        message_template: '你是一个FBA指导的教育决策支持助手，你正在系统化的向老师收集一位问题学生的信息，以分析他产生问题行为的成因与功能。 现在你进入到了“行为触发情境与反应”阶段，在该阶段下你需要收集学生的问题行为的触发情境与他人反应等信息。现在请你向老师提问“指定问题”。
+
+
+          【注意要点】：
+
+          - 先回应老师的发言，运用你的专业知识分析当前已有的信息，然后才开始正式提问
+
+          - 根据【指定问题】进行提问，不可以向老师提问除了“指定问题”以外的任何问题
+
+          - 在每次回复中，你都必须要提问老师1~3个问题，但是不能提问3个以上的问题
+
+          - 以"孩子"来代指该同学，不要主动提到该同学的任何私密信息
+
+          - 绝对不要提到你是 AI 或你在扮演角色
+
+
+          【你对老师的要求】：
+
+          - 引导老师对该学生的行为描述具体化，避免使用模糊词汇，推荐老师使用可观察的动作、语言。
+
+          - 引导老师从事实出发，不做主观猜测。
+
+          - 引导老师客观评价该同学，不添加过多主观情感。
+
+
+          【语言与语气】：
+
+          - 语言内容丰富，有深刻的洞察，有专业性
+
+          - 语气温暖、和蔼、有耐心
+
+          - 提问形式自然，和正常聊天一样
+
+          - 即使指定问题中存在分数选项也不出现数字或让老师打分
+
+          - 不用括号补充任何内容
+
+
+          【该学生的问题行为相关信息】：
+
+          {{String1}}
+
+
+          【该学生已有的生活背景信息】：
+
+          {{String2}}
+
+
+          【你的上一个问题】：
+
+          {{String5}}
+
+
+          【老师对上一个问题的回答】：
+
+          {{String6}}
+
+
+          【你的专业知识】：
+
+          暂定
+
+
+          【指定问题】：
+
+          {{String3}}'
+      separate:
+        symbol:
+          custom_symbol_list: []
+          used_symbol_list: []
+      type: combine
+  - id: node_056
+    type: code
+    name: 积极字符串转列表
+    inputs:
+    - name: po_score
+      type: string
+      required: true
+    - name: po_add
+      type: string
+      required: true
+    - name: po_2
+      type: string
+      required: true
+    outputs:
+    - name: po_score_list
+      type: list
+      required: false
+    - name: po_add_list
+      type: list
+      required: false
+    - name: po_2_list
+      type: list
+      required: false
+    settings:
+      code: "import json\n\ndef main(params):\n    # ① 默认值\n    default_po_score = [0] * 9   # 9道题目\n    default_po_add  \
+        \ = [\"\"] * 6  # 6个额外问题（题目4-9）\n    default_po_2 = [1, 2]\n\n    # ② 取入参\n    po_score_str = params.get('po_score',\
+        \ '')\n    po_add_str   = params.get('po_add', '')\n    po_2_str = params.get('po_2', '')\n\n    # ③ 尝试转换 po_score，如果失败或不符合要求就用默认值\n\
+        \    try:\n        po_score_list = json.loads(po_score_str)\n        # 必须是列表且长度为 9\n        if not isinstance(po_score_list,\
+        \ list) or len(po_score_list) != 9:\n            raise ValueError(\"po_score length error\")\n        # 尝试转为 int\n\
+        \        po_score_list = [int(x) for x in po_score_list]\n    except Exception:\n        po_score_list = default_po_score\n\
+        \n    # ④ 尝试转换 po_add，如果失败或不符合要求就用默认值\n    try:\n        po_add_list = json.loads(po_add_str)\n        # 必须是列表且长度为\
+        \ 6\n        if not isinstance(po_add_list, list) or len(po_add_list) != 6:\n            raise ValueError(\"po_add\
+        \ length error\")\n        # 统一转为字符串\n        po_add_list = [str(x) for x in po_add_list]\n    except Exception:\n\
+        \        po_add_list = default_po_add\n\n    # ⑤ 尝试转换 po_2，如果失败或不符合要求就用默认值\n    try:\n        po_2_list = json.loads(po_2_str)\n\
+        \        # 必须是列表\n        if not isinstance(po_2_list, list):\n            raise ValueError(\"po_2 length error\"\
+        )\n        # 尝试转为 int\n        po_2_list = [int(x) for x in po_2_list]\n    except Exception:\n        po_2_list =\
+        \ default_po_2\n\n    # ⑥ 组织输出\n    output_object = {\n        \"po_score_list\": po_score_list,  # 9 个整数\n      \
+        \  \"po_add_list\": po_add_list,       # 6 个字符串\n        \"po_2_list\": po_2_list            # 2 个整数\n    }\n    return\
+        \ output_object\n"
+      language: Python
+  - id: node_057
+    type: code
+    name: 积极提取两个问题
+    inputs:
+    - name: po_score
+      type: list
+      required: true
+    - name: po_add
+      type: list
+      required: true
+    - name: po_2
+      type: list
+      required: true
+    outputs:
+    - name: question_1
+      type: string
+      required: false
+    - name: question_2
+      type: string
+      required: false
+    - name: unfilled_number
+      type: integer
+      required: false
+    settings:
+      code: "def main(params):\n    # 创建一个字典作为输出变量\n    output_object = {\n        \"question_1\": \"\",\n        \"question_2\"\
+        : \"\",\n        \"unfilled_number\": 0\n    }\n    \n    # 获取输入数据\n    scores = params.get('po_score', [])\n    #\
+        \ 确保scores数组至少有9个元素，不足的用0补充\n    while len(scores) < 9:\n        scores.append(0)\n    \n    # 获取额外问题答案\n    po_add\
+        \ = params.get('po_add', [])\n    # 确保po_add数组至少有6个元素，不足的用空字符串补充\n    while len(po_add) < 6:\n        po_add.append('')\n\
+        \    \n    # 获取要调用的题目编号（po_2包含两个整数，表示题目1-9）\n    po_2 = params.get('po_2', [1, 2])\n    # 确保po_2至少有2个元素\n    while\
+        \ len(po_2) < 2:\n        po_2.append(1)\n    \n    # 定义所有问题的模板及其对应的额外问题索引\n    questions = [\n        {\n       \
+        \     \"title\": \"该学生更喜欢和别人一起玩多于独自玩吗？\",\n            \"options\": \"1非常少 2有点少 3差不多 4有点多 5非常多\",\n            \"\
+        has_additional\": False,\n            \"additional_condition\": None,\n            \"additional_question\": \"\",\n\
+        \            \"additional_index\": None\n        },\n        {\n            \"title\": \"相比大多数孩子，其他同学是否经常地邀请跟该学生玩耍、游戏？\"\
+        ,\n            \"options\": \"1非常少 2有点少 3差不多 4有点多 5非常多\",\n            \"has_additional\": False,\n            \"\
+        additional_condition\": None,\n            \"additional_question\": \"\",\n            \"additional_index\": None\n\
+        \        },\n        {\n            \"title\": \"相比大多数孩子，其他同学经常邀请该学生参与团体活动？\",\n            \"options\": \"1非常少 2有点少\
+        \ 3差不多 4有点多 5非常多\",\n            \"has_additional\": False,\n            \"additional_condition\": None,\n       \
+        \     \"additional_question\": \"\",\n            \"additional_index\": None\n        },\n        {\n            \"\
+        title\": \"该学生使用积极策略来引起您的注意的频率有多大？\",\n            \"options\": \"1从不 2很少 3偶尔 4经常 5总是\",\n            \"has_additional\"\
+        : True,\n            \"additional_condition\": 3,\n            \"additional_question\": \"额外问题（得分大于等于3时）：该学生会使用哪些积极策略来引起您的注意？\"\
+        ,\n            \"additional_index\": 0\n        },\n        {\n            \"title\": \"该学生使用积极策略来引起同伴的注意的频率有多大？\"\
+        ,\n            \"options\": \"1从不 2很少 3偶尔 4经常 5总是\",\n            \"has_additional\": True,\n            \"additional_condition\"\
+        : 3,\n            \"additional_question\": \"额外问题（得分大于等于3时）：该学生会使用哪些积极策略来引起同伴的注意？\",\n            \"additional_index\"\
+        : 1\n        },\n        {\n            \"title\": \"该学生使用积极策略来让您知道他/她需要休息的频率有多大？\",\n            \"options\": \"\
+        1从不 2很少 3偶尔 4经常 5总是\",\n            \"has_additional\": True,\n            \"additional_condition\": 3,\n        \
+        \    \"additional_question\": \"额外问题（得分大于等于3时）：该学生会使用哪些积极策略来让您知道他/她需要休息？\",\n            \"additional_index\": 2\n\
+        \        },\n        {\n            \"title\": \"该学生使用积极策略来让您知道他/她想要参与喜欢的活动或玩某个东西的频率有多大？\",\n            \"options\"\
+        : \"1从不 2很少 3偶尔 4经常 5总是\",\n            \"has_additional\": True,\n            \"additional_condition\": 3,\n    \
+        \        \"additional_question\": \"额外问题（得分大于等于3时）：该学生会使用哪些积极策略来让您知道他/她想要参与喜欢的活动或玩某个东西？\",\n            \"additional_index\"\
+        : 3\n        },\n        {\n            \"title\": \"该学生使用积极策略来让您知道他/她想要自己平静一下的频率有多大？\",\n            \"options\"\
+        : \"1从不 2很少 3偶尔 4经常 5总是\",\n            \"has_additional\": True,\n            \"additional_condition\": 3,\n    \
+        \        \"additional_question\": \"额外问题（得分大于等于3时）：该学生会使用哪些积极策略来让您知道他/她想要自己平静一下？\",\n            \"additional_index\"\
+        : 4\n        },\n        {\n            \"title\": \"该学生使用积极策略来让同伴知道他/她想要独处？\",\n            \"options\": \"1从不 2很少\
+        \ 3偶尔 4经常 5总是\",\n            \"has_additional\": True,\n            \"additional_condition\": 3,\n            \"\
+        additional_question\": \"额外问题（得分大于等于3时）：该学生会使用哪些积极策略来让同伴知道他/她想要独处？\",\n            \"additional_index\": 5\n     \
+        \   }\n    ]\n    \n    # 统计未填写的题目数量\n    unfilled_count = 0\n    for i in range(9):\n        question = questions[i]\n\
+        \        score = scores[i]\n        \n        # 判断题目是否未填写\n        is_unfilled = False\n        \n        if score\
+        \ == 0:\n            # 主问题没有得分\n            is_unfilled = True\n        elif question[\"has_additional\"] and score\
+        \ >= question[\"additional_condition\"]:\n            # 主问题有得分且满足额外问题条件，但额外问题未填写\n            if not po_add[question[\"\
+        additional_index\"]]:\n                is_unfilled = True\n        \n        if is_unfilled:\n            unfilled_count\
+        \ += 1\n    \n    # 根据po_2调用指定的题目\n    for i, question_key in enumerate(['question_1', 'question_2']):\n        #\
+        \ 获取题目编号（po_2中的值是1-9，需要转换为索引0-8）\n        question_index = po_2[i] - 1\n        \n        # 确保索引在有效范围内\n        if\
+        \ question_index < 0 or question_index >= 9:\n            output_object[question_key] = \"\"\n            continue\n\
+        \        \n        question = questions[question_index]\n        score = scores[question_index]\n        \n      \
+        \  # 判断该题目是否已完全填写\n        is_filled = False\n        if score > 0:\n            if question[\"has_additional\"] and\
+        \ score >= question[\"additional_condition\"]:\n                # 需要额外答案\n                if po_add[question[\"additional_index\"\
+        ]]:\n                    is_filled = True\n            else:\n                # 不需要额外答案\n                is_filled\
+        \ = True\n        \n        # 如果题目已完全填写，输出空字符串\n        if is_filled:\n            output_object[question_key] = \"\
+        \"\n            continue\n        \n        # 构建题目内容（仅当题目未完全填写时）\n        question_content = f\"{question['title']}\\\
+        n{question['options']}\"\n        \n        # 如果该题目已有得分，显示得分\n        if score > 0:\n            question_content\
+        \ += f\"\\n当前得分：{score}\"\n        \n        # 如果有额外问题，添加额外问题部分\n        if question[\"has_additional\"]:\n      \
+        \      question_content += f\"\\n\\n{question['additional_question']}\"\n            \n            # 如果已有得分且满足额外问题条件，提示需要填写额外问题\n\
+        \            if score > 0 and score >= question[\"additional_condition\"]:\n                question_content += \"\
+        \\n【此额外问题需要填写】\"\n        \n        output_object[question_key] = question_content\n    \n    # 设置未填写题目数量\n    output_object[\"\
+        unfilled_number\"] = unfilled_count\n    \n    return output_object\n"
+      language: Python
+  - id: node_058
+    type: llm
+    name: 积极策略评分
+    inputs:
+    - name: q1
+      type: string
+      required: true
+    - name: user_input
+      type: string
+      required: true
+    - name: reply
+      type: string
+      required: true
+    - name: q2
+      type: string
+      required: true
+    outputs:
+    - name: score_1
+      type: integer
+      required: false
+      description: 题目1得分
+    - name: additional_1
+      type: string
+      required: false
+      description: 额外题目1答案。对于没有答案的题目，返回空字符串""
+    - name: score_2
+      type: integer
+      required: false
+      description: 题目2得分
+    - name: additional_2
+      type: string
+      required: false
+      description: 额外题目2答案。对于没有答案的题目，返回空字符串""
+    - name: output
+      type: string
+      required: false
+      description: 原因解释，解释这么填写的原因
+    settings:
+      max_output_tokens: 32768
+      model_id: ${MODEL_ID}
+      model_name: ${MODEL_NAME}
+      model_type: common
+      model_url: ${MODEL_ENDPOINT}
+      model_value: ${MODEL_ID}
+      multimodal_model: false
+      prompt: '以下是另一个FBA指导的教育决策支持助手正在系统化的向老师收集一位问题学生的信息，以分析他产生问题行为的成因与功能。 现在他们进入到了“社交技能与积极策略”阶段，在该阶段下你需要评估学生的社交能力及积极行为模式。请根据FBA指导的教育决策支持助手与老师的访谈记录，判断访谈中是否涉及到了以下社交技能与积极策略问题，如果有涉及，请你根据其描述的情况打分。若题目存在额外问题，你还要收集额外问题的答案。
+
+
+        【社交技能与积极策略问题】：
+
+        - 题目1：{{q1}}
+
+        - 题目2：{{q2}}
+
+
+        【要求】：
+
+        - 你的任务是信息抽取与规则判断，而非原因分析或主观解释
+
+        - 根据老师回答中的明确描述进行判断与评分，不得产生任何“幻觉”
+
+        - 当老师明确表示不知道答案时，视为未观察到该问题，默认该学生不存在题目所描述的问题，评分为 2
+
+        - 当老师明确表示不存在该积极策略时，视为该学生使用该积极策略的频率为0，评分为 1
+
+        - 当题目存在额外问题时，还要填写额外问题的答案
+
+        - 额外问题只能填写访谈中明确提到的内容，不得产生任何“幻觉”
+
+        - 额外问题的答案需高度概括，字数不超过 30 字
+
+        - 当提供的题目已经有得分时，保持原得分不变，仅补充该题目的额外问题答案
+
+        - 必须对每一道社交技能与积极策略问题分别给出评分结果
+
+
+        【你的提问方式】：
+
+        {{reply}}
+
+
+        【老师的回答】：
+
+        {{user_input}}
+
+        '
+      reasoning_model: false
+      system: '你始终以FBA指导的教育决策支持助手身份进行思考与回应。
+
+        以可观察的行为与环境互动为核心视角
+
+        优先描述事实，避免心理动机、性格或意图推断
+
+        不补全未提供信息，证据不足时保持不确定
+
+        使用专业、冷静、非评价性语言
+
+        不使用标签化、道德化表述
+
+        不进行临床诊断或越权判断
+
+        明确区分观察、事实与假设
+
+        尊重学生隐私与职业伦理
+
+        行为准则：描述先于解释，证据先于判断，支持先于控制'
+      temperature: 0.0001
+      top_p: 0.0001
+      web_search:
+        enable: false
+  - id: node_059
+    type: code
+    name: 积极策略更新
+    inputs:
+    - name: score_1
+      type: integer
+      required: true
+    - name: additional_1
+      type: string
+      required: true
+    - name: score_2
+      type: integer
+      required: true
+    - name: additional_2
+      type: string
+      required: true
+    - name: po_score
+      type: list
+      required: true
+    - name: po_add
+      type: list
+      required: true
+    - name: po_2
+      type: list
+      required: true
+    outputs:
+    - name: po_score
+      type: list
+      required: false
+    - name: po_add
+      type: list
+      required: false
+    - name: po_score_str
+      type: string
+      required: false
+    - name: po_add_str
+      type: string
+      required: false
+    settings:
+      code: "def main(params):\n    # 创建一个字典作为输出变量\n    output_object = {\n        \"po_score\": [],\n        \"po_add\":\
+        \ [],\n        \"po_score_str\": \"\",\n        \"po_add_str\": \"\"\n    }\n    \n    # 获取输入数据\n    score_1 = params.get('score_1',\
+        \ 0)\n    score_2 = params.get('score_2', 0)\n    additional_1 = params.get('additional_1', '')\n    additional_2\
+        \ = params.get('additional_2', '')\n    \n    # 获取当前的po_score和po_add\n    po_score = params.get('po_score', [])\n\
+        \    po_add = params.get('po_add', [])\n    \n    # 确保po_score至少有9个元素\n    while len(po_score) < 9:\n        po_score.append(0)\n\
+        \    \n    # 确保po_add至少有6个元素\n    while len(po_add) < 6:\n        po_add.append('')\n    \n    # 获取需要填写的问题序号\n   \
+        \ po_2 = params.get('po_2', [1, 2])\n    while len(po_2) < 2:\n        po_2.append(1)\n    \n    # 定义题目与po_add索引的映射关系\n\
+        \    # 题号：po_add索引（只有有额外问题的题目才有映射）\n    question_to_add_index = {\n        4: 0,   # 问题4 -> po_add[0]\n        5:\
+        \ 1,   # 问题5 -> po_add[1]\n        6: 2,   # 问题6 -> po_add[2]\n        7: 3,   # 问题7 -> po_add[3]\n        8: 4, \
+        \  # 问题8 -> po_add[4]\n        9: 5    # 问题9 -> po_add[5]\n    }\n    \n    # ✅ 更稳的\"空值判断\"（避免 ' ', None, 'null' 等误覆盖）\n\
+        \    def is_blank(x) -> bool:\n        if x is None:\n            return True\n        if isinstance(x, str):\n  \
+        \          s = x.strip()\n            return s == \"\" or s.lower() in (\"null\", \"none\", \"undefined\")\n     \
+        \   return False\n    \n    # 创建po_score和po_add的副本用于更新\n    new_po_score = po_score[:]\n    new_po_add = po_add[:]\n\
+        \    \n    # 更新问题1的数据\n    question_1_num = po_2[0]\n    if 1 <= question_1_num <= 9:\n        # 大于0的score覆盖任意po_score；等于0的score无法覆盖\n\
+        \        if score_1 > 0:\n            new_po_score[question_1_num - 1] = score_1\n            \n            # 若该题有额外问题：只有当更新后po_score对应位置不为0时，才更新额外字段\n\
+        \            if question_1_num in question_to_add_index:\n                add_index = question_to_add_index[question_1_num]\n\
+        \                # 检查更新后的po_score对应位置是否不为0\n                if new_po_score[question_1_num - 1] != 0:\n          \
+        \          if not is_blank(additional_1):\n                        new_po_add[add_index] = additional_1\n    \n  \
+        \  # 更新问题2的数据\n    question_2_num = po_2[1]\n    if 1 <= question_2_num <= 9:\n        # 大于0的score覆盖任意po_score；等于0的score无法覆盖\n\
+        \        if score_2 > 0:\n            new_po_score[question_2_num - 1] = score_2\n            \n            # 若该题有额外问题：只有当更新后po_score对应位置不为0时，才更新额外字段\n\
+        \            if question_2_num in question_to_add_index:\n                add_index = question_to_add_index[question_2_num]\n\
+        \                # 检查更新后的po_score对应位置是否不为0\n                if new_po_score[question_2_num - 1] != 0:\n          \
+        \          if not is_blank(additional_2):\n                        new_po_add[add_index] = additional_2\n    \n  \
+        \  # 输出更新后的数据（数组形式）\n    output_object[\"po_score\"] = new_po_score\n    output_object[\"po_add\"] = new_po_add\n\
+        \    \n    # 将更新后的数据转换为字符串\n    import json\n    output_object[\"po_score_str\"] = json.dumps(new_po_score, ensure_ascii=False)\n\
+        \    output_object[\"po_add_str\"] = json.dumps(new_po_add, ensure_ascii=False)\n    \n    return output_object\n"
+      language: Python
+  - id: node_060
+    type: switch
+    name: 积极策略判断
+    inputs:
+    - {}
+    - {}
+    outputs: []
+  - id: node_061
+    type: code
+    name: 积极策略已填写和未填写
+    inputs:
+    - name: po_score
+      type: list
+      required: true
+    - name: po_add
+      type: list
+      required: true
+    outputs:
+    - name: filled_questions
+      type: string
+      required: false
+    - name: unfilled_questions
+      type: string
+      required: false
+    - name: unfilled_number
+      type: integer
+      required: false
+    - name: significant_number
+      type: integer
+      required: false
+    settings:
+      code: "def main(params):\n    # 创建一个字典作为输出变量\n    output_object = {\n        \"filled_questions\": \"\",\n        \"\
+        unfilled_questions\": \"\",\n        \"unfilled_number\": 0,\n        \"significant_number\": 0\n    }\n    \n   \
+        \ # 获取输入数据\n    scores = params.get('po_score', [])\n    # 确保scores数组至少有9个元素，不足的用0补充\n    while len(scores) < 9:\n\
+        \        scores.append(0)\n    \n    # 合并所有additional问题为字符串列表\n    po_add = params.get('po_add', [])\n    # 确保po_add数组至少有6个元素（题目4-9的额外问题），不足的用空字符串补充\n\
+        \    while len(po_add) < 6:\n        po_add.append('')\n    \n    # 定义所有问题的模板\n    questions = [\n        {\n    \
+        \        \"title\": \"该学生更喜欢和别人一起玩多于独自玩吗\",\n            \"options\": [\"非常少\", \"有点少\", \"差不多\", \"有点多\", \"非常多\"\
+        ],\n            \"has_additional\": False,\n            \"additional_condition\": None,\n            \"additional_index\"\
+        : None,\n            \"additional_template\": \"\"\n        },\n        {\n            \"title\": \"相比大多数孩子，其他同学邀请跟该学生玩耍、游戏的频率\"\
+        ,\n            \"options\": [\"非常少\", \"有点少\", \"差不多\", \"有点多\", \"非常多\"],\n            \"has_additional\": False,\n\
+        \            \"additional_condition\": None,\n            \"additional_index\": None,\n            \"additional_template\"\
+        : \"\"\n        },\n        {\n            \"title\": \"相比大多数孩子，其他同学邀请该学生参与团体活动的频率\",\n            \"options\": [\"\
+        非常少\", \"有点少\", \"差不多\", \"有点多\", \"非常多\"],\n            \"has_additional\": False,\n            \"additional_condition\"\
+        : None,\n            \"additional_index\": None,\n            \"additional_template\": \"\"\n        },\n        {\n\
+        \            \"title\": \"该学生使用积极策略来引起老师注意的频率\",\n            \"options\": [\"从不\", \"很少\", \"偶尔\", \"经常\", \"总是\"\
+        ],\n            \"has_additional\": True,\n            \"additional_condition\": 3,\n            \"additional_index\"\
+        : 0,\n            \"additional_template\": \"该学生使用的积极策略是{}\"\n        },\n        {\n            \"title\": \"该学生使用积极策略来引起同伴注意的频率\"\
+        ,\n            \"options\": [\"从不\", \"很少\", \"偶尔\", \"经常\", \"总是\"],\n            \"has_additional\": True,\n   \
+        \         \"additional_condition\": 3,\n            \"additional_index\": 1,\n            \"additional_template\"\
+        : \"该学生使用的积极策略是{}\"\n        },\n        {\n            \"title\": \"该学生使用积极策略来让老师知道他/她需要休息的频率\",\n            \"\
+        options\": [\"从不\", \"很少\", \"偶尔\", \"经常\", \"总是\"],\n            \"has_additional\": True,\n            \"additional_condition\"\
+        : 3,\n            \"additional_index\": 2,\n            \"additional_template\": \"该学生使用的积极策略是{}\"\n        },\n \
+        \       {\n            \"title\": \"该学生使用积极策略来让老师知道他/她想要参与喜欢的活动或玩某个东西的频率\",\n            \"options\": [\"从不\", \"\
+        很少\", \"偶尔\", \"经常\", \"总是\"],\n            \"has_additional\": True,\n            \"additional_condition\": 3,\n\
+        \            \"additional_index\": 3,\n            \"additional_template\": \"该学生使用的积极策略是{}\"\n        },\n      \
+        \  {\n            \"title\": \"该学生使用积极策略来让老师知道他/她想要自己平静一下的频率\",\n            \"options\": [\"从不\", \"很少\", \"偶尔\"\
+        , \"经常\", \"总是\"],\n            \"has_additional\": True,\n            \"additional_condition\": 3,\n            \"\
+        additional_index\": 4,\n            \"additional_template\": \"该学生使用的积极策略是{}\"\n        },\n        {\n          \
+        \  \"title\": \"该学生使用积极策略来让同伴知道他/她想要独处的频率\",\n            \"options\": [\"从不\", \"很少\", \"偶尔\", \"经常\", \"总是\"],\n\
+        \            \"has_additional\": True,\n            \"additional_condition\": 3,\n            \"additional_index\"\
+        : 5,\n            \"additional_template\": \"该学生使用的积极策略是{}\"\n        }\n    ]\n    \n    # 分类已填写和未填写的问题\n    filled_list\
+        \ = []\n    unfilled_list = []\n    significant_count = 0  # 统计得分≥3的已填写题目数量\n    \n    for i in range(9):\n      \
+        \  question = questions[i]\n        score = scores[i]\n        \n        # 判断问题是否完全填写\n        is_filled = False\n\
+        \        \n        if score > 0:\n            # 主问题有答案\n            if question[\"has_additional\"] and score >= question[\"\
+        additional_condition\"]:\n                # 需要额外答案\n                if po_add[question[\"additional_index\"]]:\n \
+        \                   is_filled = True\n            else:\n                # 不需要额外答案\n                is_filled = True\n\
+        \        \n        if is_filled:\n            # 构建陈述句\n            statement = f\"{i+1}. {question['title']}：{question['options'][score-1]}\"\
+        \n            \n            # 如果有额外信息，添加额外信息\n            if question[\"has_additional\"] and score >= question[\"\
+        additional_condition\"]:\n                additional_info = po_add[question[\"additional_index\"]]\n             \
+        \   if additional_info:\n                    statement += f\"\\n{question['additional_template'].format(additional_info)}\"\
+        \n            \n            filled_list.append(statement + \"\\n\")\n            \n            # 统计得分≥3的已填写题目\n  \
+        \          if score >= 3:\n                significant_count += 1\n        else:\n            # 构建未填写问题的展示（仅显示题目标题）\n\
+        \            unfilled_question = f\"{i+1}. {question['title']}\"\n            \n            unfilled_list.append(unfilled_question\
+        \ + \"\\n\")\n    \n    # 组装输出\n    output_object[\"filled_questions\"] = \"\\n\\n\".join(filled_list)\n    output_object[\"\
+        unfilled_questions\"] = \"\\n\\n\".join(unfilled_list)\n    output_object[\"unfilled_number\"] = len(unfilled_list)\n\
+        \    output_object[\"significant_number\"] = significant_count\n    \n    return output_object\n"
+      language: Python
+  - id: node_062
+    type: llm
+    name: 积极策略确定关键问题
+    inputs:
+    - name: filled
+      type: string
+      required: true
+    - name: unfilled
+      type: string
+      required: true
+    - name: basic
+      type: string
+      required: true
+    - name: conversation
+      type: string
+      required: true
+    outputs:
+    - name: number_1
+      type: integer
+      required: false
+      description: 第一个选择的问题题号
+    - name: number_2
+      type: integer
+      required: false
+      description: 第二个选择的问题题号
+    - name: output
+      type: string
+      required: false
+      description: 原因解释：选择该题号的原因
+    settings:
+      max_output_tokens: 32768
+      model_id: ${MODEL_ID}
+      model_name: ${MODEL_NAME}
+      model_type: common
+      model_url: ${MODEL_ENDPOINT}
+      model_value: ${MODEL_ID}
+      multimodal_model: false
+      prompt: '你是一个FBA指导的教育决策支持助手，你正在系统化的向老师收集一位问题学生的信息，以分析他产生问题行为的成因与功能。现在你进入到了“社交技能与积极策略”阶段，在该阶段下你需要评估学生的社交能力及积极行为模式。请判断【可选问题】中是否存在出现频率较高的选项，如果存在，请选出出现频率最高的两个选项
+
+
+        【评判标准】：
+
+        - 根据该学生的特点，有针对性的选择问题
+
+        - 当【已收集的社交技能与积极策略信息】少于【可选问题】时，必须选择问题
+
+        - 当【可选问题】少于【已收集的社交技能与积极策略信息】时，不选择问题
+
+
+        【该学生的问题行为相关信息】：
+
+        {{basic}}
+
+
+        【已收集的社交技能与积极策略信息】：
+
+        {{filled}}
+
+
+        【聊天记录】：
+
+        {{conversation}}
+
+
+        【可选问题】：
+
+        {{unfilled}}
+
+        '
+      reasoning_model: false
+      system: '你始终以FBA指导的教育决策支持助手身份进行思考与回应。
+
+        以可观察的行为与环境互动为核心视角
+
+        优先描述事实，避免心理动机、性格或意图推断
+
+        不补全未提供信息，证据不足时保持不确定
+
+        使用专业、冷静、非评价性语言
+
+        不使用标签化、道德化表述
+
+        不进行临床诊断或越权判断
+
+        明确区分观察、事实与假设
+
+        尊重学生隐私与职业伦理
+
+        行为准则：描述先于解释，证据先于判断，支持先于控制'
+      temperature: 0.0001
+      top_p: 0.0001
+      web_search:
+        enable: false
+  - id: node_063
+    type: chat
+    name: 信息收集3
+    inputs:
+    - name: unfilled_questions
+      type: string
+      required: false
+    outputs:
+    - name: query
+      type: string
+      required: false
+    - name: chatflowHistory
+      type: string
+      required: false
+    - name: fileUrls
+      type: list
+      required: false
+    - name: fileNames
+      type: list
+      required: false
+    - name: number
+      type: integer
+      required: false
+      description: 用户选择的选项题号。如果没有选择问题选项或完全无关，返回0
+    settings:
+      model:
+        chat_history: true
+        max_output_tokens: 1024
+        model_id: ${MODEL_ID}
+        model_name: ${MODEL_NAME}
+        model_type: common
+        model_url: ${MODEL_ENDPOINT}
+        model_value: ${MODEL_ID}
+        reasoning_model: false
+        system: ''
+        temperature: 0.0001
+      params:
+      - desc: 用户选择的选项题号。如果没有选择问题选项或完全无关，返回0
+        meta:
+          editable: true
+          id: ref_0003
+          isDefaultParam: false
+          isModelOutputsConfigParam: false
+          isStreamingParam: false
+        name: number
+        required: false
+        type: integer
+        value:
+          type: generated
+      question_template: '为了更好了解该学生在班级中的社交互动与沟通方式，请您根据平时观察，从以下项目中选出您认为【出现频率最高】的一项。如果您觉得没有哪一项特别突出，也可以不进行选择（回复一个数字即可）。
+
+
+        {{unfilled_questions}}
+
+        '
+      streaming: true
+  - id: node_064
+    type: switch
+    name: 用户是否需要补充问题3
+    inputs:
+    - {}
+    outputs: []
+  - id: node_065
+    type: code
+    name: 列表转字符串3
+    inputs:
+    - name: po_score
+      type: list
+      required: true
+    - name: po_add
+      type: list
+      required: true
+    outputs:
+    - name: po_score
+      type: string
+      required: false
+    - name: po_add
+      type: string
+      required: false
+    settings:
+      code: "def main(params):\n    # 创建一个字典作为输出变量\n    output_object = {\n        \"po_score\": \"\",\n        \"po_add\"\
+        : \"\"\n    }\n    \n    # 获取输入数据\n    po_score = params.get('po_score', [])\n    po_add = params.get('po_add', [])\n\
+        \    \n    # 将po_score转换为字符串\n    # 方式1：转换为JSON格式的字符串\n    import json\n    output_object[\"po_score\"] = json.dumps(po_score,\
+        \ ensure_ascii=False)\n    output_object[\"po_add\"] = json.dumps(po_add, ensure_ascii=False)\n    \n    return output_object\n"
+      language: Python
+  - id: node_066
+    type: code
+    name: 确定补充问题3
+    inputs:
+    - name: number1
+      type: integer
+      required: true
+    - name: number2
+      type: integer
+      required: true
+    outputs:
+    - name: po_2
+      type: string
+      required: false
+    settings:
+      code: "def main(params):\n    # 创建一个字典作为输出变量\n    output_object = {\n        \"po_2\": \"\"\n    }\n    \n    # 获取输入参数\n\
+        \    number1 = params.get('number1', None)\n    number2 = params.get('number2', None)\n    \n    # 创建po_2列表\n    po_2\
+        \ = []\n    \n    # 处理number1：如果为空值，添加0，否则添加该值\n    if number1 is None or number1 == '' or number1 == 0:\n       \
+        \ po_2.append(0)\n    else:\n        po_2.append(number1)\n    \n    # 处理number2：如果为空值，添加0，否则添加该值\n    if number2\
+        \ is None or number2 == '' or number2 == 0:\n        po_2.append(0)\n    else:\n        po_2.append(number2)\n\n\n\
+        \    # 将列表转换为字符串输出\n    # 格式：[值1, 值2, -1]\n    output_object[\"po_2\"] = str(po_2)\n    \n    return output_object"
+      language: Python
+  - id: node_067
+    type: code
+    name: 用户确定补充问题3
+    inputs:
+    - name: number1
+      type: integer
+      required: true
+    - name: number2
+      type: integer
+      required: true
+      literal_value: 0
+    outputs:
+    - name: po_2
+      type: string
+      required: false
+    settings:
+      code: "def main(params):\n    # 创建一个字典作为输出变量\n    output_object = {\n        \"po_2\": \"\"\n    }\n    \n    # 获取输入参数\n\
+        \    number1 = params.get('number1', None)\n    number2 = params.get('number2', None)\n    \n    # 创建po_2列表\n    po_2\
+        \ = []\n    \n    # 处理number1：如果为空值，添加0，否则添加该值\n    if number1 is None or number1 == '' or number1 == 0:\n       \
+        \ po_2.append(0)\n    else:\n        po_2.append(number1)\n    \n    # 处理number2：如果为空值，添加0，否则添加该值\n    if number2\
+        \ is None or number2 == '' or number2 == 0:\n        po_2.append(0)\n    else:\n        po_2.append(number2)\n\n \
+        \   # 在列表末尾添加-1\n    po_2.append(-1)\n    \n    # 将列表转换为字符串输出\n    # 格式：[值1, 值2, -1]\n    output_object[\"po_2\"]\
+        \ = str(po_2)\n    \n    return output_object"
+      language: Python
+  - id: node_068
+    type: merge_variable
+    name: 补充问题聚合3
+    inputs: []
+    outputs:
+    - name: Group1
+      type: string
+      required: false
+    settings:
+      groups:
+      - members:
+        - content:
+            ref_node_id: node_066
+            ref_var_name: po_2
+          type: ref
+        - content:
+            ref_node_id: node_067
+            ref_var_name: po_2
+          type: ref
+        - content:
+            ref_node_id: node_004
+            ref_var_name: po_2
+          type: ref
+        name: Group1
+      strategy: first_non_empty
+  - id: node_069
+    type: memory
+    name: 积极策略转阶段
+    inputs:
+    - name: stage
+      type: string
+      required: true
+      literal_value: '5'
+    - name: po_score
+      type: string
+      required: true
+    - name: po_add
+      type: string
+      required: true
+    - name: un
+      type: string
+      required: true
+      literal_value: '1'
+    outputs:
+    - name: isSuccess
+      type: boolean
+      required: true
+    - name: stage
+      type: string
+      required: false
+    - name: po_score
+      type: string
+      required: false
+    - name: po_add
+      type: string
+      required: false
+    - name: un
+      type: string
+      required: false
+    settings:
+      mod: write
+  - id: node_070
+    type: memory
+    name: 积极策略存储
+    inputs:
+    - name: po_2
+      type: string
+      required: true
+    - name: po_score
+      type: string
+      required: true
+    - name: po_add
+      type: string
+      required: true
+    outputs:
+    - name: isSuccess
+      type: boolean
+      required: true
+    - name: po_2
+      type: string
+      required: false
+    - name: po_score
+      type: string
+      required: false
+    - name: po_add
+      type: string
+      required: false
+    settings:
+      mod: write
+  - id: node_071
+    type: code
+    name: 指定问题3
+    inputs:
+    - name: po_score
+      type: list
+      required: true
+    - name: po_2
+      type: string
+      required: true
+    outputs:
+    - name: question_1
+      type: string
+      required: false
+    - name: question_2
+      type: string
+      required: false
+    settings:
+      code: "import json\n\ndef main(params):\n    # 创建一个字典作为输出变量\n    output_object = {\n        \"question_1\": \"\",\n\
+        \        \"question_2\": \"\"\n    }\n    \n    # 获取输入数据\n    scores = params.get('po_score', [])\n    # 确保scores数组至少有9个元素，不足的用0补充\n\
+        \    while len(scores) < 9:\n        scores.append(0)\n    \n    # ① 默认值\n    default_po_2 = [1, 2]  # 改为 [1, 2] 更合理\n\
+        \n    # ② 取入参\n    po_2_raw = params.get('po_2', '')\n\n    # ③ 尝试转换 po_2\n    try:\n        # 如果 po_2 已经是列表，直接使用\n\
+        \        if isinstance(po_2_raw, list):\n            po_2 = [int(x) for x in po_2_raw]\n        # 如果是字符串，尝试 JSON 解析\n\
+        \        elif isinstance(po_2_raw, str) and po_2_raw:\n            po_2 = json.loads(po_2_raw)\n            if not\
+        \ isinstance(po_2, list):\n                raise ValueError(\"po_2 must be a list\")\n            po_2 = [int(x) for\
+        \ x in po_2]\n        else:\n            po_2 = default_po_2\n    except Exception:\n        po_2 = default_po_2\n\
+        \n    # 确保po_2至少有2个元素\n    while len(po_2) < 2:\n        po_2.append(1)\n    \n    # 定义所有问题的模板\n    questions = [\n\
+        \        {\n            \"title\": \"- 该学生更喜欢和别人一起玩多于独自玩吗？\",\n            \"options\": \"1.非常少 2.有点少 3.差不多 4.有点多\
+        \ 5.非常多\",\n            \"has_additional\": False,\n            \"additional_condition\": None,\n            \"additional_question\"\
+        : \"\"\n        },\n        {\n            \"title\": \"- 相比大多数孩子，其他同学是否经常地邀请跟该学生玩耍、游戏？\",\n            \"options\"\
+        : \"1.非常少 2.有点少 3.差不多 4.有点多 5.非常多\",\n            \"has_additional\": False,\n            \"additional_condition\"\
+        : None,\n            \"additional_question\": \"\"\n        },\n        {\n            \"title\": \"- 相比大多数孩子，其他同学经常邀请该学生参与团体活动？\"\
+        ,\n            \"options\": \"1.非常少 2.有点少 3.差不多 4.有点多 5.非常多\",\n            \"has_additional\": False,\n         \
+        \   \"additional_condition\": None,\n            \"additional_question\": \"\"\n        },\n        {\n          \
+        \  \"title\": \"- 该学生使用积极策略来引起您的注意的频率有多大？\",\n            \"options\": \"1.从不 2.很少 3.偶尔 4.经常 5.总是\",\n           \
+        \ \"has_additional\": True,\n            \"additional_condition\": 3,\n            \"additional_question\": \"额外问题（得分大于等于3时）：该学生会使用哪些积极策略来引起您的注意？\"\
+        \n        },\n        {\n            \"title\": \"- 该学生使用积极策略来引起同伴的注意的频率有多大？\",\n            \"options\": \"1.从不 2.很少\
+        \ 3.偶尔 4.经常 5.总是\",\n            \"has_additional\": True,\n            \"additional_condition\": 3,\n           \
+        \ \"additional_question\": \"额外问题（得分大于等于3时）：该学生会使用哪些积极策略来引起同伴的注意？\"\n        },\n        {\n            \"title\"\
+        : \"- 该学生使用积极策略来让您知道他/她需要休息的频率有多大？\",\n            \"options\": \"1.从不 2.很少 3.偶尔 4.经常 5.总是\",\n            \"has_additional\"\
+        : True,\n            \"additional_condition\": 3,\n            \"additional_question\": \"额外问题（得分大于等于3时）：该学生会使用哪些积极策略来让您知道他/她需要休息？\"\
+        \n        },\n        {\n            \"title\": \"- 该学生使用积极策略来让您知道他/她想要参与喜欢的活动或玩某个东西的频率有多大？\",\n            \"options\"\
+        : \"1.从不 2.很少 3.偶尔 4.经常 5.总是\",\n            \"has_additional\": True,\n            \"additional_condition\": 3,\n\
+        \            \"additional_question\": \"额外问题（得分大于等于3时）：该学生会使用哪些积极策略来让您知道他/她想要参与喜欢的活动或玩某个东西？\"\n        },\n      \
+        \  {\n            \"title\": \"- 该学生使用积极策略来让您知道他/她想要自己平静一下的频率有多大？\",\n            \"options\": \"1.从不 2.很少 3.偶尔 4.经常\
+        \ 5.总是\",\n            \"has_additional\": True,\n            \"additional_condition\": 3,\n            \"additional_question\"\
+        : \"额外问题（得分大于等于3时）：该学生会使用哪些积极策略来让您知道他/她想要自己平静一下？\"\n        },\n        {\n            \"title\": \"- 该学生使用积极策略来让同伴知道他/她想要独处？\"\
+        ,\n            \"options\": \"1.从不 2.很少 3.偶尔 4.经常 5.总是\",\n            \"has_additional\": True,\n            \"additional_condition\"\
+        : 3,\n            \"additional_question\": \"额外问题（得分大于等于3时）：该学生会使用哪些积极策略来让同伴知道他/她想要独处？\"\n        }\n    ]\n    \n\
+        \    # 根据po_2调用指定的题目\n    for i, question_key in enumerate(['question_1', 'question_2']):\n        # 获取题目编号\n    \
+        \    question_num = po_2[i]\n        \n        # 如果po_2对应位置为0，question为空\n        if question_num == 0:\n        \
+        \    output_object[question_key] = \"\"\n            continue\n        \n        # 将题目编号转换为索引（po_2中的值是1-9，需要转换为索引0-8）\n\
+        \        question_index = question_num - 1\n        \n        # 确保索引在有效范围内\n        if question_index < 0 or question_index\
+        \ >= 9:\n            output_object[question_key] = \"\"\n            continue\n        \n        question = questions[question_index]\n\
+        \        score = scores[question_index]\n        \n        # 构建题目内容\n        question_content = f\"{question['title']}\\\
+        n{question['options']}\"\n        \n        # 如果该题目已有得分，显示得分\n        if score > 0:\n            question_content\
+        \ += f\"\\n当前得分：{score}\"\n        \n        # 如果有额外问题，添加额外问题部分\n        if question[\"has_additional\"]:\n      \
+        \      question_content += f\"\\n\\n{question['additional_question']}\"\n            \n            # 如果已有得分且满足额外问题条件，提示需要填写额外问题\n\
+        \            if score > 0 and score >= question[\"additional_condition\"]:\n                question_content += \"\
+        \\n【此额外问题需要填写】\"\n        \n        output_object[question_key] = question_content\n    \n    return output_object\n\
+        \n"
+      language: Python
+  - id: node_072
+    type: text_processor
+    name: 积极策略提示词
+    inputs:
+    - name: String1
+      type: string
+      required: true
+    - name: String2
+      type: string
+      required: true
+    - name: String3
+      type: string
+      required: true
+    - name: String5
+      type: string
+      required: true
+    - name: String6
+      type: string
+      required: true
+    - name: String7
+      type: string
+      required: true
+    outputs:
+    - name: output
+      type: string
+      required: false
+    settings:
+      combine:
+        message_template: '你是一个FBA指导的教育决策支持助手，你正在系统化的向老师收集一位问题学生的信息，以分析他产生问题行为的成因与功能。 现在你进入到了“社交技能与积极策略”阶段，在该阶段下你需要评估学生的社交能力及积极行为模式。现在请你向老师提问“指定问题”。
+
+
+          【注意要点】：
+
+          - 先回应老师的发言，运用你的专业知识分析当前已有的信息，然后才开始正式提问
+
+          - 根据【指定问题】进行提问，不可以向老师提问除了“指定问题”以外的任何问题
+
+          - 在每次回复中，你都必须要提问老师1~2个问题，但是不能提问2个以上的问题
+
+          - 以"孩子"来代指该同学，不要主动提到该同学的任何私密信息
+
+          - 绝对不要提到你是 AI 或你在扮演角色
+
+
+          【你对老师的要求】：
+
+          - 引导老师对该学生的行为描述具体化，避免使用模糊词汇，推荐老师使用可观察的动作、语言。
+
+          - 引导老师从事实出发，不做主观猜测。
+
+          - 引导老师客观评价该同学，不添加过多主观情感。
+
+
+          【语言与语气】：
+
+          - 语言内容丰富，有深刻的洞察，有专业性
+
+          - 语气温暖、和蔼、有耐心
+
+          - 提问形式自然，和正常聊天一样
+
+          - 即使指定问题中存在分数选项也不出现数字或让老师打分
+
+          - 不用括号补充任何内容
+
+
+          【该学生的问题行为相关信息】：
+
+          {{String1}}
+
+
+          【该学生已有的生活背景信息】：
+
+          {{String2}}
+
+
+          【你的上一个问题】：
+
+          {{String5}}
+
+
+          【老师对上一个问题的回答】：
+
+          {{String6}}
+
+
+          【你的专业知识】：
+
+          暂定
+
+
+          【指定问题】：
+
+          {{String3}}
+
+          {{String7}}'
+      separate:
+        symbol:
+          custom_symbol_list: []
+          used_symbol_list: []
+      type: combine
+  - id: node_073
+    type: llm
+    name: 反馈生成
+    inputs:
+    - name: bg
+      type: string
+      required: true
+    - name: re
+      type: string
+      required: true
+    - name: po
+      type: string
+      required: true
+    - name: basic_text
+      type: string
+      required: true
+    outputs:
+    - name: outcome
+      type: string
+      required: false
+    settings:
+      max_output_tokens: 32768
+      model_id: ${MODEL_ID}
+      model_name: ${MODEL_NAME}
+      model_type: common
+      model_url: ${MODEL_ENDPOINT}
+      model_value: ${MODEL_ID}
+      multimodal_model: false
+      prompt: '你是一个FBA指导的教育决策支持助手，正在为一名学生进行功能性行为评估（FBA）。请你从应用行为分析（ABA）视角出发，阅读并整合以下信息，对学生的问题行为进行系统评估。在分析过程中，你可以考虑环境因素以及可能存在的生理或情境背景变量，但不得将心理动机、性格特质或主观意图作为行为功能的依据。请在此基础上，结合专业知识，完成以下
+        FBA 评估任务。
+
+
+        【FBA评估任务目标】：
+
+        一、问题行为描述
+
+        • 详细阐述该学生的问题行为
+
+        • 包括：
+
+        - 行为发生的具体触发情境
+
+        - 行为的可观察、可测量表现形式
+
+        - 行为发生的频率或相对常见程度
+
+        二、行为功能分析（核心任务）
+
+        • 基于记录表信息，分析并识别问题行为的”前因（A）—行为（B）—后果（C）“链条
+
+        • 明确区分：
+
+        - 基于记录表的直接证据
+
+        - 基于行为模式的合理假设（需明确标注为假设）
+
+        • 明确指出每个主要问题行为对应的行为功能，
+
+        功能判断仅限以下四类之一或其组合：
+
+        - 获得注意
+
+        - 获得有形物或活动
+
+        - 逃避或回避任务/情境
+
+        - 自动强化/感觉刺激
+
+        三、基于功能的干预建议
+
+        • 在明确行为功能的基础上，为该学生制定干预方案
+
+        • 干预策略需遵循以下原则：
+
+        - 与已识别的行为功能保持一致
+
+        - 优先教授功能等价但更合适的替代行为
+
+        - 同时考虑环境调整、前因干预和后果策略
+
+        • 目标是：
+
+        - 减少问题行为发生频率
+
+        - 改善课堂秩序
+
+        - 提升学生的社会适应能力
+
+
+        【内容要求】
+
+        • 不要在内容中直接提及记录表
+
+        • 可参考相关案例分析思路和专业知识，但不得直接提及参考过程
+
+        • 内容需体现专业性、逻辑清晰、分析深入
+
+        • 语言通俗易懂，必要时可使用简短示例辅助说明
+
+        • 全文统一以 “孩子” 代称该学生
+
+        • 不使用心理动机或价值判断
+
+        • 不使用性格标签
+
+        • 不假设主观意图
+
+        • 不将合理假设表述为既定事实
+
+        • 仅基于 ABC 模型与可观察结果推断行为功能
+
+
+        【记录表】：
+
+        基本信息与问题行为：
+
+        {{basic_text}}
+
+
+        生活背景：
+
+        {{bg}}
+
+
+        问题行为触发情境与反应：
+
+        {{re}}
+
+
+        社交技能与积极策略：
+
+        {{po}}
+
+
+        【相关专业知识】：
+
+        功能性行为评估（FBA）定义：
+
+        FBA 是一种通过分析 前因（A）—行为（B）—后果（C），
+
+        来判断某个反复出现的行为在现实中实现了什么结果的过程。
+
+
+        FBA 的目标：
+
+        识别行为功能，并为设计功能等价的替代行为和有效干预策略提供依据，而非单纯压制或消除行为。
+
+
+        《功能（Function）定义》：
+
+        功能 = 行为发生后，个体通过该行为获得或避免的结果，使该行为得以维持。
+
+        功能是客观的环境结果，而非动机、情绪或性格推断。
+
+        在功能性行为评估（FBA）中，行为功能指行为发生后，环境发生了什么变化，从而使该行为得以维持。所有反复出现的问题行为，其功能仅限以下四类之一或其组合。
+
+
+        一、获得注意（Attention）
+
+        功能含义
+
+        • 行为的结果是：
+
+        - 孩子通过该行为获得了他人的关注或互动。
+
+        • 这里的“注意”包括但不限于：
+
+        - 语言回应（提醒、批评、安慰、劝说）
+
+        - 非语言反应（目光、靠近、表情）
+
+        - 情绪性互动（生气、焦虑、关心）
+
+        关键判断点
+
+        • 行为发生后，是否有人立刻回应孩子
+
+        • 即使是负面关注（训斥、制止），只要增加了互动，都可能起强化作用
+
+        常见情境特征
+
+        • 行为多发生在成人忙碌、关注他人时
+
+        • 当成人持续忽略时，行为可能升级
+
+        示例（用于理解，不作为心理解释）
+
+        • 行为：孩子在课堂上插话
+
+        • 后果：老师立刻停下教学进行提醒
+
+        • 功能：获得注意
+
+
+        二、获得有形物或活动（Tangible）
+
+        功能含义
+
+        • 行为的结果是：
+
+        - 孩子通过该行为获得了某个具体的物品、活动或特权。
+
+        • 包括：
+
+        - 实体物品（玩具、文具、零食、电子设备）
+
+        - 活动机会（自由活动、玩游戏、外出）
+
+        - 特殊待遇（额外时间、优先权）
+
+        关键判断点
+
+        • 行为是否直接或间接导致“得到想要的东西/活动”
+
+        • 即使成人本意是“安抚”，只要结果是给予物品或活动，即构成功能
+
+        常见情境特征
+
+        • 行为多出现在被拒绝、等待或限制情境中
+
+        • 当获得物品后，行为迅速停止
+
+        示例
+
+        • 行为：孩子哭闹
+
+        • 后果：老师允许其提前下课
+
+        • 功能：获得活动（Tangible）
+
+
+        三、逃避或回避任务/情境（Escape）
+
+        功能含义
+
+        • 行为的结果是：
+
+        - 孩子通过该行为减少、推迟或完全避免了不喜欢或有难度的任务、要求或情境。
+
+        • 逃避对象可能包括：
+
+        - 学习任务（作业、测验、书写）
+
+        - 社交情境（发言、小组合作）
+
+        - 规则或要求（等待、服从指令）
+
+        关键判断点
+
+        • 行为发生后，任务是否被暂停、降低难度或取消
+
+        • 行为是否在特定任务出现时高频发生
+
+        常见情境特征
+
+        • 行为多与任务难度、持续时间或要求强度相关
+
+        • 任务一旦撤除，行为明显减少或停止
+
+        示例
+
+        • 行为：孩子拒绝配合并大声喊叫
+
+        • 后果：老师让其暂时不用完成作业
+
+        • 功能：逃避任务
+
+
+        四、自动强化 / 感觉刺激（Automatic / Sensory）
+
+        功能含义
+
+        • 行为的结果是：
+
+        - 行为本身就产生了感觉上的满足或缓解，而不依赖他人或外部环境的反应。
+
+        • 这种行为的强化来源是：
+
+        - 感觉刺激（触觉、听觉、本体觉等）
+
+        - 紧张缓解或生理舒适感
+
+        关键判断点
+
+        • 行为在独处或无他人反应时仍持续发生
+
+        • 行为不因他人回应的变化而明显改变
+
+        常见情境特征
+
+        • 行为高度重复、节律性强
+
+        • 在多种环境中均可能出现
+
+        示例
+
+        • 行为：孩子反复摇晃身体
+
+        • 后果：无明显外界变化，但行为持续
+
+        • 功能：自动强化
+
+
+        五、重要补充
+
+        • 同一行为在不同情境下可能具有不同功能
+
+        • 一个行为也可能同时服务于多个功能
+
+        • 功能判断必须基于行为发生后的客观结果，而非主观推测
+
+
+        六、专业判断标准
+
+        判断功能时，可反问：
+
+        “如果这个行为不再发生，孩子会失去什么，或不得不面对什么？”
+
+        这个“失去或面对的结果”，即行为的功能。
+
+        '
+      reasoning_model: false
+      system: '你始终以FBA指导的教育决策支持助手身份进行思考与回应。
+
+        你的语言、判断方式与专业立场应符合学校心理服务与行为评估的职业规范。
+
+
+        一、专业视角
+
+        你以行为与环境的互动作为理解学生行为的主要视角
+
+        你优先关注可观察、可描述、可记录的信息
+
+        你将情境、规则、要求、他人反应视为影响行为的重要因素
+
+        你避免将学生行为直接归因为性格、品格或内在动机
+
+
+        二、思考方式
+
+        你在回应前会区分：
+
+        已明确提供的信息
+
+        尚未提供或信息不足的部分
+
+        你不会用常识或经验去补全未出现的信息
+
+        当证据不足时，你会保持克制，而非给出确定性结论
+
+
+        三、语言风格
+
+
+        你的语言应：
+
+        专业、冷静、尊重
+
+        清晰而不过度学术化
+
+        避免评价性、道德化或情绪化表达
+
+        你不使用标签性词汇（如“懒惰”“叛逆”“故意”）
+
+        你倾向使用描述性语言，而非解释性语言
+
+
+        四、角色边界
+
+        你不进行临床诊断或替代医学判断
+
+        你不揣测学生的主观意图或心理动机
+
+        你不做超出学校心理服务职责范围的承诺或判断
+
+        你明确区分专业观察与个人推测
+
+
+        五、职业伦理
+
+        你始终保持公正、中立的立场
+
+        你尊重学生的尊严与隐私
+
+        你对不确定信息保持谨慎态度
+
+        你更倾向于支持、理解与建设性引导，而非控制或惩罚
+
+
+        六、行为准则（核心）
+
+        在任何情境下，你都应体现一名合格FBA指导的教育决策支持助手的专业克制：
+
+        先描述，再理解；
+
+        先证据，再判断；
+
+        先支持，再改变。'
+      temperature: 0.0001
+      top_p: 0.0001
+      web_search:
+        enable: false
+  edges:
+  - source: node_001
+    target: node_037
+  - source: node_003
+    target: node_011
+  - source: node_004
+    target: node_005
+  - source: node_005
+    target: node_016
+  - source: node_006
+    target: node_013
+  - source: node_007
+    target: node_020
+  - source: node_008
+    target: node_007
+    source_port: '-1'
+  - source: node_008
+    target: node_018
+    source_port: '0'
+  - source: node_009
+    target: node_002
+  - source: node_010
+    target: node_012
+  - source: node_011
+    target: node_010
+  - source: node_012
+    target: node_008
+  - source: node_013
+    target: node_023
+  - source: node_014
+    target: node_015
+  - source: node_015
+    target: node_073
+  - source: node_016
+    target: node_003
+    source_port: '0'
+  - source: node_016
+    target: node_025
+    source_port: '1'
+  - source: node_016
+    target: node_038
+    source_port: '2'
+  - source: node_016
+    target: node_056
+    source_port: '3'
+  - source: node_016
+    target: node_056
+    source_port: '-1'
+  - source: node_017
+    target: node_019
+  - source: node_018
+    target: node_017
+  - source: node_019
+    target: node_009
+  - source: node_020
+    target: node_019
+  - source: node_021
+    target: node_033
+  - source: node_022
+    target: node_006
+  - source: node_023
+    target: node_031
+  - source: node_024
+    target: node_026
+  - source: node_025
+    target: node_022
+  - source: node_026
+    target: node_034
+    source_port: '0'
+  - source: node_026
+    target: node_035
+    source_port: '-1'
+  - source: node_027
+    target: node_019
+  - source: node_028
+    target: node_019
+  - source: node_029
+    target: node_028
+  - source: node_030
+    target: node_032
+  - source: node_031
+    target: node_021
+    source_port: '0'
+  - source: node_031
+    target: node_024
+    source_port: '1'
+  - source: node_031
+    target: node_035
+    source_port: '-1'
+  - source: node_032
+    target: node_036
+  - source: node_033
+    target: node_030
+  - source: node_034
+    target: node_030
+  - source: node_035
+    target: node_029
+  - source: node_036
+    target: node_027
+  - source: node_037
+    target: node_004
+  - source: node_038
+    target: node_039
+  - source: node_039
+    target: node_040
+  - source: node_040
+    target: node_041
+  - source: node_041
+    target: node_043
+  - source: node_042
+    target: node_044
+    source_port: '0'
+  - source: node_042
+    target: node_045
+    source_port: '1'
+  - source: node_042
+    target: node_047
+    source_port: '-1'
+  - source: node_043
+    target: node_042
+  - source: node_044
+    target: node_049
+  - source: node_045
+    target: node_046
+  - source: node_046
+    target: node_047
+    source_port: '-1'
+  - source: node_046
+    target: node_048
+    source_port: '0'
+  - source: node_047
+    target: node_051
+  - source: node_048
+    target: node_050
+  - source: node_049
+    target: node_050
+  - source: node_050
+    target: node_052
+  - source: node_051
+    target: node_053
+  - source: node_052
+    target: node_054
+  - source: node_053
+    target: node_019
+  - source: node_054
+    target: node_055
+  - source: node_055
+    target: node_019
+  - source: node_056
+    target: node_057
+  - source: node_057
+    target: node_058
+  - source: node_058
+    target: node_059
+  - source: node_059
+    target: node_061
+  - source: node_060
+    target: node_062
+    source_port: '0'
+  - source: node_060
+    target: node_063
+    source_port: '1'
+  - source: node_060
+    target: node_065
+    source_port: '-1'
+  - source: node_061
+    target: node_060
+  - source: node_062
+    target: node_066
+  - source: node_063
+    target: node_064
+  - source: node_064
+    target: node_065
+    source_port: '-1'
+  - source: node_064
+    target: node_067
+    source_port: '0'
+  - source: node_065
+    target: node_069
+  - source: node_066
+    target: node_068
+  - source: node_067
+    target: node_068
+  - source: node_068
+    target: node_070
+  - source: node_069
+    target: node_014
+  - source: node_070
+    target: node_071
+  - source: node_071
+    target: node_072
+  - source: node_072
+    target: node_019
+  - source: node_073
+    target: node_002

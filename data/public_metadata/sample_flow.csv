@@ -1,0 +1,10 @@
+evaluation,analysis_population,selection_rule,n
+source,anonymous_teacher_rating_snapshot,all newly numbered teacher records,137
+report_quality_evaluation,teacher_quality_ratings,complete ratings on all six quality dimensions,121
+report_quality_evaluation,expert_final_average_scores,arithmetic mean of each expert's paired Round 1 and Round 2 scores,4
+report_quality_evaluation,expert_round_1,complete ratings on all six quality dimensions in Round 1,4
+report_quality_evaluation,expert_round_2,complete ratings on all six quality dimensions in Round 2,4
+practitioner_referenced_similarity_evaluation,practitioner_reference_teachers,complete ratings on all six practitioner-FBA similarity dimensions from 75 distinct teachers,75
+practitioner_referenced_similarity_evaluation,quality_complete_practitioner_reference_records,complete practitioner-FBA similarity block plus complete quality block,59
+matched_general_purpose_ai_comparison,teachers,complete ratings on all six general-purpose-AI similarity dimensions,62
+matched_general_purpose_ai_comparison,quality_and_general_purpose_ai_similarity_ratings,complete general-purpose-AI similarity block plus complete quality block,62

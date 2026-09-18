@@ -1,0 +1,123 @@
+evaluation,measure,score_set,dimension,rating,n,proportion
+Evaluation 1,Teacher report quality,not_applicable,Antecedent identification,1.0,0,0.0
+Evaluation 1,Teacher report quality,not_applicable,Antecedent identification,2.0,2,0.0165289256198347
+Evaluation 1,Teacher report quality,not_applicable,Antecedent identification,3.0,8,0.0661157024793388
+Evaluation 1,Teacher report quality,not_applicable,Antecedent identification,4.0,80,0.6611570247933884
+Evaluation 1,Teacher report quality,not_applicable,Antecedent identification,5.0,31,0.256198347107438
+Evaluation 1,Teacher report quality,not_applicable,Consequence identification,1.0,1,0.0082644628099173
+Evaluation 1,Teacher report quality,not_applicable,Consequence identification,2.0,3,0.024793388429752
+Evaluation 1,Teacher report quality,not_applicable,Consequence identification,3.0,10,0.0826446280991735
+Evaluation 1,Teacher report quality,not_applicable,Consequence identification,4.0,56,0.4628099173553719
+Evaluation 1,Teacher report quality,not_applicable,Consequence identification,5.0,51,0.4214876033057851
+Evaluation 1,Teacher report quality,not_applicable,Setting-event identification,1.0,1,0.0082644628099173
+Evaluation 1,Teacher report quality,not_applicable,Setting-event identification,2.0,3,0.024793388429752
+Evaluation 1,Teacher report quality,not_applicable,Setting-event identification,3.0,12,0.0991735537190082
+Evaluation 1,Teacher report quality,not_applicable,Setting-event identification,4.0,63,0.5206611570247934
+Evaluation 1,Teacher report quality,not_applicable,Setting-event identification,5.0,42,0.3471074380165289
+Evaluation 1,Teacher report quality,not_applicable,Core function hypothesis,1.0,0,0.0
+Evaluation 1,Teacher report quality,not_applicable,Core function hypothesis,2.0,2,0.0165289256198347
+Evaluation 1,Teacher report quality,not_applicable,Core function hypothesis,3.0,12,0.0991735537190082
+Evaluation 1,Teacher report quality,not_applicable,Core function hypothesis,4.0,60,0.4958677685950413
+Evaluation 1,Teacher report quality,not_applicable,Core function hypothesis,5.0,47,0.3884297520661157
+Evaluation 1,Teacher report quality,not_applicable,Replacement-behavior recommendation,1.0,2,0.0165289256198347
+Evaluation 1,Teacher report quality,not_applicable,Replacement-behavior recommendation,2.0,1,0.0082644628099173
+Evaluation 1,Teacher report quality,not_applicable,Replacement-behavior recommendation,3.0,13,0.1074380165289256
+Evaluation 1,Teacher report quality,not_applicable,Replacement-behavior recommendation,4.0,62,0.512396694214876
+Evaluation 1,Teacher report quality,not_applicable,Replacement-behavior recommendation,5.0,43,0.3553719008264462
+Evaluation 1,Teacher report quality,not_applicable,Overall rating,1.0,1,0.0082644628099173
+Evaluation 1,Teacher report quality,not_applicable,Overall rating,2.0,1,0.0082644628099173
+Evaluation 1,Teacher report quality,not_applicable,Overall rating,3.0,7,0.0578512396694214
+Evaluation 1,Teacher report quality,not_applicable,Overall rating,4.0,87,0.71900826446281
+Evaluation 1,Teacher report quality,not_applicable,Overall rating,5.0,25,0.2066115702479339
+Evaluation 1,Similarity to practitioner-conducted FBA,not_applicable,Antecedent identification,1.0,0,0.0
+Evaluation 1,Similarity to practitioner-conducted FBA,not_applicable,Antecedent identification,2.0,0,0.0
+Evaluation 1,Similarity to practitioner-conducted FBA,not_applicable,Antecedent identification,3.0,5,0.0666666666666666
+Evaluation 1,Similarity to practitioner-conducted FBA,not_applicable,Antecedent identification,4.0,57,0.76
+Evaluation 1,Similarity to practitioner-conducted FBA,not_applicable,Antecedent identification,5.0,13,0.1733333333333333
+Evaluation 1,Similarity to practitioner-conducted FBA,not_applicable,Consequence identification,1.0,1,0.0133333333333333
+Evaluation 1,Similarity to practitioner-conducted FBA,not_applicable,Consequence identification,2.0,0,0.0
+Evaluation 1,Similarity to practitioner-conducted FBA,not_applicable,Consequence identification,3.0,7,0.0933333333333333
+Evaluation 1,Similarity to practitioner-conducted FBA,not_applicable,Consequence identification,4.0,50,0.6666666666666666
+Evaluation 1,Similarity to practitioner-conducted FBA,not_applicable,Consequence identification,5.0,17,0.2266666666666666
+Evaluation 1,Similarity to practitioner-conducted FBA,not_applicable,Setting-event identification,1.0,0,0.0
+Evaluation 1,Similarity to practitioner-conducted FBA,not_applicable,Setting-event identification,2.0,0,0.0
+Evaluation 1,Similarity to practitioner-conducted FBA,not_applicable,Setting-event identification,3.0,12,0.16
+Evaluation 1,Similarity to practitioner-conducted FBA,not_applicable,Setting-event identification,4.0,41,0.5466666666666666
+Evaluation 1,Similarity to practitioner-conducted FBA,not_applicable,Setting-event identification,5.0,22,0.2933333333333333
+Evaluation 1,Similarity to practitioner-conducted FBA,not_applicable,Core function hypothesis,1.0,0,0.0
+Evaluation 1,Similarity to practitioner-conducted FBA,not_applicable,Core function hypothesis,2.0,0,0.0
+Evaluation 1,Similarity to practitioner-conducted FBA,not_applicable,Core function hypothesis,3.0,9,0.12
+Evaluation 1,Similarity to practitioner-conducted FBA,not_applicable,Core function hypothesis,4.0,49,0.6533333333333333
+Evaluation 1,Similarity to practitioner-conducted FBA,not_applicable,Core function hypothesis,5.0,17,0.2266666666666666
+Evaluation 1,Similarity to practitioner-conducted FBA,not_applicable,Replacement-behavior recommendation,1.0,0,0.0
+Evaluation 1,Similarity to practitioner-conducted FBA,not_applicable,Replacement-behavior recommendation,2.0,0,0.0
+Evaluation 1,Similarity to practitioner-conducted FBA,not_applicable,Replacement-behavior recommendation,3.0,11,0.1466666666666666
+Evaluation 1,Similarity to practitioner-conducted FBA,not_applicable,Replacement-behavior recommendation,4.0,42,0.56
+Evaluation 1,Similarity to practitioner-conducted FBA,not_applicable,Replacement-behavior recommendation,5.0,22,0.2933333333333333
+Evaluation 1,Similarity to practitioner-conducted FBA,not_applicable,Overall rating,1.0,0,0.0
+Evaluation 1,Similarity to practitioner-conducted FBA,not_applicable,Overall rating,2.0,0,0.0
+Evaluation 1,Similarity to practitioner-conducted FBA,not_applicable,Overall rating,3.0,8,0.1066666666666666
+Evaluation 1,Similarity to practitioner-conducted FBA,not_applicable,Overall rating,4.0,62,0.8266666666666667
+Evaluation 1,Similarity to practitioner-conducted FBA,not_applicable,Overall rating,5.0,5,0.0666666666666666
+Evaluation 2,Expert report quality,Arithmetic mean of rounds,Antecedent identification,1.0,0,0.0
+Evaluation 2,Expert report quality,Arithmetic mean of rounds,Antecedent identification,2.0,0,0.0
+Evaluation 2,Expert report quality,Arithmetic mean of rounds,Antecedent identification,3.0,3,0.75
+Evaluation 2,Expert report quality,Arithmetic mean of rounds,Antecedent identification,4.0,1,0.25
+Evaluation 2,Expert report quality,Arithmetic mean of rounds,Antecedent identification,5.0,0,0.0
+Evaluation 2,Expert report quality,Arithmetic mean of rounds,Consequence identification,1.0,1,0.25
+Evaluation 2,Expert report quality,Arithmetic mean of rounds,Consequence identification,2.0,0,0.0
+Evaluation 2,Expert report quality,Arithmetic mean of rounds,Consequence identification,3.0,1,0.25
+Evaluation 2,Expert report quality,Arithmetic mean of rounds,Consequence identification,4.0,1,0.25
+Evaluation 2,Expert report quality,Arithmetic mean of rounds,Consequence identification,5.0,1,0.25
+Evaluation 2,Expert report quality,Arithmetic mean of rounds,Setting-event identification,1.0,0,0.0
+Evaluation 2,Expert report quality,Arithmetic mean of rounds,Setting-event identification,2.0,1,0.25
+Evaluation 2,Expert report quality,Arithmetic mean of rounds,Setting-event identification,3.0,2,0.5
+Evaluation 2,Expert report quality,Arithmetic mean of rounds,Setting-event identification,4.0,1,0.25
+Evaluation 2,Expert report quality,Arithmetic mean of rounds,Setting-event identification,5.0,0,0.0
+Evaluation 2,Expert report quality,Arithmetic mean of rounds,Core function hypothesis,1.0,0,0.0
+Evaluation 2,Expert report quality,Arithmetic mean of rounds,Core function hypothesis,2.0,0,0.0
+Evaluation 2,Expert report quality,Arithmetic mean of rounds,Core function hypothesis,3.0,1,0.25
+Evaluation 2,Expert report quality,Arithmetic mean of rounds,Core function hypothesis,4.0,2,0.5
+Evaluation 2,Expert report quality,Arithmetic mean of rounds,Core function hypothesis,5.0,1,0.25
+Evaluation 2,Expert report quality,Arithmetic mean of rounds,Replacement-behavior recommendation,1.0,0,0.0
+Evaluation 2,Expert report quality,Arithmetic mean of rounds,Replacement-behavior recommendation,2.0,1,0.25
+Evaluation 2,Expert report quality,Arithmetic mean of rounds,Replacement-behavior recommendation,3.0,0,0.0
+Evaluation 2,Expert report quality,Arithmetic mean of rounds,Replacement-behavior recommendation,4.0,2,0.5
+Evaluation 2,Expert report quality,Arithmetic mean of rounds,Replacement-behavior recommendation,5.0,1,0.25
+Evaluation 2,Expert report quality,Arithmetic mean of rounds,Overall rating,1.0,0,0.0
+Evaluation 2,Expert report quality,Arithmetic mean of rounds,Overall rating,2.0,0,0.0
+Evaluation 2,Expert report quality,Arithmetic mean of rounds,Overall rating,3.0,2,0.5
+Evaluation 2,Expert report quality,Arithmetic mean of rounds,Overall rating,3.5,1,0.25
+Evaluation 2,Expert report quality,Arithmetic mean of rounds,Overall rating,4.0,0,0.0
+Evaluation 2,Expert report quality,Arithmetic mean of rounds,Overall rating,4.2,1,0.25
+Evaluation 2,Expert report quality,Arithmetic mean of rounds,Overall rating,5.0,0,0.0
+Evaluation 3,Similarity to general-purpose AI,not_applicable,Antecedent identification,1.0,2,0.032258064516129
+Evaluation 3,Similarity to general-purpose AI,not_applicable,Antecedent identification,2.0,22,0.3548387096774194
+Evaluation 3,Similarity to general-purpose AI,not_applicable,Antecedent identification,3.0,21,0.3387096774193548
+Evaluation 3,Similarity to general-purpose AI,not_applicable,Antecedent identification,4.0,16,0.2580645161290322
+Evaluation 3,Similarity to general-purpose AI,not_applicable,Antecedent identification,5.0,1,0.0161290322580645
+Evaluation 3,Similarity to general-purpose AI,not_applicable,Consequence identification,1.0,3,0.0483870967741935
+Evaluation 3,Similarity to general-purpose AI,not_applicable,Consequence identification,2.0,23,0.3709677419354839
+Evaluation 3,Similarity to general-purpose AI,not_applicable,Consequence identification,3.0,22,0.3548387096774194
+Evaluation 3,Similarity to general-purpose AI,not_applicable,Consequence identification,4.0,12,0.1935483870967742
+Evaluation 3,Similarity to general-purpose AI,not_applicable,Consequence identification,5.0,2,0.032258064516129
+Evaluation 3,Similarity to general-purpose AI,not_applicable,Setting-event identification,1.0,8,0.1290322580645161
+Evaluation 3,Similarity to general-purpose AI,not_applicable,Setting-event identification,2.0,18,0.2903225806451613
+Evaluation 3,Similarity to general-purpose AI,not_applicable,Setting-event identification,3.0,22,0.3548387096774194
+Evaluation 3,Similarity to general-purpose AI,not_applicable,Setting-event identification,4.0,12,0.1935483870967742
+Evaluation 3,Similarity to general-purpose AI,not_applicable,Setting-event identification,5.0,2,0.032258064516129
+Evaluation 3,Similarity to general-purpose AI,not_applicable,Core function hypothesis,1.0,8,0.1290322580645161
+Evaluation 3,Similarity to general-purpose AI,not_applicable,Core function hypothesis,2.0,23,0.3709677419354839
+Evaluation 3,Similarity to general-purpose AI,not_applicable,Core function hypothesis,3.0,14,0.2258064516129032
+Evaluation 3,Similarity to general-purpose AI,not_applicable,Core function hypothesis,4.0,15,0.2419354838709677
+Evaluation 3,Similarity to general-purpose AI,not_applicable,Core function hypothesis,5.0,2,0.032258064516129
+Evaluation 3,Similarity to general-purpose AI,not_applicable,Replacement-behavior recommendation,1.0,10,0.1612903225806451
+Evaluation 3,Similarity to general-purpose AI,not_applicable,Replacement-behavior recommendation,2.0,16,0.2580645161290322
+Evaluation 3,Similarity to general-purpose AI,not_applicable,Replacement-behavior recommendation,3.0,18,0.2903225806451613
+Evaluation 3,Similarity to general-purpose AI,not_applicable,Replacement-behavior recommendation,4.0,17,0.2741935483870967
+Evaluation 3,Similarity to general-purpose AI,not_applicable,Replacement-behavior recommendation,5.0,1,0.0161290322580645
+Evaluation 3,Similarity to general-purpose AI,not_applicable,Overall rating,1.0,4,0.064516129032258
+Evaluation 3,Similarity to general-purpose AI,not_applicable,Overall rating,2.0,16,0.2580645161290322
+Evaluation 3,Similarity to general-purpose AI,not_applicable,Overall rating,3.0,33,0.532258064516129
+Evaluation 3,Similarity to general-purpose AI,not_applicable,Overall rating,4.0,7,0.1129032258064516
+Evaluation 3,Similarity to general-purpose AI,not_applicable,Overall rating,5.0,2,0.032258064516129

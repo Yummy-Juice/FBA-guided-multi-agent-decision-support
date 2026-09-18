@@ -1,0 +1,4 @@
+score_set,n_experts,number_of_dimensions,s_cvi_ave,threshold
+Round 1,4,6,0.4583333333333333,rating >= 4
+Round 2,4,6,0.4166666666666667,rating >= 4
+Arithmetic mean of rounds,4,6,0.4583333333333333,rating >= 4

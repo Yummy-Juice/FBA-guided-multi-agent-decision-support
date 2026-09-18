@@ -1,0 +1,49 @@
+evaluation,test_family,contrast_or_dimension,n,statistic,degrees_of_freedom,effect_size,raw_p,holm_p,alternative_or_note
+Evaluation 1,Similarity midpoint tests,Antecedent identification,75,19.910101221180067,74,2.299020459928202,9.567556622330767e-32,5.429991676265091e-31,greater
+Evaluation 1,Similarity midpoint tests,Consequence identification,75,14.321361718912218,74,1.6536884087151942,2.5007149660933626e-23,2.5007149660933626e-23,greater
+Evaluation 1,Similarity midpoint tests,Setting-event identification,75,14.77242328786711,74,1.7057725123666343,4.532892990942491e-24,9.065785981884984e-24,greater
+Evaluation 1,Similarity midpoint tests,Core function hypothesis,75,16.44080612514297,74,1.8984207684091483,1.0249917061641712e-26,4.099966824656685e-26,greater
+Evaluation 1,Similarity midpoint tests,Replacement-behavior recommendation,75,15.247936751940044,74,1.7606800776637948,7.7036830276858875e-25,2.3111049083057667e-24,greater
+Evaluation 1,Similarity midpoint tests,Overall rating,75,19.927820061972664,74,2.3010664554284688,9.049986127108484e-32,5.429991676265091e-31,greater
+Evaluation 1,Similarity pairwise domain tests,Antecedent identification minus Consequence identification,75,0.1480959973194785,74,0.0171006527836614,0.8826698121230154,1.0,
+Evaluation 1,Similarity pairwise domain tests,Antecedent identification minus Setting-event identification,75,-0.2996762006611777,74,-0.034603627024291,0.765264291294005,1.0,
+Evaluation 1,Similarity pairwise domain tests,Antecedent identification minus Core function hypothesis,75,0.0,74,0.0,1.0,1.0,
+Evaluation 1,Similarity pairwise domain tests,Antecedent identification minus Replacement-behavior recommendation,75,-0.4906943152950793,74,-0.0566604990050866,0.6250946399177072,1.0,
+Evaluation 1,Similarity pairwise domain tests,Antecedent identification minus Overall rating,75,2.481568922903346,74,0.2865468971301713,0.0153507120843612,0.2149099691810569,
+Evaluation 1,Similarity pairwise domain tests,Consequence identification minus Setting-event identification,75,-0.3951178855226824,74,-0.0456242835136312,0.693892552554323,1.0,
+Evaluation 1,Similarity pairwise domain tests,Consequence identification minus Core function hypothesis,75,-0.1551543400158838,74,-0.0179156799948218,0.8771220758178737,1.0,
+Evaluation 1,Similarity pairwise domain tests,Consequence identification minus Replacement-behavior recommendation,75,-0.5747670335511101,74,-0.0663683803084112,0.5671922221320239,1.0,
+Evaluation 1,Similarity pairwise domain tests,Consequence identification minus Overall rating,75,1.9235384061671343,74,0.2221110833194357,0.0582592479812701,0.6408517277939718,
+Evaluation 1,Similarity pairwise domain tests,Setting-event identification minus Core function hypothesis,75,0.2609762548860682,74,0.0301349422021143,0.7948357398618754,1.0,
+Evaluation 1,Similarity pairwise domain tests,Setting-event identification minus Replacement-behavior recommendation,75,-0.144909851032358,74,-0.0167327483003521,0.8851760106686787,1.0,
+Evaluation 1,Similarity pairwise domain tests,Setting-event identification minus Overall rating,75,2.4084344679212,74,0.2781020576759755,0.0185116343991293,0.2406512471886818,
+Evaluation 1,Similarity pairwise domain tests,Core function hypothesis minus Replacement-behavior recommendation,75,-0.4660698821307317,74,-0.053817114381871,0.6425344936426399,1.0,
+Evaluation 1,Similarity pairwise domain tests,Core function hypothesis minus Overall rating,75,2.16857812689259,74,0.2504058330640343,0.0333289593162401,0.3999475117948818,
+Evaluation 1,Similarity pairwise domain tests,Replacement-behavior recommendation minus Overall rating,75,2.65731889685291,74,0.3068407560841414,0.0096446863936811,0.1446702959052174,
+Evaluation 3,Similarity midpoint tests,Antecedent identification,62,-1.1339764121417186,61,-0.1440151483572186,0.1306206555872333,0.1306206555872333,less
+Evaluation 3,Similarity midpoint tests,Consequence identification,62,-1.783482097603296,61,-0.2265024528981847,0.0397413009790187,0.1038442388837752,less
+Evaluation 3,Similarity midpoint tests,Setting-event identification,62,-2.218403647002922,61,-0.2817375449070568,0.0151298007746981,0.0756490038734907,less
+Evaluation 3,Similarity midpoint tests,Core function hypothesis,62,-2.3453040008978783,61,-0.2978539059680855,0.0111402397223156,0.0668414383338939,less
+Evaluation 3,Similarity midpoint tests,Replacement-behavior recommendation,62,-1.982588648219559,61,-0.25178901011302,0.0259610597209438,0.1038442388837752,less
+Evaluation 3,Similarity midpoint tests,Overall rating,62,-1.937925580499816,61,-0.2461167948403945,0.0286323763759178,0.1038442388837752,less
+Evaluation 3,Similarity pairwise domain tests,Antecedent identification minus Consequence identification,62,0.7783829493841286,61,0.0988547334265672,0.4393522310488245,1.0,
+Evaluation 3,Similarity pairwise domain tests,Antecedent identification minus Setting-event identification,62,1.2981074196414475,61,0.1648598071543534,0.1991372418466143,1.0,
+Evaluation 3,Similarity pairwise domain tests,Antecedent identification minus Core function hypothesis,62,1.4468663749493276,61,0.1837522133708698,0.1530538298144603,1.0,
+Evaluation 3,Similarity pairwise domain tests,Antecedent identification minus Replacement-behavior recommendation,62,1.054317813443144,61,0.1338984962058424,0.2958956455310077,1.0,
+Evaluation 3,Similarity pairwise domain tests,Antecedent identification minus Overall rating,62,0.7783829493841284,61,0.0988547334265671,0.4393522310488246,1.0,
+Evaluation 3,Similarity pairwise domain tests,Consequence identification minus Setting-event identification,62,0.6712056217777501,61,0.0852431992090161,0.5046233781033468,1.0,
+Evaluation 3,Similarity pairwise domain tests,Consequence identification minus Core function hypothesis,62,0.8948164564636167,61,0.1136418036127397,0.3744024848032479,1.0,
+Evaluation 3,Similarity pairwise domain tests,Consequence identification minus Replacement-behavior recommendation,62,0.5866401669443514,61,0.0745033757053455,0.5596102374152416,1.0,
+Evaluation 3,Similarity pairwise domain tests,Consequence identification minus Overall rating,62,0.0,61,0.0,1.0,1.0,
+Evaluation 3,Similarity pairwise domain tests,Setting-event identification minus Core function hypothesis,62,0.2652499854601702,61,0.0336867818402403,0.7917112253177675,1.0,
+Evaluation 3,Similarity pairwise domain tests,Setting-event identification minus Replacement-behavior recommendation,62,-0.1270169204054871,61,-0.0161311650226699,0.8993447795109527,1.0,
+Evaluation 3,Similarity pairwise domain tests,Setting-event identification minus Overall rating,62,-0.7982953003394715,61,-0.101383604526768,0.4277961773398588,1.0,
+Evaluation 3,Similarity pairwise domain tests,Core function hypothesis minus Replacement-behavior recommendation,62,-0.4017749505005881,61,-0.0510254697390699,0.6892538883029404,1.0,
+Evaluation 3,Similarity pairwise domain tests,Core function hypothesis minus Overall rating,62,-1.0214112674688836,61,-0.1297193606879737,0.3110934882649347,1.0,
+Evaluation 3,Similarity pairwise domain tests,Replacement-behavior recommendation minus Overall rating,62,-0.6293678543617366,61,-0.0799297974337779,0.5314583945910197,1.0,
+Evaluation 2,Expert round-change tests,Antecedent identification,4,-0.5,,median change=0.0; increased=0; decreased=1; unchanged=3,1.0,1.0,Exploratory paired description; n=4 experts.
+Evaluation 2,Expert round-change tests,Consequence identification,4,-0.5,,median change=0.0; increased=0; decreased=1; unchanged=3,1.0,1.0,Exploratory paired description; n=4 experts.
+Evaluation 2,Expert round-change tests,Setting-event identification,4,0.5,,median change=0.0; increased=1; decreased=0; unchanged=3,1.0,1.0,Exploratory paired description; n=4 experts.
+Evaluation 2,Expert round-change tests,Core function hypothesis,4,0.5,,median change=0.0; increased=1; decreased=0; unchanged=3,1.0,1.0,Exploratory paired description; n=4 experts.
+Evaluation 2,Expert round-change tests,Replacement-behavior recommendation,4,0.5,,median change=0.0; increased=1; decreased=0; unchanged=3,1.0,1.0,Exploratory paired description; n=4 experts.
+Evaluation 2,Expert round-change tests,Overall rating,4,-0.05,,median change=0.0; increased=0; decreased=1; unchanged=3,1.0,1.0,Exploratory paired description; n=4 experts.

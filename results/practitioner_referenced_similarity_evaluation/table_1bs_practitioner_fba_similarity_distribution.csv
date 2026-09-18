@@ -1,0 +1,31 @@
+study,sample,measure,score_set,dimension,rating,n,proportion
+practitioner_referenced_similarity_evaluation,Practitioner-referenced teacher records,Perceived similarity to human-conducted FBA,not_applicable,Antecedent identification,1,0,0.0
+practitioner_referenced_similarity_evaluation,Practitioner-referenced teacher records,Perceived similarity to human-conducted FBA,not_applicable,Antecedent identification,2,0,0.0
+practitioner_referenced_similarity_evaluation,Practitioner-referenced teacher records,Perceived similarity to human-conducted FBA,not_applicable,Antecedent identification,3,5,0.06666666666666667
+practitioner_referenced_similarity_evaluation,Practitioner-referenced teacher records,Perceived similarity to human-conducted FBA,not_applicable,Antecedent identification,4,57,0.76
+practitioner_referenced_similarity_evaluation,Practitioner-referenced teacher records,Perceived similarity to human-conducted FBA,not_applicable,Antecedent identification,5,13,0.17333333333333334
+practitioner_referenced_similarity_evaluation,Practitioner-referenced teacher records,Perceived similarity to human-conducted FBA,not_applicable,Consequence identification,1,1,0.013333333333333334
+practitioner_referenced_similarity_evaluation,Practitioner-referenced teacher records,Perceived similarity to human-conducted FBA,not_applicable,Consequence identification,2,0,0.0
+practitioner_referenced_similarity_evaluation,Practitioner-referenced teacher records,Perceived similarity to human-conducted FBA,not_applicable,Consequence identification,3,7,0.09333333333333334
+practitioner_referenced_similarity_evaluation,Practitioner-referenced teacher records,Perceived similarity to human-conducted FBA,not_applicable,Consequence identification,4,50,0.6666666666666666
+practitioner_referenced_similarity_evaluation,Practitioner-referenced teacher records,Perceived similarity to human-conducted FBA,not_applicable,Consequence identification,5,17,0.22666666666666666
+practitioner_referenced_similarity_evaluation,Practitioner-referenced teacher records,Perceived similarity to human-conducted FBA,not_applicable,Setting-event identification,1,0,0.0
+practitioner_referenced_similarity_evaluation,Practitioner-referenced teacher records,Perceived similarity to human-conducted FBA,not_applicable,Setting-event identification,2,0,0.0
+practitioner_referenced_similarity_evaluation,Practitioner-referenced teacher records,Perceived similarity to human-conducted FBA,not_applicable,Setting-event identification,3,12,0.16
+practitioner_referenced_similarity_evaluation,Practitioner-referenced teacher records,Perceived similarity to human-conducted FBA,not_applicable,Setting-event identification,4,41,0.5466666666666666
+practitioner_referenced_similarity_evaluation,Practitioner-referenced teacher records,Perceived similarity to human-conducted FBA,not_applicable,Setting-event identification,5,22,0.29333333333333333
+practitioner_referenced_similarity_evaluation,Practitioner-referenced teacher records,Perceived similarity to human-conducted FBA,not_applicable,Core function hypothesis,1,0,0.0
+practitioner_referenced_similarity_evaluation,Practitioner-referenced teacher records,Perceived similarity to human-conducted FBA,not_applicable,Core function hypothesis,2,0,0.0
+practitioner_referenced_similarity_evaluation,Practitioner-referenced teacher records,Perceived similarity to human-conducted FBA,not_applicable,Core function hypothesis,3,9,0.12
+practitioner_referenced_similarity_evaluation,Practitioner-referenced teacher records,Perceived similarity to human-conducted FBA,not_applicable,Core function hypothesis,4,49,0.6533333333333333
+practitioner_referenced_similarity_evaluation,Practitioner-referenced teacher records,Perceived similarity to human-conducted FBA,not_applicable,Core function hypothesis,5,17,0.22666666666666666
+practitioner_referenced_similarity_evaluation,Practitioner-referenced teacher records,Perceived similarity to human-conducted FBA,not_applicable,Replacement-behavior recommendation,1,0,0.0
+practitioner_referenced_similarity_evaluation,Practitioner-referenced teacher records,Perceived similarity to human-conducted FBA,not_applicable,Replacement-behavior recommendation,2,0,0.0
+practitioner_referenced_similarity_evaluation,Practitioner-referenced teacher records,Perceived similarity to human-conducted FBA,not_applicable,Replacement-behavior recommendation,3,11,0.14666666666666667
+practitioner_referenced_similarity_evaluation,Practitioner-referenced teacher records,Perceived similarity to human-conducted FBA,not_applicable,Replacement-behavior recommendation,4,42,0.56
+practitioner_referenced_similarity_evaluation,Practitioner-referenced teacher records,Perceived similarity to human-conducted FBA,not_applicable,Replacement-behavior recommendation,5,22,0.29333333333333333
+practitioner_referenced_similarity_evaluation,Practitioner-referenced teacher records,Perceived similarity to human-conducted FBA,not_applicable,Overall rating,1,0,0.0
+practitioner_referenced_similarity_evaluation,Practitioner-referenced teacher records,Perceived similarity to human-conducted FBA,not_applicable,Overall rating,2,0,0.0
+practitioner_referenced_similarity_evaluation,Practitioner-referenced teacher records,Perceived similarity to human-conducted FBA,not_applicable,Overall rating,3,8,0.10666666666666667
+practitioner_referenced_similarity_evaluation,Practitioner-referenced teacher records,Perceived similarity to human-conducted FBA,not_applicable,Overall rating,4,62,0.8266666666666667
+practitioner_referenced_similarity_evaluation,Practitioner-referenced teacher records,Perceived similarity to human-conducted FBA,not_applicable,Overall rating,5,5,0.06666666666666667

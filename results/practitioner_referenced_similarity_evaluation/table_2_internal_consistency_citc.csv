@@ -1,0 +1,13 @@
+scale,dimension,n_listwise_complete,number_of_items,cronbach_alpha,corrected_item_total_correlation,citc_p_value,citc_at_least_0_30
+Teacher quality ratings,Antecedent identification,59,6,0.4911173833637724,0.23698885565590513,0.07072507656976854,False
+Teacher quality ratings,Consequence identification,59,6,0.4911173833637724,0.21196796656643435,0.10702866078061651,False
+Teacher quality ratings,Setting-event identification,59,6,0.4911173833637724,0.22615519663665418,0.08500503969651418,False
+Teacher quality ratings,Core function hypothesis,59,6,0.4911173833637724,0.2847721312208216,0.028811463914022173,False
+Teacher quality ratings,Replacement-behavior recommendation,59,6,0.4911173833637724,0.28167017047105475,0.03067797595205679,False
+Teacher quality ratings,Overall rating,59,6,0.4911173833637724,0.2620387106899768,0.04497645148625674,False
+Practitioner-FBA similarity ratings,Antecedent identification,75,6,0.6464534978087972,0.2849914195885836,0.013202096434591548,False
+Practitioner-FBA similarity ratings,Consequence identification,75,6,0.6464534978087972,0.3669306428326639,0.0012033705603643628,True
+Practitioner-FBA similarity ratings,Setting-event identification,75,6,0.6464534978087972,0.2650636255743696,0.021548293160890512,False
+Practitioner-FBA similarity ratings,Core function hypothesis,75,6,0.6464534978087972,0.31977589298679393,0.005163347792975438,True
+Practitioner-FBA similarity ratings,Replacement-behavior recommendation,75,6,0.6464534978087972,0.46451887621470717,2.6903745751948072e-05,True
+Practitioner-FBA similarity ratings,Overall rating,75,6,0.6464534978087972,0.6788903048409256,2.1708105968404312e-11,True

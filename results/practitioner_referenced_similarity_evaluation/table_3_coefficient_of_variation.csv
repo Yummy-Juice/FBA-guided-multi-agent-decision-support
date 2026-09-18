@@ -1,0 +1,13 @@
+scale,dimension,n,mean,sd,coefficient_of_variation
+Teacher quality ratings,Antecedent identification,59,4.3559322033898304,0.5173777338292621,0.11877543305807962
+Teacher quality ratings,Consequence identification,59,4.4576271186440675,0.5966005392134929,0.13383814377793188
+Teacher quality ratings,Setting-event identification,59,4.305084745762712,0.6229583837358196,0.14470293165517067
+Teacher quality ratings,Core function hypothesis,59,4.288135593220339,0.6960689486663565,0.162324379333261
+Teacher quality ratings,Replacement-behavior recommendation,59,4.4576271186440675,0.5669651177710502,0.1271898933402736
+Teacher quality ratings,Overall rating,59,4.254237288135593,0.5116983331054185,0.12027968786143302
+Practitioner-FBA similarity ratings,Antecedent identification,75,4.1066666666666665,0.48136442713573224,0.11721536375058415
+Practitioner-FBA similarity ratings,Consequence identification,75,4.093333333333334,0.6611483321593703,0.16151832218877124
+Practitioner-FBA similarity ratings,Setting-event identification,75,4.133333333333334,0.6644105970267493,0.16074449928066514
+Practitioner-FBA similarity ratings,Core function hypothesis,75,4.1066666666666665,0.58294066577982,0.14194983744638473
+Practitioner-FBA similarity ratings,Replacement-behavior recommendation,75,4.1466666666666665,0.6512634982433332,0.1570571137242765
+Practitioner-FBA similarity ratings,Overall rating,75,3.96,0.41719785959908046,0.10535299484825264

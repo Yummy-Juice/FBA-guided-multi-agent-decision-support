@@ -1,0 +1,31 @@
+study,sample,measure,score_set,dimension,rating,n,proportion
+matched_general_purpose_ai_comparison,Teachers,Teacher-perceived quality ratings,not_applicable,Antecedent identification,1,0,0.0
+matched_general_purpose_ai_comparison,Teachers,Teacher-perceived quality ratings,not_applicable,Antecedent identification,2,2,0.03225806451612903
+matched_general_purpose_ai_comparison,Teachers,Teacher-perceived quality ratings,not_applicable,Antecedent identification,3,7,0.11290322580645161
+matched_general_purpose_ai_comparison,Teachers,Teacher-perceived quality ratings,not_applicable,Antecedent identification,4,44,0.7096774193548387
+matched_general_purpose_ai_comparison,Teachers,Teacher-perceived quality ratings,not_applicable,Antecedent identification,5,9,0.14516129032258066
+matched_general_purpose_ai_comparison,Teachers,Teacher-perceived quality ratings,not_applicable,Consequence identification,1,1,0.016129032258064516
+matched_general_purpose_ai_comparison,Teachers,Teacher-perceived quality ratings,not_applicable,Consequence identification,2,3,0.04838709677419355
+matched_general_purpose_ai_comparison,Teachers,Teacher-perceived quality ratings,not_applicable,Consequence identification,3,7,0.11290322580645161
+matched_general_purpose_ai_comparison,Teachers,Teacher-perceived quality ratings,not_applicable,Consequence identification,4,30,0.4838709677419355
+matched_general_purpose_ai_comparison,Teachers,Teacher-perceived quality ratings,not_applicable,Consequence identification,5,21,0.3387096774193548
+matched_general_purpose_ai_comparison,Teachers,Teacher-perceived quality ratings,not_applicable,Setting-event identification,1,1,0.016129032258064516
+matched_general_purpose_ai_comparison,Teachers,Teacher-perceived quality ratings,not_applicable,Setting-event identification,2,3,0.04838709677419355
+matched_general_purpose_ai_comparison,Teachers,Teacher-perceived quality ratings,not_applicable,Setting-event identification,3,7,0.11290322580645161
+matched_general_purpose_ai_comparison,Teachers,Teacher-perceived quality ratings,not_applicable,Setting-event identification,4,32,0.5161290322580645
+matched_general_purpose_ai_comparison,Teachers,Teacher-perceived quality ratings,not_applicable,Setting-event identification,5,19,0.3064516129032258
+matched_general_purpose_ai_comparison,Teachers,Teacher-perceived quality ratings,not_applicable,Core function hypothesis,1,0,0.0
+matched_general_purpose_ai_comparison,Teachers,Teacher-perceived quality ratings,not_applicable,Core function hypothesis,2,1,0.016129032258064516
+matched_general_purpose_ai_comparison,Teachers,Teacher-perceived quality ratings,not_applicable,Core function hypothesis,3,7,0.11290322580645161
+matched_general_purpose_ai_comparison,Teachers,Teacher-perceived quality ratings,not_applicable,Core function hypothesis,4,31,0.5
+matched_general_purpose_ai_comparison,Teachers,Teacher-perceived quality ratings,not_applicable,Core function hypothesis,5,23,0.3709677419354839
+matched_general_purpose_ai_comparison,Teachers,Teacher-perceived quality ratings,not_applicable,Replacement-behavior recommendation,1,2,0.03225806451612903
+matched_general_purpose_ai_comparison,Teachers,Teacher-perceived quality ratings,not_applicable,Replacement-behavior recommendation,2,1,0.016129032258064516
+matched_general_purpose_ai_comparison,Teachers,Teacher-perceived quality ratings,not_applicable,Replacement-behavior recommendation,3,11,0.1774193548387097
+matched_general_purpose_ai_comparison,Teachers,Teacher-perceived quality ratings,not_applicable,Replacement-behavior recommendation,4,34,0.5483870967741935
+matched_general_purpose_ai_comparison,Teachers,Teacher-perceived quality ratings,not_applicable,Replacement-behavior recommendation,5,14,0.22580645161290322
+matched_general_purpose_ai_comparison,Teachers,Teacher-perceived quality ratings,not_applicable,Overall rating,1,1,0.016129032258064516
+matched_general_purpose_ai_comparison,Teachers,Teacher-perceived quality ratings,not_applicable,Overall rating,2,1,0.016129032258064516
+matched_general_purpose_ai_comparison,Teachers,Teacher-perceived quality ratings,not_applicable,Overall rating,3,5,0.08064516129032258
+matched_general_purpose_ai_comparison,Teachers,Teacher-perceived quality ratings,not_applicable,Overall rating,4,47,0.7580645161290323
+matched_general_purpose_ai_comparison,Teachers,Teacher-perceived quality ratings,not_applicable,Overall rating,5,8,0.12903225806451613

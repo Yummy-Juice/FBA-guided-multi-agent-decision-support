@@ -1,0 +1,5 @@
+expert_record_id,quality_antecedent_identification,quality_consequence_identification,quality_setting_event_identification,quality_core_function_hypothesis,quality_replacement_behavior_recommendation,quality_overall_rating
+E001,3,3,3,4,4,3.5
+E002,4,5,2,5,5,4.2
+E003,3,1,4,3,4,3.0
+E004,3,4,3,4,2,3.0

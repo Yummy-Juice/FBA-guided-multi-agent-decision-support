@@ -1,0 +1,5 @@
+source_artifact,role,public_package_action
+teacher_analysis_source,Source for the 137 teacher rating records,Released as one anonymous rating table with new P001-P137 identifiers and rating fields only
+expert_round_source,Source for two paired rounds from four experts,Released as anonymous E001-E004 round records plus arithmetic-average final scores
+ethics_approval_certificate,Three-page approval certificate BNU202601050010,Included under docs/ethics with public document metadata
+private_agent_workflow,Source workflow export,Released as a sanitized documentation blueprint without deployment identifiers credentials signed links or private retrieval content

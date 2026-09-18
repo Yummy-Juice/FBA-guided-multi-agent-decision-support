@@ -1,0 +1,13 @@
+scale,dimension,n_listwise_complete,number_of_items,cronbach_alpha,corrected_item_total_correlation,citc_p_value,citc_at_least_0_30
+Teacher quality ratings,Antecedent identification,62,6,0.8288778914839777,0.5725296212223611,1.161547123076309e-06,True
+Teacher quality ratings,Consequence identification,62,6,0.8288778914839777,0.6553443218803502,7.480517949508389e-09,True
+Teacher quality ratings,Setting-event identification,62,6,0.8288778914839777,0.5650238824067065,1.7167932986745197e-06,True
+Teacher quality ratings,Core function hypothesis,62,6,0.8288778914839777,0.388834784916937,0.0017884803873856635,True
+Teacher quality ratings,Replacement-behavior recommendation,62,6,0.8288778914839777,0.7097676832764357,1.0562610513693354e-10,True
+Teacher quality ratings,Overall rating,62,6,0.8288778914839777,0.7638637647769989,5.152295087130834e-13,True
+Matched general-purpose AI similarity ratings,Antecedent identification,62,6,0.88499874481489,0.6038015045562409,2.0445144808980957e-07,True
+Matched general-purpose AI similarity ratings,Consequence identification,62,6,0.88499874481489,0.7134931671012831,7.614953121294773e-11,True
+Matched general-purpose AI similarity ratings,Setting-event identification,62,6,0.88499874481489,0.6987319879963398,2.7040583010761194e-10,True
+Matched general-purpose AI similarity ratings,Core function hypothesis,62,6,0.88499874481489,0.6919506846714386,4.719454427026227e-10,True
+Matched general-purpose AI similarity ratings,Replacement-behavior recommendation,62,6,0.88499874481489,0.7234939208910359,3.082388411986677e-11,True
+Matched general-purpose AI similarity ratings,Overall rating,62,6,0.88499874481489,0.7833007971548723,5.312209626583352e-14,True

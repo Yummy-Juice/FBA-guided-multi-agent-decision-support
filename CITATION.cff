@@ -1,0 +1,27 @@
+cff-version: 1.2.0
+message: "If you use this reproducibility package, please cite the repository version and the associated article when available."
+title: "An FBA-Guided Multi-Agent Decision-Support System for Structuring Teacher Reports in Chinese Schools: Reproducibility Package"
+type: software
+authors:
+  - name: "Yummy-Juice"
+version: 1.0.0
+date-released: 2026-09-18
+repository-code: "https://github.com/Yummy-Juice/FBA-guided-multi-agent-decision-support"
+url: "https://github.com/Yummy-Juice/FBA-guided-multi-agent-decision-support"
+license:
+  - MIT
+  - CC-BY-4.0
+keywords:
+  - functional behavior assessment
+  - multi-agent system
+  - decision support
+  - special education technology
+  - teacher reports
+  - reproducibility
+abstract: >-
+  This repository contains anonymous rating data, analysis and validation code,
+  generated aggregate results and figures, public metadata, and a sanitized
+  documentation blueprint for an FBA-guided multi-agent decision-support
+  prototype. The evidence concerns teacher perceptions and expert ratings and
+  does not establish diagnostic accuracy, intervention effects, student
+  outcomes, or autonomous professional decision making.

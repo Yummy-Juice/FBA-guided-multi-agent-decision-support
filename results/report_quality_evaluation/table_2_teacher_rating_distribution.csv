@@ -1,0 +1,31 @@
+study,sample,measure,score_set,dimension,rating,n,proportion
+report_quality_evaluation,Teachers,Teacher-perceived endorsement proportions,not_applicable,Antecedent identification,1,0,0.0
+report_quality_evaluation,Teachers,Teacher-perceived endorsement proportions,not_applicable,Antecedent identification,2,2,0.01652892561983471
+report_quality_evaluation,Teachers,Teacher-perceived endorsement proportions,not_applicable,Antecedent identification,3,8,0.06611570247933884
+report_quality_evaluation,Teachers,Teacher-perceived endorsement proportions,not_applicable,Antecedent identification,4,80,0.6611570247933884
+report_quality_evaluation,Teachers,Teacher-perceived endorsement proportions,not_applicable,Antecedent identification,5,31,0.256198347107438
+report_quality_evaluation,Teachers,Teacher-perceived endorsement proportions,not_applicable,Consequence identification,1,1,0.008264462809917356
+report_quality_evaluation,Teachers,Teacher-perceived endorsement proportions,not_applicable,Consequence identification,2,3,0.024793388429752067
+report_quality_evaluation,Teachers,Teacher-perceived endorsement proportions,not_applicable,Consequence identification,3,10,0.08264462809917356
+report_quality_evaluation,Teachers,Teacher-perceived endorsement proportions,not_applicable,Consequence identification,4,56,0.4628099173553719
+report_quality_evaluation,Teachers,Teacher-perceived endorsement proportions,not_applicable,Consequence identification,5,51,0.4214876033057851
+report_quality_evaluation,Teachers,Teacher-perceived endorsement proportions,not_applicable,Setting-event identification,1,1,0.008264462809917356
+report_quality_evaluation,Teachers,Teacher-perceived endorsement proportions,not_applicable,Setting-event identification,2,3,0.024793388429752067
+report_quality_evaluation,Teachers,Teacher-perceived endorsement proportions,not_applicable,Setting-event identification,3,12,0.09917355371900827
+report_quality_evaluation,Teachers,Teacher-perceived endorsement proportions,not_applicable,Setting-event identification,4,63,0.5206611570247934
+report_quality_evaluation,Teachers,Teacher-perceived endorsement proportions,not_applicable,Setting-event identification,5,42,0.34710743801652894
+report_quality_evaluation,Teachers,Teacher-perceived endorsement proportions,not_applicable,Core function hypothesis,1,0,0.0
+report_quality_evaluation,Teachers,Teacher-perceived endorsement proportions,not_applicable,Core function hypothesis,2,2,0.01652892561983471
+report_quality_evaluation,Teachers,Teacher-perceived endorsement proportions,not_applicable,Core function hypothesis,3,12,0.09917355371900827
+report_quality_evaluation,Teachers,Teacher-perceived endorsement proportions,not_applicable,Core function hypothesis,4,60,0.49586776859504134
+report_quality_evaluation,Teachers,Teacher-perceived endorsement proportions,not_applicable,Core function hypothesis,5,47,0.3884297520661157
+report_quality_evaluation,Teachers,Teacher-perceived endorsement proportions,not_applicable,Replacement-behavior recommendation,1,2,0.01652892561983471
+report_quality_evaluation,Teachers,Teacher-perceived endorsement proportions,not_applicable,Replacement-behavior recommendation,2,1,0.008264462809917356
+report_quality_evaluation,Teachers,Teacher-perceived endorsement proportions,not_applicable,Replacement-behavior recommendation,3,13,0.10743801652892562
+report_quality_evaluation,Teachers,Teacher-perceived endorsement proportions,not_applicable,Replacement-behavior recommendation,4,62,0.512396694214876
+report_quality_evaluation,Teachers,Teacher-perceived endorsement proportions,not_applicable,Replacement-behavior recommendation,5,43,0.35537190082644626
+report_quality_evaluation,Teachers,Teacher-perceived endorsement proportions,not_applicable,Overall rating,1,1,0.008264462809917356
+report_quality_evaluation,Teachers,Teacher-perceived endorsement proportions,not_applicable,Overall rating,2,1,0.008264462809917356
+report_quality_evaluation,Teachers,Teacher-perceived endorsement proportions,not_applicable,Overall rating,3,7,0.05785123966942149
+report_quality_evaluation,Teachers,Teacher-perceived endorsement proportions,not_applicable,Overall rating,4,87,0.71900826446281
+report_quality_evaluation,Teachers,Teacher-perceived endorsement proportions,not_applicable,Overall rating,5,25,0.2066115702479339

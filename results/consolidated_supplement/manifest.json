@@ -1,0 +1,14 @@
+{
+  "generated_utc": "2026-09-18T05:46:31+00:00",
+  "builder": "code/build_consolidated_supplement.py",
+  "figures_modified": false,
+  "tables": {
+    "table_s1_system_modules_models_prompts_parameters.csv": 19,
+    "table_s2_scale_items_chinese_scoring.csv": 12,
+    "table_s3_complete_rating_distributions.csv": 122,
+    "table_s4_reliability_item_total_composites.csv": 35,
+    "table_s5_inferential_tests_raw_holm.csv": 48,
+    "table_s6_correlations_sensitivity.csv": 32
+  },
+  "scope_note": "The tables report teacher-perception ratings and a four-expert review; diagnostic accuracy, professional equivalence, intervention effects, and student outcomes are separate evaluation targets."
+}

@@ -1,0 +1,35 @@
+dataset,variable,type,allowed_values,description,access_class
+teacher_ratings_deidentified,participant_id,string,P001-P137,New anonymous teacher number assigned sequentially for public release; original identifiers and collection mode are absent,public
+teacher_ratings_deidentified,quality_antecedent_identification,numeric,1 through 5 or missing,Teacher rating of the prototype's antecedent identification,public
+teacher_ratings_deidentified,quality_consequence_identification,numeric,1 through 5 or missing,Teacher rating of the prototype's consequence identification,public
+teacher_ratings_deidentified,quality_setting_event_identification,numeric,1 through 5 or missing,Teacher rating of the prototype's setting-event identification,public
+teacher_ratings_deidentified,quality_core_function_hypothesis,numeric,1 through 5 or missing,Teacher rating of the prototype's core function hypothesis,public
+teacher_ratings_deidentified,quality_replacement_behavior_recommendation,numeric,1 through 5 or missing,Teacher rating of the prototype's replacement-behavior recommendation,public
+teacher_ratings_deidentified,quality_overall_rating,numeric,1 through 5 or missing,Teacher overall quality rating of the prototype,public
+teacher_ratings_deidentified,human_fba_similarity_antecedent_identification,numeric,1 through 5 or missing,Similarity to human-conducted FBA for antecedent identification,public
+teacher_ratings_deidentified,human_fba_similarity_consequence_identification,numeric,1 through 5 or missing,Similarity to human-conducted FBA for consequence identification,public
+teacher_ratings_deidentified,human_fba_similarity_setting_event_identification,numeric,1 through 5 or missing,Similarity to human-conducted FBA for setting-event identification,public
+teacher_ratings_deidentified,human_fba_similarity_core_function_hypothesis,numeric,1 through 5 or missing,Similarity to human-conducted FBA for the core function hypothesis,public
+teacher_ratings_deidentified,human_fba_similarity_replacement_behavior_recommendation,numeric,1 through 5 or missing,Similarity to human-conducted FBA for replacement-behavior recommendation,public
+teacher_ratings_deidentified,human_fba_similarity_overall_rating,numeric,1 through 5 or missing,Overall similarity to human-conducted FBA,public
+teacher_ratings_deidentified,general_ai_similarity_antecedent_identification,numeric,1 through 5 or missing,Similarity to a general-purpose AI for antecedent identification,public
+teacher_ratings_deidentified,general_ai_similarity_consequence_identification,numeric,1 through 5 or missing,Similarity to a general-purpose AI for consequence identification,public
+teacher_ratings_deidentified,general_ai_similarity_setting_event_identification,numeric,1 through 5 or missing,Similarity to a general-purpose AI for setting-event identification,public
+teacher_ratings_deidentified,general_ai_similarity_core_function_hypothesis,numeric,1 through 5 or missing,Similarity to a general-purpose AI for the core function hypothesis,public
+teacher_ratings_deidentified,general_ai_similarity_replacement_behavior_recommendation,numeric,1 through 5 or missing,Similarity to a general-purpose AI for replacement-behavior recommendation,public
+teacher_ratings_deidentified,general_ai_similarity_overall_rating,numeric,1 through 5 or missing,Overall similarity to a general-purpose AI,public
+expert_ratings_deidentified,expert_record_id,string,E001-E004,New anonymous expert number used consistently across the final and paired-round public files,public
+expert_ratings_deidentified,quality_antecedent_identification,numeric,1 through 5,Expert rating of the prototype's antecedent identification,public
+expert_ratings_deidentified,quality_consequence_identification,numeric,1 through 5,Expert rating of the prototype's consequence identification,public
+expert_ratings_deidentified,quality_setting_event_identification,numeric,1 through 5,Expert rating of the prototype's setting-event identification,public
+expert_ratings_deidentified,quality_core_function_hypothesis,numeric,1 through 5,Expert rating of the prototype's core function hypothesis,public
+expert_ratings_deidentified,quality_replacement_behavior_recommendation,numeric,1 through 5,Expert rating of the prototype's replacement-behavior recommendation,public
+expert_ratings_deidentified,quality_overall_rating,numeric,1.0 through 5.0; decimals permitted,Expert overall quality rating preserved at the recorded decimal precision,public
+expert_delphi_rounds_deidentified,expert_record_id,string,E001-E004,New anonymous expert number paired consistently across both public rounds,public
+expert_delphi_rounds_deidentified,delphi_round,categorical,round_1|round_2,Documented Delphi consensus round for the deidentified expert rating record,public
+expert_delphi_rounds_deidentified,quality_antecedent_identification,numeric,1 through 5,Expert rating of the prototype's antecedent identification in the documented Delphi round,public
+expert_delphi_rounds_deidentified,quality_consequence_identification,numeric,1 through 5,Expert rating of the prototype's consequence identification in the documented Delphi round,public
+expert_delphi_rounds_deidentified,quality_setting_event_identification,numeric,1 through 5,Expert rating of the prototype's setting-event identification in the documented Delphi round,public
+expert_delphi_rounds_deidentified,quality_core_function_hypothesis,numeric,1 through 5,Expert rating of the prototype's core function hypothesis in the documented Delphi round,public
+expert_delphi_rounds_deidentified,quality_replacement_behavior_recommendation,numeric,1 through 5,Expert rating of the prototype's replacement-behavior recommendation in the documented Delphi round,public
+expert_delphi_rounds_deidentified,quality_overall_rating,numeric,1.0 through 5.0; decimals permitted,Expert overall quality rating in the documented Delphi round preserved at the recorded decimal precision,public

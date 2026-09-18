@@ -1,0 +1,31 @@
+study,sample,measure,score_set,dimension,rating,n,proportion
+matched_general_purpose_ai_comparison,Teachers,Perceived similarity to general-purpose AI,not_applicable,Antecedent identification,1,2,0.03225806451612903
+matched_general_purpose_ai_comparison,Teachers,Perceived similarity to general-purpose AI,not_applicable,Antecedent identification,2,22,0.3548387096774194
+matched_general_purpose_ai_comparison,Teachers,Perceived similarity to general-purpose AI,not_applicable,Antecedent identification,3,21,0.3387096774193548
+matched_general_purpose_ai_comparison,Teachers,Perceived similarity to general-purpose AI,not_applicable,Antecedent identification,4,16,0.25806451612903225
+matched_general_purpose_ai_comparison,Teachers,Perceived similarity to general-purpose AI,not_applicable,Antecedent identification,5,1,0.016129032258064516
+matched_general_purpose_ai_comparison,Teachers,Perceived similarity to general-purpose AI,not_applicable,Consequence identification,1,3,0.04838709677419355
+matched_general_purpose_ai_comparison,Teachers,Perceived similarity to general-purpose AI,not_applicable,Consequence identification,2,23,0.3709677419354839
+matched_general_purpose_ai_comparison,Teachers,Perceived similarity to general-purpose AI,not_applicable,Consequence identification,3,22,0.3548387096774194
+matched_general_purpose_ai_comparison,Teachers,Perceived similarity to general-purpose AI,not_applicable,Consequence identification,4,12,0.1935483870967742
+matched_general_purpose_ai_comparison,Teachers,Perceived similarity to general-purpose AI,not_applicable,Consequence identification,5,2,0.03225806451612903
+matched_general_purpose_ai_comparison,Teachers,Perceived similarity to general-purpose AI,not_applicable,Setting-event identification,1,8,0.12903225806451613
+matched_general_purpose_ai_comparison,Teachers,Perceived similarity to general-purpose AI,not_applicable,Setting-event identification,2,18,0.2903225806451613
+matched_general_purpose_ai_comparison,Teachers,Perceived similarity to general-purpose AI,not_applicable,Setting-event identification,3,22,0.3548387096774194
+matched_general_purpose_ai_comparison,Teachers,Perceived similarity to general-purpose AI,not_applicable,Setting-event identification,4,12,0.1935483870967742
+matched_general_purpose_ai_comparison,Teachers,Perceived similarity to general-purpose AI,not_applicable,Setting-event identification,5,2,0.03225806451612903
+matched_general_purpose_ai_comparison,Teachers,Perceived similarity to general-purpose AI,not_applicable,Core function hypothesis,1,8,0.12903225806451613
+matched_general_purpose_ai_comparison,Teachers,Perceived similarity to general-purpose AI,not_applicable,Core function hypothesis,2,23,0.3709677419354839
+matched_general_purpose_ai_comparison,Teachers,Perceived similarity to general-purpose AI,not_applicable,Core function hypothesis,3,14,0.22580645161290322
+matched_general_purpose_ai_comparison,Teachers,Perceived similarity to general-purpose AI,not_applicable,Core function hypothesis,4,15,0.24193548387096775
+matched_general_purpose_ai_comparison,Teachers,Perceived similarity to general-purpose AI,not_applicable,Core function hypothesis,5,2,0.03225806451612903
+matched_general_purpose_ai_comparison,Teachers,Perceived similarity to general-purpose AI,not_applicable,Replacement-behavior recommendation,1,10,0.16129032258064516
+matched_general_purpose_ai_comparison,Teachers,Perceived similarity to general-purpose AI,not_applicable,Replacement-behavior recommendation,2,16,0.25806451612903225
+matched_general_purpose_ai_comparison,Teachers,Perceived similarity to general-purpose AI,not_applicable,Replacement-behavior recommendation,3,18,0.2903225806451613
+matched_general_purpose_ai_comparison,Teachers,Perceived similarity to general-purpose AI,not_applicable,Replacement-behavior recommendation,4,17,0.27419354838709675
+matched_general_purpose_ai_comparison,Teachers,Perceived similarity to general-purpose AI,not_applicable,Replacement-behavior recommendation,5,1,0.016129032258064516
+matched_general_purpose_ai_comparison,Teachers,Perceived similarity to general-purpose AI,not_applicable,Overall rating,1,4,0.06451612903225806
+matched_general_purpose_ai_comparison,Teachers,Perceived similarity to general-purpose AI,not_applicable,Overall rating,2,16,0.25806451612903225
+matched_general_purpose_ai_comparison,Teachers,Perceived similarity to general-purpose AI,not_applicable,Overall rating,3,33,0.532258064516129
+matched_general_purpose_ai_comparison,Teachers,Perceived similarity to general-purpose AI,not_applicable,Overall rating,4,7,0.11290322580645161
+matched_general_purpose_ai_comparison,Teachers,Perceived similarity to general-purpose AI,not_applicable,Overall rating,5,2,0.03225806451612903

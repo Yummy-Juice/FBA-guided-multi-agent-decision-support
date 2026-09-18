@@ -1,0 +1,13 @@
+evaluation,item,english_item_definition,chinese_source_wording,scoring
+Teacher and expert report-quality review,Antecedent identification,"Concrete, observable event or context immediately preceding behavior.",指在行为发生前即刻发生的具体事件或情境。评审系统是否识别可观察的触发事件，而非模糊描述。,1=无效；2=较差；3=一般；4=良好；5=优秀
+Teacher and expert report-quality review,Consequence identification,Immediate event following behavior that may maintain or reinforce it.,指在行为发生后即刻发生、可能维持行为的事件。评审系统是否说明行为带来的实际结果。,1=无效；2=较差；3=一般；4=良好；5=优秀
+Teacher and expert report-quality review,Setting-event identification,Background event that changes the probability or value of an antecedent without being the immediate trigger.,指较早发生并改变个体对前因反应价值的背景事件。评审系统是否区分设置事件与直接前因。,1=无效；2=较差；3=一般；4=良好；5=优秀
+Teacher and expert report-quality review,Core function hypothesis,"Evidence-linked summary of what behavior may obtain or avoid, restricted to the four documented categories.",评审系统是否依据前因与后果证据，将功能假设限制为获得关注、获得有形物或活动、逃避或回避、自动或感觉强化。,1=无效；2=较差；3=一般；4=良好；5=优秀
+Teacher and expert report-quality review,Replacement-behavior recommendation,"Operational, socially adaptive behavior that is function-equivalent to the problem behavior.",评审建议是否与假设功能匹配，并说明由谁、在何时、如何教授功能等价的适应性行为。,1=无效；2=较差；3=一般；4=良好；5=优秀
+Teacher and expert report-quality review,Overall rating,"Coherence, credibility, quality, and practical usefulness of the complete report.",综合评价报告的连贯性、可信度、质量和实际可用性。,1=无效；2=较差；3=一般；4=良好；5=优秀
+Perceived-similarity review,Antecedent identification,Compare the two reports on this FBA domain and describe any substantive difference.,比较两份报告在该评审要素上的一致性，并简要描述不一致之处。,1=完全不一致；2=基本不一致；3=部分一致；4=基本一致；5=完全一致
+Perceived-similarity review,Consequence identification,Compare the two reports on this FBA domain and describe any substantive difference.,比较两份报告在该评审要素上的一致性，并简要描述不一致之处。,1=完全不一致；2=基本不一致；3=部分一致；4=基本一致；5=完全一致
+Perceived-similarity review,Setting-event identification,Compare the two reports on this FBA domain and describe any substantive difference.,比较两份报告在该评审要素上的一致性，并简要描述不一致之处。,1=完全不一致；2=基本不一致；3=部分一致；4=基本一致；5=完全一致
+Perceived-similarity review,Core function hypothesis,Compare the two reports on this FBA domain and describe any substantive difference.,比较两份报告在该评审要素上的一致性，并简要描述不一致之处。,1=完全不一致；2=基本不一致；3=部分一致；4=基本一致；5=完全一致
+Perceived-similarity review,Replacement-behavior recommendation,Compare the two reports on this FBA domain and describe any substantive difference.,比较两份报告在该评审要素上的一致性，并简要描述不一致之处。,1=完全不一致；2=基本不一致；3=部分一致；4=基本一致；5=完全一致
+Perceived-similarity review,Overall similarity,Compare the two reports on this FBA domain and describe any substantive difference.,综合评价两份分析报告在核心要素和结论上的整体相似程度。,1=完全不一致；2=基本不一致；3=部分一致；4=基本一致；5=完全一致

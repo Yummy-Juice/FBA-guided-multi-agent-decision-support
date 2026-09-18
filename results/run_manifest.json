@@ -1,0 +1,63 @@
+{
+  "created_utc": "2026-09-18T05:46:31+00:00",
+  "analysis_entry_point": "code/run_submission_analysis.py",
+  "input_files": [
+    "data/public_ratings/teacher_ratings_deidentified.csv",
+    "data/public_ratings/expert_ratings_deidentified.csv",
+    "data/public_ratings/expert_delphi_rounds_deidentified.csv"
+  ],
+  "sample_counts": {
+    "teacher_rows": 137,
+    "report_quality_complete_teacher_records": 121,
+    "expert_records_per_delphi_round": 4,
+    "practitioner_similarity_records": 75,
+    "practitioner_similarity_quality_records": 59,
+    "general_ai_comparison_records": 62
+  },
+  "public_data_design": {
+    "teacher_records": "137 anonymous teacher records numbered P001 through P137 with rating variables only.",
+    "practitioner_referenced_cohort": "75 distinct teachers identified by complete six-dimension practitioner-FBA similarity ratings.",
+    "matched_comparison_cohort": "62 teachers identified by complete six-dimension general-purpose-AI similarity ratings.",
+    "expert_records": "Four anonymous expert records across two paired rounds plus arithmetic-average final scores.",
+    "privacy_fields_removed": "Collection mode, original identifiers, names, teaching stage, reported grade, and other source metadata are absent from the public files.",
+    "source_reconciliation_correction": "One overall general-purpose-AI similarity response was corrected from 4 to 3 before public release after comparison with the source response label."
+  },
+  "public_labels": {
+    "report_quality_evaluation": "Teacher-Perceived Endorsement Proportions",
+    "matched_general_purpose_ai_comparison_sample": "Teachers"
+  },
+  "methods": {
+    "ordinal_descriptives": "Complete recorded-value distribution, median (IQR), P(rating >= 4), Wilson 95% CI; decimal expert overall ratings are preserved",
+    "multiple_testing": "Holm adjustment within each six-test or seven-correlation family",
+    "ordinal_sensitivity": "Friedman omnibus and Spearman correlations",
+    "expert_round_rule": "Final expert scores equal the arithmetic mean of paired Round 1 and Round 2 ratings.",
+    "comparison_measure_interpretation": "The practitioner-referenced similarity evaluation and matched general-purpose AI comparison use perceived-similarity ratings; concurrent and discriminant validity require dedicated future designs."
+  },
+  "figures": {
+    "figure_1_teacher_endorsement_profile": [
+      "figure_1_teacher_endorsement_profile.svg",
+      "figure_1_teacher_endorsement_profile.pdf",
+      "figure_1_teacher_endorsement_profile.tiff",
+      "figure_1_teacher_endorsement_profile.png"
+    ],
+    "figure_2_expert_delphi_rounds": [
+      "figure_2_expert_delphi_rounds.svg",
+      "figure_2_expert_delphi_rounds.pdf",
+      "figure_2_expert_delphi_rounds.tiff",
+      "figure_2_expert_delphi_rounds.png"
+    ],
+    "figure_3_teacher_similarity_profiles": [
+      "figure_3_teacher_similarity_profiles.svg",
+      "figure_3_teacher_similarity_profiles.pdf",
+      "figure_3_teacher_similarity_profiles.tiff",
+      "figure_3_teacher_similarity_profiles.png"
+    ],
+    "figure_4_exploratory_associations": [
+      "figure_4_exploratory_associations.svg",
+      "figure_4_exploratory_associations.pdf",
+      "figure_4_exploratory_associations.tiff",
+      "figure_4_exploratory_associations.png"
+    ]
+  },
+  "scope_note": "The analyses estimate teacher-perception and expert-rating quantities; diagnostic accuracy, student outcomes, professional equivalence, and autonomous decision making are separate evaluation targets."
+}

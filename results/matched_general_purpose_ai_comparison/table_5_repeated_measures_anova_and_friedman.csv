@@ -1,0 +1,3 @@
+study,sample,measure,analysis,n_listwise_complete,number_of_dimensions,statistic,df_1,df_2,p_value,effect_size,effect_size_name,note
+matched_general_purpose_ai_comparison,Teachers,Perceived similarity to general-purpose AI,repeated_measures_anova,62,6,0.7215858298164309,5,305.0,0.607660984486383,0.011690980069858277,partial_eta_squared,Univariate repeated-measures ANOVA.
+matched_general_purpose_ai_comparison,Teachers,Perceived similarity to general-purpose AI,friedman_sensitivity,62,6,3.7836021505376514,5,,0.5809733367098922,0.012205168227540811,kendalls_w_friedman,Ordinal nonparametric sensitivity analysis.

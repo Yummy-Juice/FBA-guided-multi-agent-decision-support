@@ -1,0 +1,33 @@
+evaluation,analysis,target,n,statistic,interval_or_df,raw_p,holm_p,effect_or_note
+Evaluation 1,Pearson correlation,Composite mean,59,0.5654518990468357,"[0.3617479478176915, 0.717623394412893]",3.0656683733465204e-06,2.145967861342564e-05,Exploratory association
+Evaluation 1,Spearman correlation,Composite mean,59,0.4733798711397471,,0.0001527306516174,0.0010691145613219,Ordinal sensitivity
+Evaluation 1,Pearson correlation,Antecedent identification,59,0.164862493066913,"[-0.0952454579936419, 0.40389709292559]",0.2121053760883946,0.4242107521767893,Exploratory association
+Evaluation 1,Spearman correlation,Antecedent identification,59,0.1353328327035081,,0.3067900020257094,0.6135800040514188,Ordinal sensitivity
+Evaluation 1,Pearson correlation,Consequence identification,59,0.1499662399722445,"[-0.1103587931835197, 0.3910355394220889]",0.2569239965612093,0.4242107521767893,Exploratory association
+Evaluation 1,Spearman correlation,Consequence identification,59,0.1015062849510865,,0.4442826575643524,0.6135800040514188,Ordinal sensitivity
+Evaluation 1,Pearson correlation,Setting-event identification,59,0.2604062677212332,"[0.0046281287168717, 0.4842031769245963]",0.0463783505840384,0.1855134023361539,Exploratory association
+Evaluation 1,Spearman correlation,Setting-event identification,59,0.2580841175063621,,0.0484340554739519,0.1937362218958077,Ordinal sensitivity
+Evaluation 1,Pearson correlation,Core function hypothesis,59,0.4463744824680455,"[0.2148469988154645, 0.6303998679657622]",0.0003946770630065,0.0023680623780392,Exploratory association
+Evaluation 1,Spearman correlation,Core function hypothesis,59,0.3882417538774693,,0.0023776364120621,0.014265818472373,Ordinal sensitivity
+Evaluation 1,Pearson correlation,Replacement-behavior recommendation,59,0.199755297818507,"[-0.0593684499920667, 0.4336584096388609]",0.1293036411723937,0.3879109235171811,Exploratory association
+Evaluation 1,Spearman correlation,Replacement-behavior recommendation,59,0.1899623065358981,,0.1495657172109136,0.4486971516327408,Ordinal sensitivity
+Evaluation 1,Pearson correlation,Overall rating,59,0.3246113629339133,"[0.0747374118905574, 0.5361303312575625]",0.012128969658341,0.0606448482917052,Exploratory association
+Evaluation 1,Spearman correlation,Overall rating,59,0.3169792963803394,,0.0144407057983344,0.0722035289916722,Ordinal sensitivity
+Evaluation 1,repeated_measures_anova,Six FBA domains,75,1.2926728491414938,df1=5; df2=370.0,0.2662953600566239,,partial_eta_squared=0.0171686407219402
+Evaluation 1,friedman_sensitivity,Six FBA domains,75,8.008130081300981,df1=5; df2=nan,0.1557881316761797,,kendalls_w_friedman=0.0213550135501359
+Evaluation 3,Pearson correlation,Composite mean,62,-0.1372866123741745,"[-0.3742268115997039, 0.1164801412210526]",0.287308488726085,1.0,Exploratory association
+Evaluation 3,Spearman correlation,Composite mean,62,-0.1499140605822944,,0.2448343609945567,1.0,Ordinal sensitivity
+Evaluation 3,Pearson correlation,Antecedent identification,62,0.1969284432235704,"[-0.0555778834204789, 0.4257590897682972]",0.1249988172568383,0.7499929035410298,Exploratory association
+Evaluation 3,Spearman correlation,Antecedent identification,62,0.18128744167757,,0.1585032811363081,0.9510196868178488,Ordinal sensitivity
+Evaluation 3,Pearson correlation,Consequence identification,62,-0.0784019750019869,"[-0.3218714727601259, 0.1747935474964351]",0.5447087792339161,1.0,Exploratory association
+Evaluation 3,Spearman correlation,Consequence identification,62,-0.1076405289021964,,0.4049930895158516,1.0,Ordinal sensitivity
+Evaluation 3,Pearson correlation,Setting-event identification,62,-0.3290761372178736,"[-0.5348843443415169, -0.0864055755514985]",0.0090121718380359,0.0630852028662514,Exploratory association
+Evaluation 3,Spearman correlation,Setting-event identification,62,-0.3669675581741679,,0.0033483985538333,0.0234387898768337,Ordinal sensitivity
+Evaluation 3,Pearson correlation,Core function hypothesis,62,-0.0528787290345078,"[-0.2987061198877073, 0.1995291830962172]",0.6831416651134417,1.0,Exploratory association
+Evaluation 3,Spearman correlation,Core function hypothesis,62,-0.054550291338894,,0.673680700637428,1.0,Ordinal sensitivity
+Evaluation 3,Pearson correlation,Replacement-behavior recommendation,62,-0.1614065436951556,"[-0.3952448725704134, 0.0920781809013099]",0.2101007259452309,1.0,Exploratory association
+Evaluation 3,Spearman correlation,Replacement-behavior recommendation,62,-0.1227755584644003,,0.3417746104883471,1.0,Ordinal sensitivity
+Evaluation 3,Pearson correlation,Overall rating,62,-0.1304176487525559,"[-0.3681963420885216, 0.1233738222951705]",0.3123352072035402,1.0,Exploratory association
+Evaluation 3,Spearman correlation,Overall rating,62,-0.0929921590647731,,0.4722151719499222,1.0,Ordinal sensitivity
+Evaluation 3,repeated_measures_anova,Six FBA domains,62,0.7215858298164309,df1=5; df2=305.0,0.607660984486383,,partial_eta_squared=0.0116909800698582
+Evaluation 3,friedman_sensitivity,Six FBA domains,62,3.7836021505376514,df1=5; df2=nan,0.5809733367098922,,kendalls_w_friedman=0.0122051682275408

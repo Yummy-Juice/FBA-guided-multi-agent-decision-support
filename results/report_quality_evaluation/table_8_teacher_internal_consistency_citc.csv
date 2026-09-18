@@ -1,0 +1,7 @@
+scale,dimension,n_listwise_complete,number_of_items,cronbach_alpha,corrected_item_total_correlation,citc_p_value,citc_at_least_0_30
+Teacher quality ratings,Antecedent identification,121,6,0.7759913090711569,0.5139126376476706,1.6533924418558795e-09,True
+Teacher quality ratings,Consequence identification,121,6,0.7759913090711569,0.5671576987402527,1.1833233362369106e-11,True
+Teacher quality ratings,Setting-event identification,121,6,0.7759913090711569,0.491132886010601,1.0680498819607218e-08,True
+Teacher quality ratings,Core function hypothesis,121,6,0.7759913090711569,0.33269487775847567,0.0001926639480024691,True
+Teacher quality ratings,Replacement-behavior recommendation,121,6,0.7759913090711569,0.6341124853637556,5.825866419245783e-15,True
+Teacher quality ratings,Overall rating,121,6,0.7759913090711569,0.6349175401535826,5.25580452519062e-15,True

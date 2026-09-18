@@ -1,0 +1,97 @@
+study,sample,measure,score_set,dimension,rating,n,proportion
+report_quality_evaluation,Experts,Expert quality ratings,Round 1,Antecedent identification,1.0,0,0.0
+report_quality_evaluation,Experts,Expert quality ratings,Round 1,Antecedent identification,2.0,0,0.0
+report_quality_evaluation,Experts,Expert quality ratings,Round 1,Antecedent identification,3.0,3,0.75
+report_quality_evaluation,Experts,Expert quality ratings,Round 1,Antecedent identification,4.0,0,0.0
+report_quality_evaluation,Experts,Expert quality ratings,Round 1,Antecedent identification,5.0,1,0.25
+report_quality_evaluation,Experts,Expert quality ratings,Round 1,Consequence identification,1.0,1,0.25
+report_quality_evaluation,Experts,Expert quality ratings,Round 1,Consequence identification,2.0,0,0.0
+report_quality_evaluation,Experts,Expert quality ratings,Round 1,Consequence identification,3.0,1,0.25
+report_quality_evaluation,Experts,Expert quality ratings,Round 1,Consequence identification,4.0,0,0.0
+report_quality_evaluation,Experts,Expert quality ratings,Round 1,Consequence identification,5.0,2,0.5
+report_quality_evaluation,Experts,Expert quality ratings,Round 1,Setting-event identification,1.0,1,0.25
+report_quality_evaluation,Experts,Expert quality ratings,Round 1,Setting-event identification,2.0,0,0.0
+report_quality_evaluation,Experts,Expert quality ratings,Round 1,Setting-event identification,3.0,2,0.5
+report_quality_evaluation,Experts,Expert quality ratings,Round 1,Setting-event identification,4.0,1,0.25
+report_quality_evaluation,Experts,Expert quality ratings,Round 1,Setting-event identification,5.0,0,0.0
+report_quality_evaluation,Experts,Expert quality ratings,Round 1,Core function hypothesis,1.0,0,0.0
+report_quality_evaluation,Experts,Expert quality ratings,Round 1,Core function hypothesis,2.0,1,0.25
+report_quality_evaluation,Experts,Expert quality ratings,Round 1,Core function hypothesis,3.0,0,0.0
+report_quality_evaluation,Experts,Expert quality ratings,Round 1,Core function hypothesis,4.0,2,0.5
+report_quality_evaluation,Experts,Expert quality ratings,Round 1,Core function hypothesis,5.0,1,0.25
+report_quality_evaluation,Experts,Expert quality ratings,Round 1,Replacement-behavior recommendation,1.0,1,0.25
+report_quality_evaluation,Experts,Expert quality ratings,Round 1,Replacement-behavior recommendation,2.0,0,0.0
+report_quality_evaluation,Experts,Expert quality ratings,Round 1,Replacement-behavior recommendation,3.0,0,0.0
+report_quality_evaluation,Experts,Expert quality ratings,Round 1,Replacement-behavior recommendation,4.0,2,0.5
+report_quality_evaluation,Experts,Expert quality ratings,Round 1,Replacement-behavior recommendation,5.0,1,0.25
+report_quality_evaluation,Experts,Expert quality ratings,Round 1,Overall rating,1.0,0,0.0
+report_quality_evaluation,Experts,Expert quality ratings,Round 1,Overall rating,2.0,0,0.0
+report_quality_evaluation,Experts,Expert quality ratings,Round 1,Overall rating,3.0,2,0.5
+report_quality_evaluation,Experts,Expert quality ratings,Round 1,Overall rating,3.5,1,0.25
+report_quality_evaluation,Experts,Expert quality ratings,Round 1,Overall rating,4.0,0,0.0
+report_quality_evaluation,Experts,Expert quality ratings,Round 1,Overall rating,4.3,1,0.25
+report_quality_evaluation,Experts,Expert quality ratings,Round 1,Overall rating,5.0,0,0.0
+report_quality_evaluation,Experts,Expert quality ratings,Round 2,Antecedent identification,1.0,0,0.0
+report_quality_evaluation,Experts,Expert quality ratings,Round 2,Antecedent identification,2.0,0,0.0
+report_quality_evaluation,Experts,Expert quality ratings,Round 2,Antecedent identification,3.0,4,1.0
+report_quality_evaluation,Experts,Expert quality ratings,Round 2,Antecedent identification,4.0,0,0.0
+report_quality_evaluation,Experts,Expert quality ratings,Round 2,Antecedent identification,5.0,0,0.0
+report_quality_evaluation,Experts,Expert quality ratings,Round 2,Consequence identification,1.0,1,0.25
+report_quality_evaluation,Experts,Expert quality ratings,Round 2,Consequence identification,2.0,0,0.0
+report_quality_evaluation,Experts,Expert quality ratings,Round 2,Consequence identification,3.0,2,0.5
+report_quality_evaluation,Experts,Expert quality ratings,Round 2,Consequence identification,4.0,0,0.0
+report_quality_evaluation,Experts,Expert quality ratings,Round 2,Consequence identification,5.0,1,0.25
+report_quality_evaluation,Experts,Expert quality ratings,Round 2,Setting-event identification,1.0,0,0.0
+report_quality_evaluation,Experts,Expert quality ratings,Round 2,Setting-event identification,2.0,0,0.0
+report_quality_evaluation,Experts,Expert quality ratings,Round 2,Setting-event identification,3.0,3,0.75
+report_quality_evaluation,Experts,Expert quality ratings,Round 2,Setting-event identification,4.0,1,0.25
+report_quality_evaluation,Experts,Expert quality ratings,Round 2,Setting-event identification,5.0,0,0.0
+report_quality_evaluation,Experts,Expert quality ratings,Round 2,Core function hypothesis,1.0,0,0.0
+report_quality_evaluation,Experts,Expert quality ratings,Round 2,Core function hypothesis,2.0,0,0.0
+report_quality_evaluation,Experts,Expert quality ratings,Round 2,Core function hypothesis,3.0,0,0.0
+report_quality_evaluation,Experts,Expert quality ratings,Round 2,Core function hypothesis,4.0,3,0.75
+report_quality_evaluation,Experts,Expert quality ratings,Round 2,Core function hypothesis,5.0,1,0.25
+report_quality_evaluation,Experts,Expert quality ratings,Round 2,Replacement-behavior recommendation,1.0,0,0.0
+report_quality_evaluation,Experts,Expert quality ratings,Round 2,Replacement-behavior recommendation,2.0,0,0.0
+report_quality_evaluation,Experts,Expert quality ratings,Round 2,Replacement-behavior recommendation,3.0,1,0.25
+report_quality_evaluation,Experts,Expert quality ratings,Round 2,Replacement-behavior recommendation,4.0,2,0.5
+report_quality_evaluation,Experts,Expert quality ratings,Round 2,Replacement-behavior recommendation,5.0,1,0.25
+report_quality_evaluation,Experts,Expert quality ratings,Round 2,Overall rating,1.0,0,0.0
+report_quality_evaluation,Experts,Expert quality ratings,Round 2,Overall rating,2.0,0,0.0
+report_quality_evaluation,Experts,Expert quality ratings,Round 2,Overall rating,3.0,2,0.5
+report_quality_evaluation,Experts,Expert quality ratings,Round 2,Overall rating,3.5,1,0.25
+report_quality_evaluation,Experts,Expert quality ratings,Round 2,Overall rating,4.0,0,0.0
+report_quality_evaluation,Experts,Expert quality ratings,Round 2,Overall rating,4.1,1,0.25
+report_quality_evaluation,Experts,Expert quality ratings,Round 2,Overall rating,5.0,0,0.0
+report_quality_evaluation,Experts,Expert quality ratings,Arithmetic mean of rounds,Antecedent identification,1.0,0,0.0
+report_quality_evaluation,Experts,Expert quality ratings,Arithmetic mean of rounds,Antecedent identification,2.0,0,0.0
+report_quality_evaluation,Experts,Expert quality ratings,Arithmetic mean of rounds,Antecedent identification,3.0,3,0.75
+report_quality_evaluation,Experts,Expert quality ratings,Arithmetic mean of rounds,Antecedent identification,4.0,1,0.25
+report_quality_evaluation,Experts,Expert quality ratings,Arithmetic mean of rounds,Antecedent identification,5.0,0,0.0
+report_quality_evaluation,Experts,Expert quality ratings,Arithmetic mean of rounds,Consequence identification,1.0,1,0.25
+report_quality_evaluation,Experts,Expert quality ratings,Arithmetic mean of rounds,Consequence identification,2.0,0,0.0
+report_quality_evaluation,Experts,Expert quality ratings,Arithmetic mean of rounds,Consequence identification,3.0,1,0.25
+report_quality_evaluation,Experts,Expert quality ratings,Arithmetic mean of rounds,Consequence identification,4.0,1,0.25
+report_quality_evaluation,Experts,Expert quality ratings,Arithmetic mean of rounds,Consequence identification,5.0,1,0.25
+report_quality_evaluation,Experts,Expert quality ratings,Arithmetic mean of rounds,Setting-event identification,1.0,0,0.0
+report_quality_evaluation,Experts,Expert quality ratings,Arithmetic mean of rounds,Setting-event identification,2.0,1,0.25
+report_quality_evaluation,Experts,Expert quality ratings,Arithmetic mean of rounds,Setting-event identification,3.0,2,0.5
+report_quality_evaluation,Experts,Expert quality ratings,Arithmetic mean of rounds,Setting-event identification,4.0,1,0.25
+report_quality_evaluation,Experts,Expert quality ratings,Arithmetic mean of rounds,Setting-event identification,5.0,0,0.0
+report_quality_evaluation,Experts,Expert quality ratings,Arithmetic mean of rounds,Core function hypothesis,1.0,0,0.0
+report_quality_evaluation,Experts,Expert quality ratings,Arithmetic mean of rounds,Core function hypothesis,2.0,0,0.0
+report_quality_evaluation,Experts,Expert quality ratings,Arithmetic mean of rounds,Core function hypothesis,3.0,1,0.25
+report_quality_evaluation,Experts,Expert quality ratings,Arithmetic mean of rounds,Core function hypothesis,4.0,2,0.5
+report_quality_evaluation,Experts,Expert quality ratings,Arithmetic mean of rounds,Core function hypothesis,5.0,1,0.25
+report_quality_evaluation,Experts,Expert quality ratings,Arithmetic mean of rounds,Replacement-behavior recommendation,1.0,0,0.0
+report_quality_evaluation,Experts,Expert quality ratings,Arithmetic mean of rounds,Replacement-behavior recommendation,2.0,1,0.25
+report_quality_evaluation,Experts,Expert quality ratings,Arithmetic mean of rounds,Replacement-behavior recommendation,3.0,0,0.0
+report_quality_evaluation,Experts,Expert quality ratings,Arithmetic mean of rounds,Replacement-behavior recommendation,4.0,2,0.5
+report_quality_evaluation,Experts,Expert quality ratings,Arithmetic mean of rounds,Replacement-behavior recommendation,5.0,1,0.25
+report_quality_evaluation,Experts,Expert quality ratings,Arithmetic mean of rounds,Overall rating,1.0,0,0.0
+report_quality_evaluation,Experts,Expert quality ratings,Arithmetic mean of rounds,Overall rating,2.0,0,0.0
+report_quality_evaluation,Experts,Expert quality ratings,Arithmetic mean of rounds,Overall rating,3.0,2,0.5
+report_quality_evaluation,Experts,Expert quality ratings,Arithmetic mean of rounds,Overall rating,3.5,1,0.25
+report_quality_evaluation,Experts,Expert quality ratings,Arithmetic mean of rounds,Overall rating,4.0,0,0.0
+report_quality_evaluation,Experts,Expert quality ratings,Arithmetic mean of rounds,Overall rating,4.2,1,0.25
+report_quality_evaluation,Experts,Expert quality ratings,Arithmetic mean of rounds,Overall rating,5.0,0,0.0

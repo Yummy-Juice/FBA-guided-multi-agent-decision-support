@@ -1,0 +1,9 @@
+expert_record_id,delphi_round,quality_antecedent_identification,quality_consequence_identification,quality_setting_event_identification,quality_core_function_hypothesis,quality_replacement_behavior_recommendation,quality_overall_rating
+E001,round_1,3,3,3,4,4,3.5
+E002,round_1,5,5,1,5,5,4.3
+E003,round_1,3,1,4,2,4,3
+E004,round_1,3,5,3,4,1,3
+E001,round_2,3,3,3,4,4,3.5
+E002,round_2,3,5,3,5,5,4.1
+E003,round_2,3,1,4,4,4,3
+E004,round_2,3,3,3,4,3,3

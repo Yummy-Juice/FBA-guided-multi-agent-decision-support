@@ -1,0 +1,36 @@
+row_type,scale,dimension,n,number_of_items,cronbach_alpha,corrected_item_total_r,composite_mean,composite_sd,composite_median,composite_iqr
+scale_summary,Teacher quality ratings,Composite mean,121,6,0.7759913090711569,,4.190082644628099,0.48938064841069634,4.333333333333333,0.5
+item_detail,Teacher quality ratings,Antecedent identification,121,6,0.7759913090711569,0.5139126376476706,,,,
+item_detail,Teacher quality ratings,Consequence identification,121,6,0.7759913090711569,0.5671576987402527,,,,
+item_detail,Teacher quality ratings,Setting-event identification,121,6,0.7759913090711569,0.491132886010601,,,,
+item_detail,Teacher quality ratings,Core function hypothesis,121,6,0.7759913090711569,0.3326948777584756,,,,
+item_detail,Teacher quality ratings,Replacement-behavior recommendation,121,6,0.7759913090711569,0.6341124853637556,,,,
+item_detail,Teacher quality ratings,Overall rating,121,6,0.7759913090711569,0.6349175401535826,,,,
+scale_summary,Practitioner-reference quality ratings,Composite mean,59,6,0.4911173833637724,,4.353107344632769,0.31270165258198074,4.333333333333333,0.33333333333333304
+item_detail,Practitioner-reference quality ratings,Antecedent identification,59,6,0.4911173833637724,0.2369888556559051,,,,
+item_detail,Practitioner-reference quality ratings,Consequence identification,59,6,0.4911173833637724,0.2119679665664343,,,,
+item_detail,Practitioner-reference quality ratings,Setting-event identification,59,6,0.4911173833637724,0.2261551966366541,,,,
+item_detail,Practitioner-reference quality ratings,Core function hypothesis,59,6,0.4911173833637724,0.2847721312208216,,,,
+item_detail,Practitioner-reference quality ratings,Replacement-behavior recommendation,59,6,0.4911173833637724,0.2816701704710547,,,,
+item_detail,Practitioner-reference quality ratings,Overall rating,59,6,0.4911173833637724,0.2620387106899768,,,,
+scale_summary,Practitioner-FBA similarity ratings,Composite mean,75,6,0.6464534978087972,,4.091111111111112,0.3512027097608208,4.166666666666667,0.33333333333333304
+item_detail,Practitioner-FBA similarity ratings,Antecedent identification,75,6,0.6464534978087972,0.2849914195885836,,,,
+item_detail,Practitioner-FBA similarity ratings,Consequence identification,75,6,0.6464534978087972,0.3669306428326639,,,,
+item_detail,Practitioner-FBA similarity ratings,Setting-event identification,75,6,0.6464534978087972,0.2650636255743696,,,,
+item_detail,Practitioner-FBA similarity ratings,Core function hypothesis,75,6,0.6464534978087972,0.3197758929867939,,,,
+item_detail,Practitioner-FBA similarity ratings,Replacement-behavior recommendation,75,6,0.6464534978087972,0.4645188762147071,,,,
+item_detail,Practitioner-FBA similarity ratings,Overall rating,75,6,0.6464534978087972,0.6788903048409256,,,,
+scale_summary,Matched-comparison quality ratings,Composite mean,62,6,0.8288778914839777,,4.034946236559139,0.5727073536363068,4.166666666666667,0.49999999999999956
+item_detail,Matched-comparison quality ratings,Antecedent identification,62,6,0.8288778914839777,0.5725296212223611,,,,
+item_detail,Matched-comparison quality ratings,Consequence identification,62,6,0.8288778914839777,0.6553443218803502,,,,
+item_detail,Matched-comparison quality ratings,Setting-event identification,62,6,0.8288778914839777,0.5650238824067065,,,,
+item_detail,Matched-comparison quality ratings,Core function hypothesis,62,6,0.8288778914839777,0.388834784916937,,,,
+item_detail,Matched-comparison quality ratings,Replacement-behavior recommendation,62,6,0.8288778914839777,0.7097676832764357,,,,
+item_detail,Matched-comparison quality ratings,Overall rating,62,6,0.8288778914839777,0.7638637647769989,,,,
+scale_summary,General-purpose AI similarity ratings,Composite mean,62,6,0.88499874481489,,2.760752688172043,0.7838423922829333,2.6666666666666665,1.0
+item_detail,General-purpose AI similarity ratings,Antecedent identification,62,6,0.88499874481489,0.6038015045562409,,,,
+item_detail,General-purpose AI similarity ratings,Consequence identification,62,6,0.88499874481489,0.7134931671012831,,,,
+item_detail,General-purpose AI similarity ratings,Setting-event identification,62,6,0.88499874481489,0.6987319879963398,,,,
+item_detail,General-purpose AI similarity ratings,Core function hypothesis,62,6,0.88499874481489,0.6919506846714386,,,,
+item_detail,General-purpose AI similarity ratings,Replacement-behavior recommendation,62,6,0.88499874481489,0.7234939208910359,,,,
+item_detail,General-purpose AI similarity ratings,Overall rating,62,6,0.88499874481489,0.7833007971548723,,,,

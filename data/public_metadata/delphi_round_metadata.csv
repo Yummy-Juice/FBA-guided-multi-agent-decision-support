@@ -1,0 +1,4 @@
+dataset,round_label,number_of_experts,number_of_dimensions,final_score_rule,access_class
+expert_delphi_rounds_deidentified,round_1,4,6,Not applicable; raw round score with recorded decimals preserved,public
+expert_delphi_rounds_deidentified,round_2,4,6,Not applicable; raw round score with recorded decimals preserved,public
+expert_ratings_deidentified,round_average,4,6,Arithmetic mean of the matching round_1 and round_2 scores; recorded decimals preserved,public

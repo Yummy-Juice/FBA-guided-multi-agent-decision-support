@@ -1,0 +1,20 @@
+section,component,configuration_or_input,publication_interpretation
+Workflow module,Stage and question selection,"Conversation state, completed fields, and remaining targets",Selects the next FBA information target; unsupported additions are prohibited.
+Workflow module,Natural-language question generation,"Selected target, context, and rule guidance","Produces one or two teacher-facing questions using observable, fact-focused wording."
+Workflow module,Structured recording and scoring,Teacher response and stage-specific items,"Maps explicit information into basic, setting-event, antecedent, consequence, and positive-strategy fields."
+Workflow module,Functional-hypothesis generation,Accumulated record and FBA constraints,Separates direct evidence from a provisional hypothesis restricted to four functional categories.
+Workflow module,Function-matched recommendation drafting,"Provisional hypothesis, rule base, and deidentified retrieval support","Drafts antecedent, replacement-skill, and consequence strategies for human review."
+Human oversight,Educator and qualified-professional review,"Record, hypothesis, and recommendation draft",Required before high-stakes interpretation or action.
+Platform,Workflow export,Baidu AppBuilder workflow; reported version 3.4.9,Architecture description only; operational access details are excluded.
+Retrieval,Knowledge support,VectorDB and multilingual embedding,FBA-oriented rules and case-linked retrieval materials were used during the study; knowledge-base contents are withheld for privacy and security.
+Model,Conversational generation,DeepSeek-V3 as reported in the study record,Study-time configuration reported for interpretation of the evaluated system.
+Model,Structured judgment and analysis,Qwen3-235B-A22B as reported in the study record,Study-time configuration reported for interpretation of the evaluated system.
+Process parameter,Interview stages,Four stage loops,Basic/problem definition; life background; antecedent contexts and reactions; social skills and positive strategies.
+Process parameter,Node inventory,73 nodes,"Nine LLM, 30 code, nine memory, eight switch, seven text-processing, four merge, three chat, and supporting nodes."
+Process parameter,Conversation memory,13 lifecycle variables,Carries structured state across stages rather than relying on an unstructured transcript alone.
+Prompt contract,Basic-information extraction,"Teacher reply, previous question, and existing record","Outputs sex, age, diagnosis-report status if discussed, behavior, trigger context, and frequency."
+Prompt contract,Question selection,Filled and unfilled items plus conversation history,Outputs selected item numbers and a selection rationale.
+Prompt contract,Stage scoring,Candidate questions and teacher response,"Outputs item scores, explicit follow-up information, and scoring rationale."
+Prompt contract,Final feedback,"Basic, background, antecedent/reaction, and positive-strategy records",Outputs a provisional functional hypothesis and function-matched draft recommendations.
+Functional constraint,Permitted categories,Attention; tangible/activity access; escape/avoidance; automatic/sensory reinforcement,Context-dependent or multiple hypotheses may be retained when uncertainty remains.
+Evidence boundary,Not implemented or validated,"Direct observation, experimental functional analysis, diagnostic accuracy, and outcome monitoring","The system supports preparation and documentation, not professional replacement."

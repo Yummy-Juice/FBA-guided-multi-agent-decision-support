@@ -1,0 +1,11 @@
+scope,check,value,note
+teacher_public_file,total_records,137,All teachers have new identifiers P001 through P137
+teacher_public_file,released_fields,19,One anonymous identifier plus three six-dimension rating blocks
+teacher_public_file,quality_complete_records,121,Complete ratings on all six report-quality dimensions
+practitioner_referenced_similarity_evaluation,distinct_teacher_records,75,Complete ratings on all six practitioner-FBA similarity dimensions
+practitioner_referenced_similarity_evaluation,quality_complete_records,59,Complete practitioner-FBA similarity and report-quality blocks
+matched_general_purpose_ai_comparison,teacher_records,62,Complete ratings on all six general-purpose-AI similarity dimensions
+expert_round_file,paired_round_records,8,Four experts with one record in each of two rounds
+expert_final_file,expert_records,4,Arithmetic mean of the paired rounds
+public_privacy,removed_fields,collection mode and source identity metadata,Excluded from public data and metadata
+source_reconciliation,corrected_general_ai_overall_records,1,One source response label mapped to 3 and the public value is 3

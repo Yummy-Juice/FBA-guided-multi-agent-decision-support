@@ -1,0 +1,13 @@
+scale,dimension,n,mean,sd,coefficient_of_variation
+Teacher quality ratings,Antecedent identification,62,3.967741935483871,0.6264064028179105,0.1578747844500425
+Teacher quality ratings,Consequence identification,62,4.080645161290323,0.8925628433911152,0.21873081537647882
+Teacher quality ratings,Setting-event identification,62,4.048387096774194,0.8764200533960367,0.21648622832890146
+Teacher quality ratings,Core function hypothesis,62,4.225806451612903,0.7110222342955335,0.168257169947798
+Teacher quality ratings,Replacement-behavior recommendation,62,3.9193548387096775,0.8740031717085075,0.2229966940161624
+Teacher quality ratings,Overall rating,62,3.967741935483871,0.6520520429667989,0.16433831977212005
+Matched general-purpose AI similarity ratings,Antecedent identification,62,2.870967741935484,0.8959630951076154,0.3120770331273717
+Matched general-purpose AI similarity ratings,Consequence identification,62,2.7903225806451615,0.9257180956406275,0.33176024236831736
+Matched general-purpose AI similarity ratings,Setting-event identification,62,2.7096774193548385,1.0304717489496715,0.38029314544571213
+Matched general-purpose AI similarity ratings,Core function hypothesis,62,2.6774193548387095,1.0830163335036285,0.4045000763688251
+Matched general-purpose AI similarity ratings,Replacement-behavior recommendation,62,2.725806451612903,1.0889813986083836,0.3995079687202354
+Matched general-purpose AI similarity ratings,Overall rating,62,2.7903225806451615,0.8519427513705973,0.305320523612584
